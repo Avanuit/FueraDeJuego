@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Historia — Fuera de Juego</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Space+Grotesk:wght@400;700&display=swap"
+        rel="stylesheet" />
+</head>
+
+<body data-barba="wrapper">
+
+    <nav class="nav" id="mainNav">
+        <a href="index.html" class="nav__logo">
+            <span class="nav__logo-text">FUERA<em>DE</em>JUEGO</span>
+        </a>
+        <ul class="nav__links">
+            <li><a href="index.html" class="nav__link">Inicio</a></li>
+            <li><a href="historia.html" class="nav__link active">Historia</a></li>
+            <li><a href="personajes.html" class="nav__link">Personajes</a></li>
+            <li><a href="mapa.html" class="nav__link">Mapa</a></li>
+            <li><a href="comic.html" class="nav__link">Cómic</a></li>
+            <li><a href="testimonios.html" class="nav__link">Testimonios</a></li>
+        </ul>
+        <button class="nav__toggle" id="navToggle" aria-label="Menú">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <main data-barba="view" data-barba-namespace="historia">
+
+        <section class="page-hero page-hero--historia">
+            <div class="page-hero__content">
+                <span class="tag tag--red">El Proyecto</span>
+                <h1 class="page-hero__title">La Historia</h1>
+                <p class="page-hero__sub">Un cómic de 12 páginas. Un sitio web inmersivo. Una experiencia que te obliga
+                    a actuar.</p>
+            </div>
+        </section>
+
+        <!-- SINOPSIS -->
+        <section class="content-section">
+            <div class="content-container">
+                <div class="two-col">
+                    <div class="two-col__text">
+                        <h2 class="section-title">Sinopsis</h2>
+                        <p>Mientras 48 selecciones y 16 ciudades se preparan para el Mundial más grande jamás
+                            organizado, tres adolescentes viven el lado que nadie transmite.</p>
+                        <p>No se conocen. Pero un hashtag — <strong>#FueraDeJuego</strong> — los une. El público los
+                            une. Y al final, quien lee el cómic y navega la web no es un espectador: es parte de la
+                            historia.</p>
+                    </div>
+                    <div class="two-col__image">
+                        <img src="img/historia-cover.png"
+                            alt="Ciudad con megaevento y contraste social" loading="lazy" />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CHAPTERS -->
+        <section class="chapters">
+            <div class="content-container">
+                <h2 class="section-title section-title--center">Los 4 Capítulos</h2>
+                <div class="chapters__grid">
+
+                    <article class="chapter-card">
+                        <div class="chapter-card__number">01</div>
+                        <div class="chapter-card__content">
+                            <h3>El letrero "SE RENTA"</h3>
+                            <p class="chapter-card__char">Lucía · Ciudad Juárez</p>
+                            <p>El barrio de Anapra amanece con precios triplicados. Lucía dibuja lo que sus vecinos
+                                pierden. La última viñeta: un letrero con el precio multiplicado por tres.</p>
+                            <div class="chapter-card__qr">
+                                <div class="qr-placeholder">
+                                    <span>QR</span>
+                                    <small>Escanea para ver datos reales</small>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="chapter-card">
+                        <div class="chapter-card__number">02</div>
+                        <div class="chapter-card__content">
+                            <h3>La cancha cambiada</h3>
+                            <p class="chapter-card__char">Marcus · Inglewood</p>
+                            <p>La lavendería donde Marcus lavaba los uniformes de su equipo ahora es un apartamento de
+                                lujo. Su comunidad afroamericana, borrada del mapa en nombre del progreso.</p>
+                            <div class="chapter-card__qr">
+                                <div class="qr-placeholder">
+                                    <span>QR</span>
+                                    <small>Datos: desplazamiento en Inglewood</small>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="chapter-card">
+                        <div class="chapter-card__number">03</div>
+                        <div class="chapter-card__content">
+                            <h3>La voz de la abuela</h3>
+                            <p class="chapter-card__char">Aiyana · Vancouver</p>
+                            <p>Las excavadoras avanzan sobre territorio Squamish. Aiyana graba en su teléfono los cantos
+                                de su abuela antes de que el ruido las borre para siempre.</p>
+                            <div class="chapter-card__qr">
+                                <div class="qr-placeholder">
+                                    <span>QR</span>
+                                    <small>Audio: testimonios indígenas</small>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="chapter-card chapter-card--locked">
+                        <div class="chapter-card__number">04</div>
+                        <div class="chapter-card__lock">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                            </svg>
+                        </div>
+                        <div class="chapter-card__content">
+                            <h3>El final desbloqueado</h3>
+                            <p class="chapter-card__char">Capítulo 4 — Bloqueado</p>
+                            <p>Este capítulo solo se desbloquea cuando ingresas tu propio testimonio o compartes el
+                                proyecto en redes sociales.</p>
+                            <a href="testimonios.html" class="btn btn--primary btn--sm">Desbloquear →</a>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- TRANSMEDIA -->
+        <section class="transmedia">
+            <div class="content-container">
+                <h2 class="section-title section-title--center">Conexión Transmedia</h2>
+                <p class="transmedia__lead">No vendemos un cómic. No vendemos una web. Vendemos una experiencia que
+                    obliga al usuario a usar ambos.</p>
+                <div class="transmedia__flow">
+                    <div class="flow-step">
+                        <div class="flow-step__icon">📖</div>
+                        <h4>Lees el cómic</h4>
+                        <p>12 páginas de periodismo gráfico. Cada capítulo termina con un código QR.</p>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                        <div class="flow-step__icon">📱</div>
+                        <h4>Escaneas el QR</h4>
+                        <p>Accedes al sitio web con mapas, datos reales y audios de activistas.</p>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                        <div class="flow-step__icon">✍️</div>
+                        <h4>Contribuyes</h4>
+                        <p>Tu testimonio desbloquea el Capítulo 4 y puede aparecer en la próxima edición.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- METRICS -->
+        <section class="metrics">
+            <div class="content-container">
+                <h2 class="section-title section-title--center">Impacto esperado</h2>
+                <div class="metrics__grid">
+                    <div class="metric-item">
+                        <span class="metric-item__value">100K+</span>
+                        <span class="metric-item__label">Visitas en el primer mes</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-item__value">25K+</span>
+                        <span class="metric-item__label">Descargas del cómic</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-item__value">5K+</span>
+                        <span class="metric-item__label">Testimonios recibidos</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-item__value">500K+</span>
+                        <span class="metric-item__label">Menciones #FueraDeJuego</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer__container">
+            <div class="footer__brand">
+                <span class="footer__logo">Fuera de Juego</span>
+                <p>Proyecto Transmedia — Copa del Mundo FIFA 2026</p>
+            </div>
+            <div class="footer__links">
+                <a href="index.html">Inicio</a>
+                <a href="historia.html">Historia</a>
+                <a href="personajes.html">Personajes</a>
+                <a href="mapa.html">Mapa</a>
+                <a href="comic.html">Cómic</a>
+                <a href="testimonios.html">Testimonios</a>
+            </div>
+            <div class="footer__contact">
+                <p>proyectofueradejuego@gmail.com</p>
+            </div>
+        </div>
+        <div class="footer__bottom">
+            <p>© 2026 Equipo Fuera de Juego</p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/@barba/core@2.9.7/dist/barba.umd.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/transitions.js"></script>
+</body>
+
+</html>

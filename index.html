@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fuera de Juego — FIFA 2026</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Space+Grotesk:wght@400;700&display=swap"
+        rel="stylesheet" />
+</head>
+
+<body data-barba="wrapper">
+
+    <nav class="nav" id="mainNav">
+        <a href="index.html" class="nav__logo">
+            <span class="nav__logo-text">FUERA<em>DE</em>JUEGO</span>
+        </a>
+        <ul class="nav__links">
+            <li><a href="index.html" class="nav__link active">Inicio</a></li>
+            <li><a href="historia.html" class="nav__link">Historia</a></li>
+            <li><a href="personajes.html" class="nav__link">Personajes</a></li>
+            <li><a href="mapa.html" class="nav__link">Mapa</a></li>
+            <li><a href="comic.html" class="nav__link">Cómic</a></li>
+            <li><a href="testimonios.html" class="nav__link">Testimonios</a></li>
+        </ul>
+        <button class="nav__toggle" id="navToggle" aria-label="Menú">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <main data-barba="view" data-barba-namespace="home">
+
+        <!-- HERO -->
+        <section class="hero">
+            <div class="hero__bg">
+                <div class="hero__grid"></div>
+                <div class="hero__orb hero__orb--1"></div>
+                <div class="hero__orb hero__orb--2"></div>
+            </div>
+            <div class="hero__content">
+                <div class="hero__tag">
+                    <span class="tag tag--red">FIFA 2026</span>
+                    <span class="tag tag--outline">#FueraDeJuego</span>
+                </div>
+                <h1 class="hero__title">
+                    Las voces que<br />
+                    <em>el Mundial</em><br />
+                    no transmite.
+                </h1>
+                <p class="hero__subtitle">
+                    Mientras 48 selecciones llenan los estadios, tres comunidades pagan el precio del espectáculo.
+                    Gentrificación, desplazamiento y silencio.
+                </p>
+                <div class="hero__actions">
+                    <a href="historia.html" class="btn btn--primary">Explorar la historia</a>
+                    <a href="testimonios.html" class="btn btn--ghost">Comparte tu voz</a>
+                </div>
+            </div>
+            <div class="hero__visual">
+                <div class="hero__stadium-card">
+                    <img src="img/SoFiStadium.png"
+                        alt="Estadio iluminado contrasta con barrio marginalizado" class="hero__img" loading="eager" />
+                    <div class="hero__img-caption">
+                        SoFi Stadium, Inglewood — a cuadras de donde Marcus creció.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- STATS BAR -->
+        <section class="stats">
+            <div class="stats__container">
+                <div class="stat">
+                    <span class="stat__number" data-target="48">0</span>
+                    <span class="stat__label">Selecciones</span>
+                </div>
+                <div class="stat">
+                    <span class="stat__number" data-target="16">0</span>
+                    <span class="stat__label">Ciudades sede</span>
+                </div>
+                <div class="stat">
+                    <span class="stat__number" data-target="3">0</span>
+                    <span class="stat__label">Comunidades desplazadas</span>
+                </div>
+                <div class="stat">
+                    <span class="stat__number" data-target="300">0</span>
+                    <span class="stat__label">% Aumento en alquileres</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- INTRO NARRATIVE -->
+        <section class="intro">
+            <div class="intro__container">
+                <div class="intro__text">
+                    <h2 class="section-title">Detrás del espectáculo</h2>
+                    <p class="intro__lead">
+                        El Mundial 2026 será el evento deportivo más grande de la historia. La atención global estará
+                        puesta en los estadios.
+                    </p>
+                    <p class="intro__body">
+                        Nosotros la ponemos en las calles. Donde los precios de renta se triplicaron de la noche a la
+                        mañana. Donde familias de tres generaciones reciben avisos de desalojo. Donde el "progreso"
+                        tiene un costo que nadie muestra en la pantalla grande.
+                    </p>
+                    <blockquote class="intro__quote">
+                        "Detrás de cada megaevento hay personas que pagan el precio. El fútbol puede ser alegría, pero
+                        nunca debe ser excusa para el olvido."
+                    </blockquote>
+                </div>
+                <div class="intro__image-stack">
+                    <img src="img/intro-back.png"
+                        alt="Barrio humilde con construcción de lujo al fondo" class="intro__img intro__img--back"
+                        loading="lazy" />
+                    <img src="img/intro-front.png"
+                        alt="Edificio en construcción" class="intro__img intro__img--front" loading="lazy" />
+                </div>
+            </div>
+        </section>
+
+        <!-- CITIES -->
+        <section class="cities">
+            <div class="cities__container">
+                <h2 class="section-title section-title--center">Tres ciudades. Una historia.</h2>
+                <div class="cities__grid">
+                    <article class="city-card" data-city="juarez">
+                        <div class="city-card__img-wrap">
+                            <img src="img/Anapra.png"
+                                alt="Ciudad Juárez, calles de tierra cerca del estadio" loading="lazy" />
+                            <div class="city-card__overlay"></div>
+                            <span class="city-card__flag">🇲🇽</span>
+                        </div>
+                        <div class="city-card__body">
+                            <span class="city-card__location">Anapra, Ciudad Juárez</span>
+                            <h3 class="city-card__name">Lucía</h3>
+                            <p class="city-card__desc">Calles de tierra, olor a burritos, el estadio brillando al fondo.
+                                Su barrio se desmorona por la especulación inmobiliaria.</p>
+                            <a href="personajes.html" class="city-card__link">Ver historia →</a>
+                        </div>
+                    </article>
+
+                    <article class="city-card" data-city="inglewood">
+                        <div class="city-card__img-wrap">
+                            <img src="img/Inglewood.png"
+                                alt="Inglewood, Los Ángeles" loading="lazy" />
+                            <div class="city-card__overlay"></div>
+                            <span class="city-card__flag">🇺🇸</span>
+                        </div>
+                        <div class="city-card__body">
+                            <span class="city-card__location">Inglewood, Los Ángeles</span>
+                            <h3 class="city-card__name">Marcus</h3>
+                            <p class="city-card__desc">Antes había lavanderías; ahora, apartamentos de lujo. Su
+                                comunidad afroamericana ha sido borrada del mapa para dar paso al lujo.</p>
+                            <a href="personajes.html" class="city-card__link">Ver historia →</a>
+                        </div>
+                    </article>
+
+                    <article class="city-card" data-city="vancouver">
+                        <div class="city-card__img-wrap">
+                            <img src="img/NacionSquamish.png"
+                                alt="Territorio Squamish, Vancouver" loading="lazy" />
+                            <div class="city-card__overlay"></div>
+                            <span class="city-card__flag">🇨🇦</span>
+                        </div>
+                        <div class="city-card__body">
+                            <span class="city-card__location">Nación Squamish, Vancouver</span>
+                            <h3 class="city-card__name">Aiyana</h3>
+                            <p class="city-card__desc">Bosques de cedro y el ruido de grúas. Lucha porque las
+                                excavadoras no callen la voz de su abuela, guardiana de la memoria indígena.</p>
+                            <a href="personajes.html" class="city-card__link">Ver historia →</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="cta">
+            <div class="cta__container">
+                <div class="cta__content">
+                    <h2 class="cta__title">¿Invertimos juntos en las voces que el Mundial no transmite?</h2>
+                    <p class="cta__sub">Proyecto transmedia — Cómic + Web Inmersiva</p>
+                    <div class="cta__actions">
+                        <a href="testimonios.html" class="btn btn--primary btn--large">Comparte tu testimonio</a>
+                        <a href="historia.html" class="btn btn--ghost btn--large">Leer el cómic</a>
+                    </div>
+                </div>
+                <div class="cta__tag-cloud">
+                    <span class="hashtag">#FueraDeJuego</span>
+                    <span class="hashtag hashtag--sm">#Mundial2026</span>
+                    <span class="hashtag hashtag--sm">#Gentrificación</span>
+                    <span class="hashtag">#VocesOcultas</span>
+                    <span class="hashtag hashtag--sm">#FIFA2026</span>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer__container">
+            <div class="footer__brand">
+                <span class="footer__logo">Fuera de Juego</span>
+                <p>Proyecto Transmedia — Copa del Mundo FIFA 2026</p>
+                <p>Universidad de San Buenaventura · Ingeniería Multimedia</p>
+            </div>
+            <div class="footer__links">
+                <a href="index.html">Inicio</a>
+                <a href="historia.html">Historia</a>
+                <a href="personajes.html">Personajes</a>
+                <a href="mapa.html">Mapa</a>
+                <a href="comic.html">Cómic</a>
+                <a href="testimonios.html">Testimonios</a>
+            </div>
+            <div class="footer__contact">
+                <p>proyectofueradejuego@gmail.com</p>
+                <span>#FueraDeJuego</span>
+            </div>
+        </div>
+        <div class="footer__bottom">
+            <p>© 2026 Equipo Fuera de Juego · Juan Pablo Chaves · David Flórez · Sadid Acosta</p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/@barba/core@2.9.7/dist/barba.umd.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/transitions.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Personajes — Fuera de Juego</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Space+Grotesk:wght@400;700&display=swap"
+        rel="stylesheet" />
+</head>
+
+<body data-barba="wrapper">
+
+    <nav class="nav" id="mainNav">
+        <a href="index.html" class="nav__logo">
+            <span class="nav__logo-text">FUERA<em>DE</em>JUEGO</span>
+        </a>
+        <ul class="nav__links">
+            <li><a href="index.html" class="nav__link">Inicio</a></li>
+            <li><a href="historia.html" class="nav__link">Historia</a></li>
+            <li><a href="personajes.html" class="nav__link active">Personajes</a></li>
+            <li><a href="mapa.html" class="nav__link">Mapa</a></li>
+            <li><a href="comic.html" class="nav__link">Cómic</a></li>
+            <li><a href="testimonios.html" class="nav__link">Testimonios</a></li>
+        </ul>
+        <button class="nav__toggle" id="navToggle" aria-label="Menú">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <main data-barba="view" data-barba-namespace="personajes">
+
+        <section class="page-hero page-hero--personajes">
+            <div class="page-hero__content">
+                <span class="tag tag--red">El corazón del proyecto</span>
+                <h1 class="page-hero__title">Los Personajes</h1>
+                <p class="page-hero__sub">Tres voces. Tres ciudades. Una realidad que el Mundial no transmite.</p>
+            </div>
+        </section>
+
+        <!-- CHARACTER: LUCÍA -->
+        <section class="character-section" id="lucia">
+            <div class="content-container">
+                <div class="character">
+                    <div class="character__visual">
+                        <div class="character__portrait character__portrait--lucia">
+                            <img src="img/Lucia.png"
+                                alt="Lucía Hernández, adolescente de Ciudad Juárez" loading="lazy" />
+                            <div class="character__city-tag">🇲🇽 Cd. Juárez</div>
+                        </div>
+                        <div class="character__represents">
+                            <span>Representa:</span>
+                            <strong>La gentrificación silenciosa</strong>
+                        </div>
+                    </div>
+                    <div class="character__info">
+                        <div class="character__header">
+                            <h2 class="character__name">Lucía Hernández</h2>
+                            <span class="character__age">21 años · Anapra, Ciudad Juárez</span>
+                        </div>
+                        <blockquote class="character__lema">
+                            "Si no lo dibujo, desaparece."
+                        </blockquote>
+                        <div class="character__details">
+                            <div class="detail-row">
+                                <span class="detail-label">Apariencia</span>
+                                <p>Trenzas negras, ojos grandes, sudadera holgada, mochila de cuadernos.</p>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Psicología</span>
+                                <p>Observadora, rabia contenida, sueña con ser historietista. Registra con dibujos todo
+                                    lo que desaparece a su alrededor.</p>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Su conflicto</span>
+                                <p>Su barrio en Anapra está siendo devorado por la especulación inmobiliaria. Los
+                                    precios de renta se triplicaron desde que se anunció el Mundial. Su familia recibió
+                                    un aviso de desalojo.</p>
+                            </div>
+                        </div>
+                        <div class="character__stats">
+                            <div class="char-stat">
+                                <span class="char-stat__label">Aumento de renta</span>
+                                <div class="char-stat__bar">
+                                    <div class="char-stat__fill" style="--fill: 85%"></div>
+                                </div>
+                                <span class="char-stat__val">+240%</span>
+                            </div>
+                            <div class="char-stat">
+                                <span class="char-stat__label">Familias desplazadas en su calle</span>
+                                <div class="char-stat__bar">
+                                    <div class="char-stat__fill" style="--fill: 60%"></div>
+                                </div>
+                                <span class="char-stat__val">12/20</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- CHARACTER: MARCUS -->
+        <section class="character-section" id="marcus">
+            <div class="content-container">
+                <div class="character character--reverse">
+                    <div class="character__visual">
+                        <div class="character__portrait character__portrait--marcus">
+                            <img src="img/Marcus.png"
+                                alt="Marcus Washington, Inglewood" loading="lazy" />
+                            <div class="character__city-tag">🇺🇸 Inglewood</div>
+                        </div>
+                        <div class="character__represents">
+                            <span>Representa:</span>
+                            <strong>La exclusión sistémica</strong>
+                        </div>
+                    </div>
+                    <div class="character__info">
+                        <div class="character__header">
+                            <h2 class="character__name">Marcus Washington</h2>
+                            <span class="character__age">23 años · Inglewood, Los Ángeles</span>
+                        </div>
+                        <blockquote class="character__lema">
+                            "¿Para qué ganar si la cancha está cambiada?"
+                        </blockquote>
+                        <div class="character__details">
+                            <div class="detail-row">
+                                <span class="detail-label">Apariencia</span>
+                                <p>Alto, rizos afro, manos de portero, gorra de los Galaxy.</p>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Psicología</span>
+                                <p>Extrovertido, usa el humor para no hundirse, leal a sus amigos hasta el extremo.
+                                    Sueña con ser portero profesional.</p>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Su conflicto</span>
+                                <p>A unas cuadras del SoFi Stadium, la comunidad afroamericana de Inglewood ha sido
+                                    borrada. Donde su familia lavaba ropa, ahora hay condominios de $3.000/mes.</p>
+                            </div>
+                        </div>
+                        <div class="character__stats">
+                            <div class="char-stat">
+                                <span class="char-stat__label">Negocios afroamericanos cerrados</span>
+                                <div class="char-stat__bar">
+                                    <div class="char-stat__fill char-stat__fill--gold" style="--fill: 75%"></div>
+                                </div>
+                                <span class="char-stat__val">-68%</span>
+                            </div>
+                            <div class="char-stat">
+                                <span class="char-stat__label">Precio promedio renta (2019→2026)</span>
+                                <div class="char-stat__bar">
+                                    <div class="char-stat__fill char-stat__fill--gold" style="--fill: 90%"></div>
+                                </div>
+                                <span class="char-stat__val">$900→$2.800</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- CHARACTER: AIYANA -->
+        <section class="character-section" id="aiyana">
+            <div class="content-container">
+                <div class="character">
+                    <div class="character__visual">
+                        <div class="character__portrait character__portrait--aiyana">
+                            <img src="img/Aiyana.png"
+                                alt="Aiyana Thunderbird, Nación Squamish" loading="lazy" />
+                            <div class="character__city-tag">🇨🇦 Vancouver</div>
+                        </div>
+                        <div class="character__represents">
+                            <span>Representa:</span>
+                            <strong>La lucha indígena por el territorio</strong>
+                        </div>
+                    </div>
+                    <div class="character__info">
+                        <div class="character__header">
+                            <h2 class="character__name">Aiyana Thunderbird</h2>
+                            <span class="character__age">22 años · Nación Squamish, Vancouver</span>
+                        </div>
+                        <blockquote class="character__lema">
+                            "La tierra no se vende, se cuida."
+                        </blockquote>
+                        <div class="character__details">
+                            <div class="detail-row">
+                                <span class="detail-label">Apariencia</span>
+                                <p>Pelo largo, aretes de pluma, chamarra con parches indígenas.</p>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Psicología</span>
+                                <p>Poética, heredera de la memoria oral, sin miedo a las excavadoras. Graba en su
+                                    teléfono los cantos de su abuela.</p>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Su conflicto</span>
+                                <p>Las excavadoras avanzan sobre territorio ancestral Squamish para construir
+                                    infraestructura del Mundial. Su abuela, guardiana de la memoria oral, ve cómo su voz
+                                    queda sepultada bajo el concreto.</p>
+                            </div>
+                        </div>
+                        <div class="character__stats">
+                            <div class="char-stat">
+                                <span class="char-stat__label">Territorio ancestral afectado</span>
+                                <div class="char-stat__bar">
+                                    <div class="char-stat__fill char-stat__fill--teal" style="--fill: 70%"></div>
+                                </div>
+                                <span class="char-stat__val">34 ha</span>
+                            </div>
+                            <div class="char-stat">
+                                <span class="char-stat__label">Familias reubicadas</span>
+                                <div class="char-stat__bar">
+                                    <div class="char-stat__fill char-stat__fill--teal" style="--fill: 55%"></div>
+                                </div>
+                                <span class="char-stat__val">89 fam.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONNECTION -->
+        <section class="connection-section">
+            <div class="content-container">
+                <div class="connection-box">
+                    <h3>Lo que los une</h3>
+                    <p>No se conocen. Viven en países distintos, hablan idiomas distintos, tienen historias distintas.
+                        Pero un hashtag —<strong>#FueraDeJuego</strong>— los une. Y ahora tú también eres parte de esta
+                        red.</p>
+                    <a href="testimonios.html" class="btn btn--primary">Únete a la historia</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer__container">
+            <div class="footer__brand">
+                <span class="footer__logo">Fuera de Juego</span>
+                <p>Proyecto Transmedia — Copa del Mundo FIFA 2026</p>
+            </div>
+            <div class="footer__links">
+                <a href="index.html">Inicio</a>
+                <a href="historia.html">Historia</a>
+                <a href="personajes.html">Personajes</a>
+                <a href="mapa.html">Mapa</a>
+                <a href="comic.html">Cómic</a>
+                <a href="testimonios.html">Testimonios</a>
+            </div>
+            <div class="footer__contact">
+                <p>proyectofueradejuego@gmail.com</p>
+            </div>
+        </div>
+        <div class="footer__bottom">
+            <p>© 2026 Equipo Fuera de Juego</p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/@barba/core@2.9.7/dist/barba.umd.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/transitions.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Testimonios — Fuera de Juego</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Space+Grotesk:wght@400;700&display=swap"
+        rel="stylesheet" />
+</head>
+
+<body data-barba="wrapper">
+
+    <nav class="nav" id="mainNav">
+        <a href="index.html" class="nav__logo">
+            <span class="nav__logo-text">FUERA<em>DE</em>JUEGO</span>
+        </a>
+        <ul class="nav__links">
+            <li><a href="index.html" class="nav__link">Inicio</a></li>
+            <li><a href="historia.html" class="nav__link">Historia</a></li>
+            <li><a href="personajes.html" class="nav__link">Personajes</a></li>
+            <li><a href="mapa.html" class="nav__link">Mapa</a></li>
+            <li><a href="comic.html" class="nav__link">Cómic</a></li>
+            <li><a href="testimonios.html" class="nav__link active">Testimonios</a></li>
+        </ul>
+        <button class="nav__toggle" id="navToggle" aria-label="Menú">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <main data-barba="view" data-barba-namespace="testimonios">
+
+        <section class="page-hero page-hero--testimonios">
+            <div class="page-hero__content">
+                <span class="tag tag--red">Tu voz importa</span>
+                <h1 class="page-hero__title">Testimonios</h1>
+                <p class="page-hero__sub">Comparte tu historia y desbloquea el Capítulo 4 del cómic.</p>
+            </div>
+        </section>
+
+        <!-- CHAPTER 4 UNLOCK BANNER -->
+        <section class="unlock-banner">
+            <div class="content-container">
+                <div class="unlock-box">
+                    <div class="unlock-box__icon">🔒</div>
+                    <div class="unlock-box__text">
+                        <h3>Capítulo 4 — Bloqueado</h3>
+                        <p>El final de la historia solo existe si tú lo construyes. Ingresa tu testimonio abajo para
+                            desbloquear el Capítulo 4 del cómic.</p>
+                    </div>
+                    <div class="unlock-box__progress">
+                        <div class="progress-ring">
+                            <svg viewBox="0 0 60 60">
+                                <circle cx="30" cy="30" r="25" fill="none" stroke="#1e2a3a" stroke-width="5" />
+                                <circle cx="30" cy="30" r="25" fill="none" stroke="#e63946" stroke-width="5"
+                                    stroke-dasharray="157" stroke-dashoffset="94" stroke-linecap="round"
+                                    transform="rotate(-90 30 30)" />
+                            </svg>
+                            <span class="progress-ring__label">40%</span>
+                        </div>
+                        <span>desbloqueado</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TESTIMONIAL FORM -->
+        <section class="form-section">
+            <div class="content-container">
+                <div class="form-wrapper">
+                    <div class="form-info">
+                        <h2 class="section-title">Comparte tu historia</h2>
+                        <p>¿Has vivido el desplazamiento por un megaevento? ¿Tu barrio cambió sin tu consentimiento?
+                            ¿Conoces a alguien que tuvo que irse? Tu historia es periodismo.</p>
+                        <div class="form-benefits">
+                            <div class="benefit">
+                                <span class="benefit__icon">📖</span>
+                                <div>
+                                    <strong>Desbloquea el Cap. 4</strong>
+                                    <p>Acceso inmediato al final del cómic</p>
+                                </div>
+                            </div>
+                            <div class="benefit">
+                                <span class="benefit__icon">🎨</span>
+                                <div>
+                                    <strong>Aparece en el cómic</strong>
+                                    <p>Las mejores historias se ilustran en nuevas ediciones</p>
+                                </div>
+                            </div>
+                            <div class="benefit">
+                                <span class="benefit__icon">📢</span>
+                                <div>
+                                    <strong>Amplifica tu voz</strong>
+                                    <p>Tu testimonio llega a 100,000+ personas</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form class="testimony-form" id="testimonyForm" novalidate>
+                        <div class="form-group">
+                            <label for="name">Nombre (o seudónimo)</label>
+                            <input type="text" id="name" name="name" placeholder="Ej: María G. / Anónimo" required />
+                            <span class="form-error" id="nameError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="city">Ciudad / Barrio</label>
+                            <input type="text" id="city" name="city" placeholder="Ej: Anapra, Cd. Juárez" required />
+                            <span class="form-error" id="cityError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="country">País</label>
+                            <select id="country" name="country" required>
+                                <option value="">Selecciona tu país</option>
+                                <option value="mx">México</option>
+                                <option value="us">Estados Unidos</option>
+                                <option value="ca">Canadá</option>
+                                <option value="other">Otro</option>
+                            </select>
+                            <span class="form-error" id="countryError"></span>
+                        </div>
+
+                        <div class="form-group form-group--full">
+                            <label for="testimony">Tu testimonio</label>
+                            <textarea id="testimony" name="testimony" rows="6"
+                                placeholder="Cuéntanos cómo el Mundial (o cualquier megaevento) afectó tu barrio, tu familia, tu vida..."
+                                required minlength="50"></textarea>
+                            <div class="form-group__counter">
+                                <span id="charCount">0</span>/500 caracteres
+                            </div>
+                            <span class="form-error" id="testimonyError"></span>
+                        </div>
+
+                        <div class="form-group form-group--full">
+                            <label class="form-checkbox">
+                                <input type="checkbox" id="consent" name="consent" required />
+                                <span class="checkmark"></span>
+                                <span>Acepto que mi testimonio sea publicado (con el nombre que indiqué) en este sitio y
+                                    en el cómic Fuera de Juego.</span>
+                            </label>
+                            <span class="form-error" id="consentError"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn--primary btn--large btn--full" id="submitBtn">
+                            <span class="btn-text">Enviar testimonio y desbloquear Cap. 4</span>
+                            <span class="btn-loader" style="display:none">Enviando...</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- UNLOCK SUCCESS (hidden by default) -->
+        <div class="unlock-success" id="unlockSuccess" style="display:none">
+            <div class="unlock-success__content">
+                <div class="unlock-success__icon">🔓</div>
+                <h3>¡Capítulo 4 desbloqueado!</h3>
+                <p>Gracias por compartir tu historia. Tu voz es ahora parte del proyecto.</p>
+                <div class="chapter4-preview">
+                    <div class="chapter4-preview__page">
+                        <div class="comic-panel">
+                            <div class="comic-panel__inner">
+                                <p class="comic-text">"Lucía miró el mapa en su pantalla. Miles de nombres. Miles de
+                                    historias. <em>No estamos solos</em>, pensó."</p>
+                            </div>
+                        </div>
+                        <div class="comic-panel comic-panel--wide">
+                            <div class="comic-panel__inner">
+                                <p class="comic-text">"Marcus dejó de reírse por un momento. En la pantalla, vio el
+                                    nombre de una chica de Vancouver, otra de Juárez. <em>#FueraDeJuego</em>"</p>
+                            </div>
+                        </div>
+                        <div class="comic-panel">
+                            <div class="comic-panel__inner">
+                                <p class="comic-text">"Aiyana grabó el último canto de su abuela. Lo subió con el
+                                    hashtag. En segundos, 10,000 reproducciones."</p>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="chapter4-preview__note">Ilustración completa disponible en la edición impresa del cómic.
+                    </p>
+                </div>
+                <a href="index.html" class="btn btn--primary">Volver al inicio</a>
+            </div>
+        </div>
+
+        <!-- EXISTING TESTIMONIALS -->
+        <section class="testimonials-list">
+            <div class="content-container">
+                <h2 class="section-title">Voces que ya hablan</h2>
+                <div class="testimonials-grid" id="testimonialsGrid">
+
+                    <article class="testimonial-card">
+                        <div class="testimonial-card__header">
+                            <div class="testimonial-card__avatar">MR</div>
+                            <div>
+                                <strong>Miguel R.</strong>
+                                <span>Inglewood, CA</span>
+                            </div>
+                        </div>
+                        <p>"Mi familia vivió 30 años en el mismo apartamento. Nos dieron 60 días para salir cuando
+                            anunciaron el estadio. Nadie nos explicó por qué."</p>
+                        <div class="testimonial-card__tag">#Inglewood #Desplazamiento</div>
+                    </article>
+
+                    <article class="testimonial-card">
+                        <div class="testimonial-card__header">
+                            <div class="testimonial-card__avatar" style="background: #2a9d8f">AT</div>
+                            <div>
+                                <strong>Ana T.</strong>
+                                <span>Anapra, Juárez</span>
+                            </div>
+                        </div>
+                        <p>"Antes pagaba $2,500 pesos de renta. Ahora piden $8,000 por el mismo cuarto. El estadio queda
+                            a 20 minutos pero yo no puedo ni comprar una entrada."</p>
+                        <div class="testimonial-card__tag">#Juárez #Gentrificación</div>
+                    </article>
+
+                    <article class="testimonial-card">
+                        <div class="testimonial-card__header">
+                            <div class="testimonial-card__avatar" style="background: #f4a261">SK</div>
+                            <div>
+                                <strong>Sarah K.</strong>
+                                <span>East Vancouver, BC</span>
+                            </div>
+                        </div>
+                        <p>"Las grúas empezaron en enero. Para julio ya no quedaba ningún vecino de toda la vida. Ahora
+                            todos son nuevos y nadie sabe el nombre del de al lado."</p>
+                        <div class="testimonial-card__tag">#Vancouver #ComunidadPerdida</div>
+                    </article>
+
+                    <article class="testimonial-card">
+                        <div class="testimonial-card__header">
+                            <div class="testimonial-card__avatar" style="background: #6c5ce7">JL</div>
+                            <div>
+                                <strong>José L.</strong>
+                                <span>South Central, LA</span>
+                            </div>
+                        </div>
+                        <p>"Abrí mi negocio en 2010. En 2025 me triplicaron la renta del local. Tuve que cerrar. El
+                            barrio 'mejoró', dicen. ¿Para quién?"</p>
+                        <div class="testimonial-card__tag">#SouthCentral #NegociosCerrados</div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer__container">
+            <div class="footer__brand">
+                <span class="footer__logo">Fuera de Juego</span>
+                <p>Proyecto Transmedia — Copa del Mundo FIFA 2026</p>
+            </div>
+            <div class="footer__links">
+                <a href="index.html">Inicio</a>
+                <a href="historia.html">Historia</a>
+                <a href="personajes.html">Personajes</a>
+                <a href="mapa.html">Mapa</a>
+                <a href="comic.html">Cómic</a>
+                <a href="testimonios.html">Testimonios</a>
+            </div>
+            <div class="footer__contact">
+                <p>proyectofueradejuego@gmail.com</p>
+            </div>
+        </div>
+        <div class="footer__bottom">
+            <p>© 2026 Equipo Fuera de Juego</p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/@barba/core@2.9.7/dist/barba.umd.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/transitions.js"></script>
+</body>
+
+</html>
