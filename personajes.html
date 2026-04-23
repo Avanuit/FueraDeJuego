@@ -10,6 +10,161 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Space+Grotesk:wght@400;700&display=swap"
         rel="stylesheet" />
+    <style>
+        /* ── Tarjetas de personaje rediseñadas ── */
+        .characters-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-md);
+            margin-top: var(--space-lg);
+        }
+
+        .char-card {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: transform var(--transition-base), border-color var(--transition-base), box-shadow var(--transition-base);
+        }
+
+        .char-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--color-border-2);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+        }
+
+        .char-card__img {
+            width: 100%;
+            aspect-ratio: 3/4;
+            object-fit: cover;
+            object-position: top center;
+            display: block;
+            filter: brightness(0.9) contrast(1.05);
+            transition: filter var(--transition-slow);
+        }
+
+        .char-card:hover .char-card__img {
+            filter: brightness(1) contrast(1.05);
+        }
+
+        .char-card__body {
+            padding: var(--space-md);
+            position: relative;
+        }
+
+        /* Acento de color lateral según personaje */
+        .char-card--lucia  .char-card__body { border-top: 3px solid var(--color-red); }
+        .char-card--marcus .char-card__body { border-top: 3px solid var(--color-gold); }
+        .char-card--aiyana .char-card__body { border-top: 3px solid var(--color-teal); }
+
+        .char-card__flag {
+            font-size: 1.2rem;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .char-card__name {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            margin-bottom: 2px;
+            line-height: 1.1;
+        }
+
+        .char-card--lucia  .char-card__name { color: var(--color-red); }
+        .char-card--marcus .char-card__name { color: var(--color-gold); }
+        .char-card--aiyana .char-card__name { color: var(--color-teal); }
+
+        .char-card__age {
+            font-size: 0.82rem;
+            color: var(--color-text-muted);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: var(--space-sm);
+            display: block;
+        }
+
+        .char-card__lema {
+            font-size: 0.95rem;
+            font-style: italic;
+            color: var(--color-text-muted);
+            border-left: 2px solid var(--color-border-2);
+            padding-left: var(--space-sm);
+            margin-bottom: var(--space-sm);
+            line-height: 1.5;
+        }
+
+        .char-card__represents {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            padding: 4px 10px;
+            border-radius: 100px;
+            margin-bottom: var(--space-sm);
+        }
+
+        .char-card--lucia  .char-card__represents { background: rgba(230,57,70,0.12);  color: var(--color-red);  border: 1px solid rgba(230,57,70,0.25);  }
+        .char-card--marcus .char-card__represents { background: rgba(244,162,97,0.12); color: var(--color-gold); border: 1px solid rgba(244,162,97,0.25); }
+        .char-card--aiyana .char-card__represents { background: rgba(42,157,143,0.12); color: var(--color-teal); border: 1px solid rgba(42,157,143,0.25); }
+
+        .char-card__backstory {
+            font-size: 0.88rem;
+            color: var(--color-text-muted);
+            line-height: 1.7;
+        }
+
+        .char-card__appearance {
+            margin-top: var(--space-sm);
+            padding-top: var(--space-sm);
+            border-top: 1px solid var(--color-border);
+            font-size: 0.82rem;
+            color: var(--color-text-dim);
+            line-height: 1.6;
+        }
+
+        .char-card__appearance strong {
+            color: var(--color-text-muted);
+            font-weight: 600;
+        }
+
+        /* Sección conexión */
+        .connection-section { padding: var(--space-lg) 0; }
+
+        .connection-box {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .connection-box h3 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 900;
+            margin-bottom: var(--space-sm);
+        }
+
+        .connection-box p {
+            color: var(--color-text-muted);
+            margin-bottom: var(--space-md);
+            line-height: 1.7;
+        }
+
+        @media (max-width: 900px) {
+            .characters-grid { grid-template-columns: 1fr; max-width: 480px; margin-left: auto; margin-right: auto; }
+        }
+        @media (max-width: 600px) {
+            .characters-grid { max-width: 100%; }
+        }
+    </style>
 </head>
 
 <body data-barba="wrapper">
@@ -19,11 +174,11 @@
             <span class="nav__logo-text">FUERA<em>DE</em>JUEGO</span>
         </a>
         <ul class="nav__links">
-            <li><a href="index.html" class="nav__link">Inicio</a></li>
-            <li><a href="historia.html" class="nav__link">Historia</a></li>
-            <li><a href="personajes.html" class="nav__link active">Personajes</a></li>
-            <li><a href="mapa.html" class="nav__link">Mapa</a></li>
-            <li><a href="comic.html" class="nav__link">Cómic</a></li>
+            <li><a href="index.html"       class="nav__link">Inicio</a></li>
+            <li><a href="historia.html"    class="nav__link">Historia</a></li>
+            <li><a href="personajes.html"  class="nav__link active">Personajes</a></li>
+            <li><a href="mapa.html"        class="nav__link">Mapa</a></li>
+            <li><a href="comic.html"       class="nav__link">Cómic</a></li>
             <li><a href="testimonios.html" class="nav__link">Testimonios</a></li>
         </ul>
         <button class="nav__toggle" id="navToggle" aria-label="Menú">
@@ -41,188 +196,70 @@
             </div>
         </section>
 
-        <!-- CHARACTER: LUCÍA -->
-        <section class="character-section" id="lucia">
+        <section class="content-section">
             <div class="content-container">
-                <div class="character">
-                    <div class="character__visual">
-                        <div class="character__portrait character__portrait--lucia">
-                            <img src="img/Lucia.png"
-                                alt="Lucía Hernández, adolescente de Ciudad Juárez" loading="lazy" />
-                            <div class="character__city-tag">🇲🇽 Cd. Juárez</div>
-                        </div>
-                        <div class="character__represents">
-                            <span>Representa:</span>
-                            <strong>La gentrificación silenciosa</strong>
-                        </div>
-                    </div>
-                    <div class="character__info">
-                        <div class="character__header">
-                            <h2 class="character__name">Lucía Hernández</h2>
-                            <span class="character__age">21 años · Anapra, Ciudad Juárez</span>
-                        </div>
-                        <blockquote class="character__lema">
-                            "Si no lo dibujo, desaparece."
-                        </blockquote>
-                        <div class="character__details">
-                            <div class="detail-row">
-                                <span class="detail-label">Apariencia</span>
-                                <p>Trenzas negras, ojos grandes, sudadera holgada, mochila de cuadernos.</p>
-                            </div>
-                            <div class="detail-row">
-                                <span class="detail-label">Psicología</span>
-                                <p>Observadora, rabia contenida, sueña con ser historietista. Registra con dibujos todo
-                                    lo que desaparece a su alrededor.</p>
-                            </div>
-                            <div class="detail-row">
-                                <span class="detail-label">Su conflicto</span>
-                                <p>Su barrio en Anapra está siendo devorado por la especulación inmobiliaria. Los
-                                    precios de renta se triplicaron desde que se anunció el Mundial. Su familia recibió
-                                    un aviso de desalojo.</p>
-                            </div>
-                        </div>
-                        <div class="character__stats">
-                            <div class="char-stat">
-                                <span class="char-stat__label">Aumento de renta</span>
-                                <div class="char-stat__bar">
-                                    <div class="char-stat__fill" style="--fill: 85%"></div>
-                                </div>
-                                <span class="char-stat__val">+240%</span>
-                            </div>
-                            <div class="char-stat">
-                                <span class="char-stat__label">Familias desplazadas en su calle</span>
-                                <div class="char-stat__bar">
-                                    <div class="char-stat__fill" style="--fill: 60%"></div>
-                                </div>
-                                <span class="char-stat__val">12/20</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+                <div class="characters-grid">
 
-        <div class="section-divider"></div>
+                    <!-- LUCÍA -->
+                    <div class="char-card char-card--lucia">
+                        <img class="char-card__img" src="img/Lucia.png" alt="Lucía Hernández" loading="lazy" />
+                        <div class="char-card__body">
+                            <span class="char-card__flag">🇲🇽</span>
+                            <h2 class="char-card__name">Lucía Hernández</h2>
+                            <span class="char-card__age">19 años · Anapra, Ciudad Juárez</span>
+                            <span class="char-card__represents">Gentrificación silenciosa</span>
+                            <blockquote class="char-card__lema">"Si no lo dibujo, desaparece."</blockquote>
+                            <p class="char-card__backstory">
+                                Lucía creció entre las calles de tierra de Anapra, donde aprendió a dibujar en los márgenes de los cuadernos de la escuela. 
+                                Desde que anunciaron el Mundial, su barrio cambió: primero los precios, luego los vecinos. 
+                                Hoy lleva un registro visual de todo lo que desaparece — su forma de resistir.
+                            </p>
+                            <p class="char-card__appearance">
+                                <strong>Apariencia:</strong> Trenzas negras, hoodie verde holgado. Siempre con una mochila llena de cuadernos de bocetos.
+                            </p>
+                        </div>
+                    </div>
 
-        <!-- CHARACTER: MARCUS -->
-        <section class="character-section" id="marcus">
-            <div class="content-container">
-                <div class="character character--reverse">
-                    <div class="character__visual">
-                        <div class="character__portrait character__portrait--marcus">
-                            <img src="img/Marcus.png"
-                                alt="Marcus Washington, Inglewood" loading="lazy" />
-                            <div class="character__city-tag">🇺🇸 Inglewood</div>
-                        </div>
-                        <div class="character__represents">
-                            <span>Representa:</span>
-                            <strong>La exclusión sistémica</strong>
-                        </div>
-                    </div>
-                    <div class="character__info">
-                        <div class="character__header">
-                            <h2 class="character__name">Marcus Washington</h2>
-                            <span class="character__age">23 años · Inglewood, Los Ángeles</span>
-                        </div>
-                        <blockquote class="character__lema">
-                            "¿Para qué ganar si la cancha está cambiada?"
-                        </blockquote>
-                        <div class="character__details">
-                            <div class="detail-row">
-                                <span class="detail-label">Apariencia</span>
-                                <p>Alto, rizos afro, manos de portero, gorra de los Galaxy.</p>
-                            </div>
-                            <div class="detail-row">
-                                <span class="detail-label">Psicología</span>
-                                <p>Extrovertido, usa el humor para no hundirse, leal a sus amigos hasta el extremo.
-                                    Sueña con ser portero profesional.</p>
-                            </div>
-                            <div class="detail-row">
-                                <span class="detail-label">Su conflicto</span>
-                                <p>A unas cuadras del SoFi Stadium, la comunidad afroamericana de Inglewood ha sido
-                                    borrada. Donde su familia lavaba ropa, ahora hay condominios de $3.000/mes.</p>
-                            </div>
-                        </div>
-                        <div class="character__stats">
-                            <div class="char-stat">
-                                <span class="char-stat__label">Negocios afroamericanos cerrados</span>
-                                <div class="char-stat__bar">
-                                    <div class="char-stat__fill char-stat__fill--gold" style="--fill: 75%"></div>
-                                </div>
-                                <span class="char-stat__val">-68%</span>
-                            </div>
-                            <div class="char-stat">
-                                <span class="char-stat__label">Precio promedio renta (2019→2026)</span>
-                                <div class="char-stat__bar">
-                                    <div class="char-stat__fill char-stat__fill--gold" style="--fill: 90%"></div>
-                                </div>
-                                <span class="char-stat__val">$900→$2.800</span>
-                            </div>
+                    <!-- MARCUS -->
+                    <div class="char-card char-card--marcus">
+                        <img class="char-card__img" src="img/Marcus.png" alt="Marcus Washington" loading="lazy" />
+                        <div class="char-card__body">
+                            <span class="char-card__flag">🇺🇸</span>
+                            <h2 class="char-card__name">Marcus Washington</h2>
+                            <span class="char-card__age">17 años · Inglewood, Los Ángeles</span>
+                            <span class="char-card__represents">Exclusión sistémica</span>
+                            <blockquote class="char-card__lema">"¿Para qué ganar si la cancha está cambiada?"</blockquote>
+                            <p class="char-card__backstory">
+                                Marcus soñaba con jugar en el SoFi Stadium. Creció a tres cuadras de él, en una comunidad que construyó ese barrio con décadas de trabajo. 
+                                Cuando empezaron las obras del Mundial, su familia recibió una notificación de desalojo. 
+                                Ahora usa el fútbol para procesar una rabia que no sabe cómo nombrar.
+                            </p>
+                            <p class="char-card__appearance">
+                                <strong>Apariencia:</strong> Hoodie rojo, contextura atlética. Rara vez se lo quita — es su escudo y su identidad.
+                            </p>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
 
-        <div class="section-divider"></div>
+                    <!-- AIYANA -->
+                    <div class="char-card char-card--aiyana">
+                        <img class="char-card__img" src="img/Aiyana.png" alt="Aiyana Thunderbird" loading="lazy" />
+                        <div class="char-card__body">
+                            <span class="char-card__flag">🇨🇦</span>
+                            <h2 class="char-card__name">Aiyana Thunderbird</h2>
+                            <span class="char-card__age">20 años · Nación Squamish, Vancouver</span>
+                            <span class="char-card__represents">Lucha indígena por el territorio</span>
+                            <blockquote class="char-card__lema">"La tierra no se vende, se cuida."</blockquote>
+                            <p class="char-card__backstory">
+                                Aiyana heredó de su abuela el don de la memoria oral: canciones, mapas de palabras, nombres de lugares que ningún GPS conoce. 
+                                Cuando las excavadoras llegaron al territorio Squamish para construir infraestructura del Mundial, 
+                                comenzó a grabar todo en su teléfono. Su archivo digital es el último refugio de una historia que el concreto quiere borrar.
+                            </p>
+                            <p class="char-card__appearance">
+                                <strong>Apariencia:</strong> Pelo largo y negro liso, hoodie verde con parches. Siempre con los audífonos al cuello.
+                            </p>
+                        </div>
+                    </div>
 
-        <!-- CHARACTER: AIYANA -->
-        <section class="character-section" id="aiyana">
-            <div class="content-container">
-                <div class="character">
-                    <div class="character__visual">
-                        <div class="character__portrait character__portrait--aiyana">
-                            <img src="img/Aiyana.png"
-                                alt="Aiyana Thunderbird, Nación Squamish" loading="lazy" />
-                            <div class="character__city-tag">🇨🇦 Vancouver</div>
-                        </div>
-                        <div class="character__represents">
-                            <span>Representa:</span>
-                            <strong>La lucha indígena por el territorio</strong>
-                        </div>
-                    </div>
-                    <div class="character__info">
-                        <div class="character__header">
-                            <h2 class="character__name">Aiyana Thunderbird</h2>
-                            <span class="character__age">22 años · Nación Squamish, Vancouver</span>
-                        </div>
-                        <blockquote class="character__lema">
-                            "La tierra no se vende, se cuida."
-                        </blockquote>
-                        <div class="character__details">
-                            <div class="detail-row">
-                                <span class="detail-label">Apariencia</span>
-                                <p>Pelo largo, aretes de pluma, chamarra con parches indígenas.</p>
-                            </div>
-                            <div class="detail-row">
-                                <span class="detail-label">Psicología</span>
-                                <p>Poética, heredera de la memoria oral, sin miedo a las excavadoras. Graba en su
-                                    teléfono los cantos de su abuela.</p>
-                            </div>
-                            <div class="detail-row">
-                                <span class="detail-label">Su conflicto</span>
-                                <p>Las excavadoras avanzan sobre territorio ancestral Squamish para construir
-                                    infraestructura del Mundial. Su abuela, guardiana de la memoria oral, ve cómo su voz
-                                    queda sepultada bajo el concreto.</p>
-                            </div>
-                        </div>
-                        <div class="character__stats">
-                            <div class="char-stat">
-                                <span class="char-stat__label">Territorio ancestral afectado</span>
-                                <div class="char-stat__bar">
-                                    <div class="char-stat__fill char-stat__fill--teal" style="--fill: 70%"></div>
-                                </div>
-                                <span class="char-stat__val">34 ha</span>
-                            </div>
-                            <div class="char-stat">
-                                <span class="char-stat__label">Familias reubicadas</span>
-                                <div class="char-stat__bar">
-                                    <div class="char-stat__fill char-stat__fill--teal" style="--fill: 55%"></div>
-                                </div>
-                                <span class="char-stat__val">89 fam.</span>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </section>
@@ -233,8 +270,7 @@
                 <div class="connection-box">
                     <h3>Lo que los une</h3>
                     <p>No se conocen. Viven en países distintos, hablan idiomas distintos, tienen historias distintas.
-                        Pero un hashtag —<strong>#FueraDeJuego</strong>— los une. Y ahora tú también eres parte de esta
-                        red.</p>
+                        Pero un hashtag — <strong>#FueraDeJuego</strong> — los une. Y ahora tú también eres parte de esta red.</p>
                     <a href="testimonios.html" class="btn btn--primary">Únete a la historia</a>
                 </div>
             </div>
@@ -270,5 +306,4 @@
     <script src="js/main.js"></script>
     <script src="js/transitions.js"></script>
 </body>
-
 </html>

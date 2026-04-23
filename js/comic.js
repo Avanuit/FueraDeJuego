@@ -1,143 +1,192 @@
 /**
  * comic.js
- * Lector de cómic con animación de volteo de página.
- * Implementación propia en CSS 3D + JS — sin dependencias externas.
- * Compatible con Barba.js: expone ComicReader.init() globalmente.
+ * Lector de cómic — animación de volteo tipo libro real.
+ * Al avanzar: la página derecha gira hacia la izquierda (como pasar hoja).
+ * Al retroceder: la página izquierda gira hacia la derecha.
+ * Sin librerías externas. Compatible con Barba.js.
  */
 
 'use strict';
 
 const ComicReader = (() => {
 
-    const TOTAL_PAGES   = 6;
-    const FLIP_DURATION = 700; // ms
+    const TOTAL_PAGES   = 13;   // Total de páginas del cómic
+    const FLIP_MS       = 650;  // Duración animación ms
 
-    let currentPage = 0;
+    let spread      = 0;    // Índice del par visible (0 = págs 0-1, 1 = págs 2-3, ...)
     let isFlipping  = false;
     let isMobile    = false;
-    let initialized = false;
+    let _keyHandler = null;
 
     const $ = (id) => document.getElementById(id);
-
     const checkMobile = () => { isMobile = window.innerWidth < 700; };
 
-    // ── Renderizar páginas visibles ───────────────────────────────
-    const renderPages = () => {
+    // Número de spreads (pares) en desktop
+    const totalSpreads = () => Math.ceil(TOTAL_PAGES / 2);   // 6 spreads para 12 págs
+
+    // Índice de página izquierda del spread actual
+    const leftIdx  = () => spread * 2;
+    const rightIdx = () => spread * 2 + 1;
+
+    // ── Renderizar el spread actual (sin animación) ───────────────
+    const renderSpread = () => {
         const viewer = $('comicViewer');
         if (!viewer) return;
         const pages = [...viewer.querySelectorAll('.comic-page')];
 
-        pages.forEach(p => {
-            p.style.display = 'none';
-            p.className = 'comic-page';
-        });
+        // Ocultar todas
+        pages.forEach(p => { p.style.display = 'none'; p.className = 'comic-page'; });
 
         if (isMobile) {
-            const cur = pages[currentPage];
-            if (cur) { cur.style.display = 'flex'; cur.classList.add('visible'); }
+            // Móvil: una sola página = leftIdx del spread
+            const p = pages[leftIdx()];
+            if (p) { p.style.display = 'flex'; p.classList.add('page-left'); }
         } else {
-            const left  = pages[currentPage];
-            const right = pages[currentPage + 1];
-            if (left)  { left.style.display  = 'flex'; left.classList.add('visible'); }
-            if (right) { right.style.display = 'flex'; right.classList.add('visible-right'); }
+            // Desktop: par izquierda + derecha
+            const pL = pages[leftIdx()];
+            const pR = pages[rightIdx()];
+            if (pL) { pL.style.display = 'flex'; pL.classList.add('page-left'); }
+            if (pR) { pR.style.display = 'flex'; pR.classList.add('page-right'); }
         }
     };
 
-    // ── Avanzar página ────────────────────────────────────────────
+    // ── Animación avanzar: la hoja derecha se voltea hacia la izq ─
     const flipForward = () => {
         if (isFlipping) return;
-        const step    = isMobile ? 1 : 2;
-        const maxPage = TOTAL_PAGES - step;
-        if (currentPage >= maxPage) return;
+        const maxSpread = isMobile ? TOTAL_PAGES - 1 : totalSpreads() - 1;
+        if (spread >= maxSpread) return;
 
         isFlipping = true;
         const viewer = $('comicViewer');
         if (!viewer) { isFlipping = false; return; }
         const pages = [...viewer.querySelectorAll('.comic-page')];
 
-        const outL = pages[currentPage];
-        const outR = !isMobile ? pages[currentPage + 1] : null;
-        const inL  = pages[currentPage + step];
-        const inR  = !isMobile ? pages[currentPage + step + 1] : null;
+        if (isMobile) {
+            // Móvil: página actual sale por izquierda, siguiente entra por derecha
+            const curP  = pages[spread];
+            const nextP = pages[spread + 1];
 
-        pages.forEach(p => { p.style.display = 'none'; p.className = 'comic-page'; });
+            pages.forEach(p => { p.style.display = 'none'; p.className = 'comic-page'; });
 
-        if (outL) { outL.style.display = 'flex'; outL.classList.add('flip-out-left'); }
-        if (outR) { outR.style.display = 'flex'; outR.classList.add('flip-out-right'); }
-        if (inL)  { inL.style.display  = 'flex'; inL.classList.add('flip-in-right-prep'); }
-        if (inR)  { inR.style.display  = 'flex'; inR.classList.add('flip-in-left-prep'); }
+            if (curP)  { curP.style.display  = 'flex'; curP.classList.add('anim-slide-out-left'); }
+            if (nextP) { nextP.style.display = 'flex'; nextP.classList.add('anim-slide-in-right'); }
 
-        requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-                if (inL) { inL.classList.remove('flip-in-right-prep'); inL.classList.add('flip-in-right'); }
-                if (inR) { inR.classList.remove('flip-in-left-prep');  inR.classList.add('flip-in-left'); }
-            });
-        });
+            setTimeout(() => {
+                spread++;
+                isFlipping = false;
+                renderSpread();
+                updateUI();
+            }, FLIP_MS);
 
-        setTimeout(() => {
-            currentPage += step;
-            isFlipping = false;
-            renderPages();
-            updateUI();
-        }, FLIP_DURATION);
+        } else {
+            // Desktop: la hoja derecha del spread actual gira hacia la izquierda,
+            // revelando las dos páginas del siguiente spread.
+            const curL  = pages[leftIdx()];
+            const curR  = pages[rightIdx()];   // esta es la que "voltea"
+            const nxtL  = pages[leftIdx() + 2];
+            const nxtR  = pages[rightIdx() + 2];
+
+            pages.forEach(p => { p.style.display = 'none'; p.className = 'comic-page'; });
+
+            // Mostrar spread actual
+            if (curL) { curL.style.display = 'flex'; curL.classList.add('page-left'); }
+            if (curR) { curR.style.display = 'flex'; curR.classList.add('page-right'); }
+
+            // Pre-mostrar siguiente spread detrás (invisible por el z-index)
+            if (nxtL) { nxtL.style.display = 'flex'; nxtL.classList.add('page-left', 'behind'); }
+            if (nxtR) { nxtR.style.display = 'flex'; nxtR.classList.add('page-right', 'behind'); }
+
+            // Dar un frame para que el navegador pinte el estado inicial
+            requestAnimationFrame(() => requestAnimationFrame(() => {
+                // La hoja derecha gira hacia la izquierda (flip de libro)
+                if (curR) curR.classList.add('flip-to-left');
+                // La izquierda actual se desvanece suavemente
+                if (curL) curL.classList.add('fade-out');
+            }));
+
+            setTimeout(() => {
+                spread++;
+                isFlipping = false;
+                renderSpread();
+                updateUI();
+            }, FLIP_MS);
+        }
     };
 
-    // ── Retroceder página ─────────────────────────────────────────
+    // ── Animación retroceder: la hoja izquierda se voltea a la der ─
     const flipBackward = () => {
-        if (isFlipping || currentPage <= 0) return;
+        if (isFlipping) return;
+        if (spread <= 0) return;
 
         isFlipping = true;
-        const step  = isMobile ? 1 : 2;
-        const prev  = currentPage - step;
         const viewer = $('comicViewer');
         if (!viewer) { isFlipping = false; return; }
         const pages = [...viewer.querySelectorAll('.comic-page')];
 
-        const outL = pages[currentPage];
-        const outR = !isMobile ? pages[currentPage + 1] : null;
-        const inL  = pages[prev];
-        const inR  = !isMobile ? pages[prev + 1] : null;
+        if (isMobile) {
+            const curP  = pages[spread];
+            const prevP = pages[spread - 1];
 
-        pages.forEach(p => { p.style.display = 'none'; p.className = 'comic-page'; });
+            pages.forEach(p => { p.style.display = 'none'; p.className = 'comic-page'; });
 
-        if (outL) { outL.style.display = 'flex'; outL.classList.add('flip-back-out-left'); }
-        if (outR) { outR.style.display = 'flex'; outR.classList.add('flip-back-out-right'); }
-        if (inL)  { inL.style.display  = 'flex'; inL.classList.add('flip-back-in-left-prep'); }
-        if (inR)  { inR.style.display  = 'flex'; inR.classList.add('flip-back-in-right-prep'); }
+            if (curP)  { curP.style.display  = 'flex'; curP.classList.add('anim-slide-out-right'); }
+            if (prevP) { prevP.style.display = 'flex'; prevP.classList.add('anim-slide-in-left'); }
 
-        requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-                if (inL) { inL.classList.remove('flip-back-in-left-prep');  inL.classList.add('flip-back-in-left'); }
-                if (inR) { inR.classList.remove('flip-back-in-right-prep'); inR.classList.add('flip-back-in-right'); }
-            });
-        });
+            setTimeout(() => {
+                spread--;
+                isFlipping = false;
+                renderSpread();
+                updateUI();
+            }, FLIP_MS);
 
-        setTimeout(() => {
-            currentPage = prev;
-            isFlipping = false;
-            renderPages();
-            updateUI();
-        }, FLIP_DURATION);
+        } else {
+            const curL  = pages[leftIdx()];
+            const curR  = rightIdx() < TOTAL_PAGES ? pages[rightIdx()] : null;
+            const prevL = pages[leftIdx() - 2];
+            const prevR = pages[rightIdx() - 2];
+
+            pages.forEach(p => { p.style.display = 'none'; p.className = 'comic-page'; });
+
+            if (curL) { curL.style.display = 'flex'; curL.classList.add('page-left'); }
+            if (curR) { curR.style.display = 'flex'; curR.classList.add('page-right'); }
+
+            if (prevL) { prevL.style.display = 'flex'; prevL.classList.add('page-left', 'behind'); }
+            if (prevR) { prevR.style.display = 'flex'; prevR.classList.add('page-right', 'behind'); }
+
+            requestAnimationFrame(() => requestAnimationFrame(() => {
+                // La hoja izquierda gira hacia la derecha
+                if (curL) curL.classList.add('flip-to-right');
+                if (curR) curR.classList.add('fade-out');
+            }));
+
+            setTimeout(() => {
+                spread--;
+                isFlipping = false;
+                renderSpread();
+                updateUI();
+            }, FLIP_MS);
+        }
     };
 
-    // ── Actualizar UI ─────────────────────────────────────────────
+    // ── Actualizar indicador, botones y miniaturas ────────────────
     const updateUI = () => {
+        const dispPage = isMobile ? spread + 1 : spread * 2 + 1;
         const indicator = $('pageIndicator');
         if (indicator) {
-            indicator.innerHTML = `Pág. <span>${currentPage + 1}</span> / ${TOTAL_PAGES}`;
+            indicator.innerHTML = `Pág. <span>${dispPage}</span> / ${TOTAL_PAGES}`;
         }
 
-        const step    = isMobile ? 1 : 2;
-        const maxPage = TOTAL_PAGES - step;
+        const maxSpread = isMobile ? TOTAL_PAGES - 1 : totalSpreads() - 1;
         const btnPrev = $('btnPrev');
         const btnNext = $('btnNext');
-        if (btnPrev) btnPrev.disabled = currentPage <= 0;
-        if (btnNext) btnNext.disabled = currentPage >= maxPage;
+        if (btnPrev) btnPrev.disabled = spread <= 0;
+        if (btnNext) btnNext.disabled = spread >= maxSpread;
 
+        // Miniaturas
         document.querySelectorAll('.comic-thumb').forEach((th, idx) => {
             const active = isMobile
-                ? idx === currentPage
-                : (idx === currentPage || idx === currentPage + 1);
+                ? idx === spread
+                : (idx === leftIdx() || idx === rightIdx());
             th.classList.toggle('active', active);
         });
     };
@@ -161,20 +210,19 @@ const ComicReader = (() => {
             img.draggable = false;
             btn.appendChild(img);
 
-            const targetIdx = i;
+            const targetPage = i;
             btn.addEventListener('click', () => {
                 if (isFlipping) return;
-                const step   = isMobile ? 1 : 2;
-                const target = isMobile ? targetIdx : (targetIdx % 2 === 0 ? targetIdx : targetIdx - 1);
-                if (target === currentPage) return;
+                const targetSpread = isMobile ? targetPage : Math.floor(targetPage / 2);
+                if (targetSpread === spread) return;
 
-                const direction = target > currentPage ? 'fwd' : 'bwd';
+                const dir = targetSpread > spread ? 'fwd' : 'bwd';
                 const doFlip = () => {
-                    if (isFlipping) { setTimeout(doFlip, FLIP_DURATION + 60); return; }
-                    if (direction === 'fwd' && currentPage < target) {
-                        flipForward(); hideHint(); setTimeout(doFlip, FLIP_DURATION + 60);
-                    } else if (direction === 'bwd' && currentPage > target) {
-                        flipBackward(); hideHint(); setTimeout(doFlip, FLIP_DURATION + 60);
+                    if (isFlipping) { setTimeout(doFlip, FLIP_MS + 60); return; }
+                    if (dir === 'fwd' && spread < targetSpread) {
+                        flipForward(); setTimeout(doFlip, FLIP_MS + 60);
+                    } else if (dir === 'bwd' && spread > targetSpread) {
+                        flipBackward(); setTimeout(doFlip, FLIP_MS + 60);
                     }
                 };
                 doFlip();
@@ -194,25 +242,20 @@ const ComicReader = (() => {
         }
     };
 
-    // ── Keydown handler con referencia para poder removerlo ───────
-    let _keyHandler = null;
-
     // ── Inicializar ───────────────────────────────────────────────
     const init = () => {
         const viewer = $('comicViewer');
-        if (!viewer) return; // No estamos en comic.html
+        if (!viewer) return;
 
-        // Reset de estado al reiniciar (Barba)
-        currentPage = 0;
-        isFlipping  = false;
-        initialized = true;
-
+        // Reset
+        spread     = 0;
+        isFlipping = false;
         checkMobile();
-        renderPages();
+        renderSpread();
         buildThumbnails();
         updateUI();
 
-        // ── Botones (clonar para limpiar listeners previos) ──
+        // Botones — clonar para limpiar listeners anteriores
         ['btnPrev', 'btnNext'].forEach(id => {
             const el = $(id);
             if (!el) return;
@@ -222,36 +265,30 @@ const ComicReader = (() => {
         $('btnPrev')?.addEventListener('click', () => { flipBackward(); hideHint(); });
         $('btnNext')?.addEventListener('click', () => { flipForward();  hideHint(); });
 
-        // ── Teclado ──
+        // Teclado
         if (_keyHandler) document.removeEventListener('keydown', _keyHandler);
         _keyHandler = (e) => {
-            if (!$('comicViewer')) {
-                document.removeEventListener('keydown', _keyHandler);
-                _keyHandler = null;
-                return;
-            }
+            if (!$('comicViewer')) { document.removeEventListener('keydown', _keyHandler); _keyHandler = null; return; }
             if (e.key === 'ArrowRight') { e.preventDefault(); flipForward();  hideHint(); }
             if (e.key === 'ArrowLeft')  { e.preventDefault(); flipBackward(); hideHint(); }
         };
         document.addEventListener('keydown', _keyHandler);
 
-        // ── Swipe táctil ──
-        viewer.addEventListener('touchstart', (e) => {
-            viewer._touchX = e.touches[0].clientX;
-        }, { passive: true });
-        viewer.addEventListener('touchend', (e) => {
-            const dx = e.changedTouches[0].clientX - (viewer._touchX || 0);
+        // Swipe táctil
+        viewer.addEventListener('touchstart', (e) => { viewer._tx = e.touches[0].clientX; }, { passive: true });
+        viewer.addEventListener('touchend',   (e) => {
+            const dx = e.changedTouches[0].clientX - (viewer._tx || 0);
             if (Math.abs(dx) < 40) return;
             dx < 0 ? flipForward() : flipBackward();
             hideHint();
         }, { passive: true });
 
-        // ── Fullscreen ──
+        // Fullscreen
         const btnFs = $('btnFullscreen');
         if (btnFs) {
-            const newFs = btnFs.cloneNode(true);
-            btnFs.parentNode.replaceChild(newFs, btnFs);
-            newFs.addEventListener('click', () => {
+            const clone = btnFs.cloneNode(true);
+            btnFs.parentNode.replaceChild(clone, btnFs);
+            clone.addEventListener('click', () => {
                 const stage = document.querySelector('.comic-stage');
                 !document.fullscreenElement
                     ? stage?.requestFullscreen().catch(() => {})
@@ -259,16 +296,19 @@ const ComicReader = (() => {
             });
         }
 
-        // ── Resize ──
-        let _resizeTimer;
+        // Resize
+        let _rt;
         window.addEventListener('resize', () => {
-            clearTimeout(_resizeTimer);
-            _resizeTimer = setTimeout(() => {
+            clearTimeout(_rt);
+            _rt = setTimeout(() => {
                 const wasMobile = isMobile;
                 checkMobile();
                 if (wasMobile !== isMobile) {
-                    if (!isMobile && currentPage % 2 !== 0) currentPage--;
-                    renderPages();
+                    // Recalcular spread para mantener posición aproximada
+                    if (!isMobile) spread = Math.floor(spread / 2);
+                    else           spread = spread * 2;
+                    spread = Math.max(0, spread);
+                    renderSpread();
                     updateUI();
                 }
             }, 200);
@@ -278,8 +318,4 @@ const ComicReader = (() => {
     return { init };
 })();
 
-// ─── BOOTSTRAP ────────────────────────────────────────────────────────
-// Carga directa de la página (sin Barba)
-document.addEventListener('DOMContentLoaded', () => {
-    ComicReader.init();
-});
+document.addEventListener('DOMContentLoaded', () => { ComicReader.init(); });
