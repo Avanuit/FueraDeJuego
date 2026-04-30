@@ -401,21 +401,38 @@ export const TestimonyForm = {
 };
 
 /* ============================================
+   PAGE-SPECIFIC MODULES (Dynamic Import)
+   ============================================ */
+async function initPageModules() {
+  if (document.getElementById('comicViewer')) {
+    try {
+      const { initComic } = await import('./comic.js');
+      initComic();
+    } catch (e) {
+      console.warn('Comic init failed:', e);
+    }
+  }
+  if (document.getElementById('leafletMap')) {
+    try {
+      const { initMap } = await import('./mapa.js');
+      initMap();
+    } catch (e) {
+      console.warn('Map init failed:', e);
+    }
+  }
+}
+
+/* ============================================
    PAGE REINIT
    ============================================ */
 export const PageReinit = {
-  run() {
+  async run() {
     Navigation.init();
     CounterAnimation.init();
     CharCounter.init();
     TestimonyForm.init();
     ScrollReveal.init();
-    if (typeof window.ComicReader !== 'undefined' && window.ComicReader.init) {
-      window.ComicReader.init();
-    }
-    if (typeof window.MapController !== 'undefined' && window.MapController.init) {
-      window.MapController.init();
-    }
+    await initPageModules();
     ScrollTrigger.refresh();
   },
 };
@@ -423,7 +440,7 @@ export const PageReinit = {
 /* ============================================
    BOOTSTRAP
    ============================================ */
-export function initApp() {
+export async function initApp() {
   injectComponents();
   initLenis();
   Navigation.init();
@@ -431,11 +448,12 @@ export function initApp() {
   ScrollReveal.init();
   CharCounter.init();
   TestimonyForm.init();
+  await initPageModules();
 }
 
 // Auto-init if loaded as module
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initApp);
+  document.addEventListener('DOMContentLoaded', () => initApp());
 } else {
   initApp();
 }

@@ -1,25 +1,36 @@
 /**
  * transitions.js
- * Barba.js + GSAP transiciones cinematograficas.
+ * Barba.js + GSAP — Cortina de teatro buttery.
  * ES Module.
  */
 
 import gsap from 'gsap';
 import barba from '@barba/core';
-import { PageReinit, initLenis, getLenis } from './app.js';
+import { PageReinit, getLenis } from './app.js';
 
 /* ============================================
-   OVERLAY SETUP
+   CORTINAS (Theatre Curtain)
    ============================================ */
-const TransitionOverlay = {
-  overlay: null,
-  get() {
-    if (!this.overlay) {
-      this.overlay = document.createElement('div');
-      this.overlay.className = 'barba-overlay';
-      document.body.appendChild(this.overlay);
+const Curtains = {
+  left: null,
+  right: null,
+
+  getLeft() {
+    if (!this.left) {
+      this.left = document.createElement('div');
+      this.left.className = 'curtain-panel curtain-panel--left';
+      document.body.appendChild(this.left);
     }
-    return this.overlay;
+    return this.left;
+  },
+
+  getRight() {
+    if (!this.right) {
+      this.right = document.createElement('div');
+      this.right.className = 'curtain-panel curtain-panel--right';
+      document.body.appendChild(this.right);
+    }
+    return this.right;
   },
 };
 
@@ -36,82 +47,80 @@ const NavUpdater = {
       comic: 'comic.html',
       testimonios: 'testimonios.html',
     };
-    const targetHref = map[namespace];
-    if (!targetHref) return;
+    const target = map[namespace];
+    if (!target) return;
 
     document.querySelectorAll('.nav__link').forEach((link) => {
-      link.classList.remove('active');
-      const href = link.getAttribute('href') || '';
-      if (href === targetHref) link.classList.add('active');
+      link.classList.toggle('active', link.getAttribute('href') === target);
     });
   },
 };
 
 /* ============================================
-   WIPE TRANSITION
+   THEATRE WIPE TRANSITION
    ============================================ */
-const wipeTransition = {
-  name: 'wipe-transition',
+const theatreWipe = {
+  name: 'theatre-wipe',
+
+  beforeLeave() {
+    document.body.classList.add('is-transitioning');
+    const lenis = getLenis();
+    if (lenis) lenis.stop();
+  },
 
   leave({ current }) {
     const done = this.async();
-    const overlay = TransitionOverlay.get();
-    const lenis = getLenis();
-    if (lenis) lenis.stop();
+    const left = Curtains.getLeft();
+    const right = Curtains.getRight();
 
-    const tl = gsap.timeline({
-      onComplete: done,
-    });
+    // Reset curtain positions (closed = 0, open = -100/+100)
+    gsap.set(left,  { xPercent: -100 });
+    gsap.set(right, { xPercent: 100 });
 
-    // Content fade out with stagger
-    tl.to(current.container.children, {
+    const tl = gsap.timeline({ onComplete: done });
+
+    // Content fades gently while curtains close
+    tl.to(current.container, {
       opacity: 0,
-      y: -20,
       duration: 0.35,
-      stagger: 0.03,
-      ease: 'power2.in',
-    });
+      ease: 'power2.inOut',
+    }, 0);
 
-    // Overlay wipe up
-    tl.fromTo(overlay,
-      { yPercent: 100 },
-      { yPercent: 0, duration: 0.5, ease: 'power4.inOut' },
-      '-=0.1'
-    );
+    // Curtains close simultaneously — buttery expo easing
+    tl.to(left,  { xPercent: 0, duration: 0.75, ease: 'expo.inOut' }, 0);
+    tl.to(right, { xPercent: 0, duration: 0.75, ease: 'expo.inOut' }, 0);
   },
 
   enter({ next }) {
     const done = this.async();
-    const overlay = TransitionOverlay.get();
     const lenis = getLenis();
+    const left = Curtains.getLeft();
+    const right = Curtains.getRight();
 
+    // Reset scroll instantly
     window.scrollTo({ top: 0, behavior: 'instant' });
 
-    gsap.set(next.container.children, { opacity: 0, y: 30 });
+    // New content is ready behind the curtains
+    gsap.set(next.container, { opacity: 1, y: 0 });
 
     const tl = gsap.timeline({
       onComplete: () => {
-        gsap.set(overlay, { yPercent: 100 });
+        // Park curtains off-screen for next time
+        gsap.set(left,  { xPercent: -100 });
+        gsap.set(right, { xPercent: 100 });
+        document.body.classList.remove('is-transitioning');
         if (lenis) lenis.start();
         done();
       },
     });
 
-    // Overlay exits up
-    tl.to(overlay, {
-      yPercent: -100,
-      duration: 0.5,
-      ease: 'power4.inOut',
-    });
+    // Dramatic beat: curtains stay closed for 90ms so the viewer
+    // perceives the "page has changed" before the reveal.
+    tl.to({}, { duration: 0.09 });
 
-    // New content staggers in
-    tl.to(next.container.children, {
-      opacity: 1,
-      y: 0,
-      duration: 0.6,
-      stagger: 0.05,
-      ease: 'power2.out',
-    }, '-=0.2');
+    // Curtains open simultaneously — reveal the new page
+    tl.to(left,  { xPercent: -100, duration: 0.75, ease: 'expo.inOut' }, 'open');
+    tl.to(right, { xPercent: 100,  duration: 0.75, ease: 'expo.inOut' }, 'open');
   },
 
   after({ next }) {
@@ -121,24 +130,24 @@ const wipeTransition = {
 };
 
 /* ============================================
-   BARBA CONTROLLER
+   BARBA INIT
    ============================================ */
 const BarbaController = {
   init() {
-    const overlay = TransitionOverlay.get();
-    gsap.set(overlay, { yPercent: 100 });
+    // Ensure curtains exist and are hidden
+    const left = Curtains.getLeft();
+    const right = Curtains.getRight();
+    gsap.set(left,  { xPercent: -100 });
+    gsap.set(right, { xPercent: 100 });
 
     barba.init({
       prevent: ({ el }) => el.classList?.contains('no-barba'),
       timeout: 10000,
-      transitions: [wipeTransition],
+      transitions: [theatreWipe],
     });
   },
 };
 
-/* ============================================
-   BOOTSTRAP
-   ============================================ */
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => BarbaController.init());
 } else {

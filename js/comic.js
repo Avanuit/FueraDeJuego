@@ -1,22 +1,21 @@
 /**
  * comic.js
  * Lector de comic con efecto de volteo tipo libro.
- * ES Module — expone ComicReader en window para reinit.
+ * ES Module — se importa dinamicamente desde app.js.
  */
 
 'use strict';
 
-const ComicReader = (() => {
-  const TOTAL_PAGES = 13;
-  const FLIP_MS = 650;
+const TOTAL_PAGES = 13;
+const FLIP_MS = 650;
 
-  let spread = 0;
-  let isFlipping = false;
-  let isMobile = false;
-  let _keyHandler = null;
+let spread = 0;
+let isFlipping = false;
+let isMobile = false;
+let _keyHandler = null;
 
-  const $ = (id) => document.getElementById(id);
-  const checkMobile = () => { isMobile = window.innerWidth < 700; };
+const $ = (id) => document.getElementById(id);
+const checkMobile = () => { isMobile = window.innerWidth < 700; };
 
   const totalSpreads = () => Math.ceil(TOTAL_PAGES / 2);
   const leftIdx = () => spread * 2;
@@ -211,82 +210,69 @@ const ComicReader = (() => {
     }
   };
 
-  const init = () => {
-    const viewer = $('comicViewer');
-    if (!viewer) return;
+export function initComic() {
+  const viewer = $('comicViewer');
+  if (!viewer) return;
 
-    spread = 0;
-    isFlipping = false;
-    checkMobile();
-    renderSpread();
-    buildThumbnails();
-    updateUI();
+  spread = 0;
+  isFlipping = false;
+  checkMobile();
+  renderSpread();
+  buildThumbnails();
+  updateUI();
 
-    ['btnPrev', 'btnNext'].forEach((id) => {
-      const el = $(id);
-      if (!el) return;
-      const clone = el.cloneNode(true);
-      el.parentNode.replaceChild(clone, el);
-    });
-    $('btnPrev')?.addEventListener('click', () => { flipBackward(); hideHint(); });
-    $('btnNext')?.addEventListener('click', () => { flipForward();  hideHint(); });
+  ['btnPrev', 'btnNext'].forEach((id) => {
+    const el = $(id);
+    if (!el) return;
+    const clone = el.cloneNode(true);
+    el.parentNode.replaceChild(clone, el);
+  });
+  $('btnPrev')?.addEventListener('click', () => { flipBackward(); hideHint(); });
+  $('btnNext')?.addEventListener('click', () => { flipForward();  hideHint(); });
 
-    if (_keyHandler) document.removeEventListener('keydown', _keyHandler);
-    _keyHandler = (e) => {
-      if (!$('comicViewer')) { document.removeEventListener('keydown', _keyHandler); _keyHandler = null; return; }
-      if (e.key === 'ArrowRight') { e.preventDefault(); flipForward();  hideHint(); }
-      if (e.key === 'ArrowLeft')  { e.preventDefault(); flipBackward(); hideHint(); }
-    };
-    document.addEventListener('keydown', _keyHandler);
-
-    viewer.addEventListener('touchstart', (e) => { viewer._tx = e.touches[0].clientX; }, { passive: true });
-    viewer.addEventListener('touchend', (e) => {
-      const dx = e.changedTouches[0].clientX - (viewer._tx || 0);
-      if (Math.abs(dx) < 40) return;
-      dx < 0 ? flipForward() : flipBackward();
-      hideHint();
-    }, { passive: true });
-
-    const btnFs = $('btnFullscreen');
-    if (btnFs) {
-      const clone = btnFs.cloneNode(true);
-      btnFs.parentNode.replaceChild(clone, btnFs);
-      clone.addEventListener('click', () => {
-        const stage = document.querySelector('.comic-stage');
-        if (!document.fullscreenElement) {
-          stage?.requestFullscreen().catch(() => {});
-        } else {
-          document.exitFullscreen();
-        }
-      });
-    }
-
-    let _rt;
-    window.addEventListener('resize', () => {
-      clearTimeout(_rt);
-      _rt = setTimeout(() => {
-        const wasMobile = isMobile;
-        checkMobile();
-        if (wasMobile !== isMobile) {
-          if (!isMobile) spread = Math.floor(spread / 2);
-          else spread = spread * 2;
-          spread = Math.max(0, spread);
-          renderSpread();
-          updateUI();
-        }
-      }, 200);
-    });
+  if (_keyHandler) document.removeEventListener('keydown', _keyHandler);
+  _keyHandler = (e) => {
+    if (!$('comicViewer')) { document.removeEventListener('keydown', _keyHandler); _keyHandler = null; return; }
+    if (e.key === 'ArrowRight') { e.preventDefault(); flipForward();  hideHint(); }
+    if (e.key === 'ArrowLeft')  { e.preventDefault(); flipBackward(); hideHint(); }
   };
+  document.addEventListener('keydown', _keyHandler);
 
-  return { init };
-})();
+  viewer.addEventListener('touchstart', (e) => { viewer._tx = e.touches[0].clientX; }, { passive: true });
+  viewer.addEventListener('touchend', (e) => {
+    const dx = e.changedTouches[0].clientX - (viewer._tx || 0);
+    if (Math.abs(dx) < 40) return;
+    dx < 0 ? flipForward() : flipBackward();
+    hideHint();
+  }, { passive: true });
 
-// Expose globally for PageReinit
-window.ComicReader = ComicReader;
+  const btnFs = $('btnFullscreen');
+  if (btnFs) {
+    const clone = btnFs.cloneNode(true);
+    btnFs.parentNode.replaceChild(clone, btnFs);
+    clone.addEventListener('click', () => {
+      const stage = document.querySelector('.comic-stage');
+      if (!document.fullscreenElement) {
+        stage?.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen();
+      }
+    });
+  }
 
-// Auto-init
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => ComicReader.init());
-} else {
-  ComicReader.init();
+  let _rt;
+  window.addEventListener('resize', () => {
+    clearTimeout(_rt);
+    _rt = setTimeout(() => {
+      const wasMobile = isMobile;
+      checkMobile();
+      if (wasMobile !== isMobile) {
+        if (!isMobile) spread = Math.floor(spread / 2);
+        else spread = spread * 2;
+        spread = Math.max(0, spread);
+        renderSpread();
+        updateUI();
+      }
+    }, 200);
+  });
 }
