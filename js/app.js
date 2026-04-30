@@ -41,20 +41,38 @@ export function getLenis() {
    COMPONENT INJECTION (Nav + Footer)
    ============================================ */
 const NAV_TEMPLATE = `
-  <a href="index.html" class="nav__logo">
-    <span class="nav__logo-text">FUERA<em>DE</em>JUEGO</span>
+  <div class="nav__start">
+    <button class="nav__toggle" id="navToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <a href="index.html" class="nav__logo" aria-label="Fuera de Juego">
+      <svg class="nav__logo-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="18" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M20 4L26 8V16L20 20L14 16V8L20 4Z" stroke="currentColor" stroke-width="1"/>
+        <path d="M14 16L10 22L14 28H26L30 22L26 16" stroke="currentColor" stroke-width="1"/>
+        <line x1="7" y1="33" x2="33" y2="7" stroke="#FF2A00" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="20" cy="20" r="2" fill="#FF2A00"/>
+      </svg>
+    </a>
+  </div>
+
+  <a href="index.html" class="nav__brand">
+    <span class="nav__brand-text">FUERA<em>DE</em>JUEGO</span>
   </a>
-  <ul class="nav__links">
-    <li><a href="index.html" class="nav__link" data-nav="home">Inicio</a></li>
-    <li><a href="historia.html" class="nav__link" data-nav="historia">Historia</a></li>
-    <li><a href="personajes.html" class="nav__link" data-nav="personajes">Personajes</a></li>
-    <li><a href="mapa.html" class="nav__link" data-nav="mapa">Mapa</a></li>
-    <li><a href="comic.html" class="nav__link" data-nav="comic">Comic</a></li>
-    <li><a href="testimonios.html" class="nav__link" data-nav="testimonios">Testimonios</a></li>
-  </ul>
-  <button class="nav__toggle" id="navToggle" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
+
+  <div class="nav__overlay" id="navOverlay">
+    <button class="nav__close" id="navClose" aria-label="Cerrar menu">
+      <span></span><span></span>
+    </button>
+    <ul class="nav__links">
+      <li class="nav__links-item"><a href="index.html" class="nav__link" data-nav="home"><span class="nav__link-num">01</span>Inicio</a></li>
+      <li class="nav__links-item"><a href="historia.html" class="nav__link" data-nav="historia"><span class="nav__link-num">02</span>Historia</a></li>
+      <li class="nav__links-item"><a href="personajes.html" class="nav__link" data-nav="personajes"><span class="nav__link-num">03</span>Personajes</a></li>
+      <li class="nav__links-item"><a href="mapa.html" class="nav__link" data-nav="mapa"><span class="nav__link-num">04</span>Mapa</a></li>
+      <li class="nav__links-item"><a href="comic.html" class="nav__link" data-nav="comic"><span class="nav__link-num">05</span>Comic</a></li>
+      <li class="nav__links-item"><a href="testimonios.html" class="nav__link" data-nav="testimonios"><span class="nav__link-num">06</span>Testimonios</a></li>
+    </ul>
+  </div>
 `;
 
 const FOOTER_TEMPLATE = `
@@ -107,16 +125,37 @@ export function injectComponents() {
 export const Navigation = {
   init() {
     const toggle = document.getElementById('navToggle');
-    const links = document.querySelector('.nav__links');
-    if (!toggle || !links) return;
+    const closeBtn = document.getElementById('navClose');
+    const overlay = document.getElementById('navOverlay');
+    if (!toggle || !overlay) return;
 
-    const open = () => links.classList.add('open');
-    const close = () => links.classList.remove('open');
-    const toggleMenu = () => links.classList.contains('open') ? close() : open();
+    const open = () => {
+      overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      const items = overlay.querySelectorAll('.nav__links-item');
+      items.forEach((item) => {
+        item.style.animation = 'none';
+        void item.offsetHeight;
+        item.style.animation = '';
+      });
+    };
+
+    const close = () => {
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+    };
+
+    const toggleMenu = () => (overlay.classList.contains('open') ? close() : open());
 
     toggle.addEventListener('click', toggleMenu);
-    links.querySelectorAll('.nav__link').forEach((link) => {
+    if (closeBtn) closeBtn.addEventListener('click', close);
+
+    overlay.querySelectorAll('.nav__link').forEach((link) => {
       link.addEventListener('click', close);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && overlay.classList.contains('open')) close();
     });
   },
 };
