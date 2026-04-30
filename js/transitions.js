@@ -1,155 +1,122 @@
-/**
- * transitions.js
- * Barba.js + GSAP — Cortina de teatro buttery.
- * ES Module.
- */
+import gsap from 'gsap'
+import barba from '@barba/core'
+import { getLenis } from './lenis.js'
+import { reinit } from './app.js'
 
-import gsap from 'gsap';
-import barba from '@barba/core';
-import { PageReinit, getLenis } from './app.js';
+const NAMESPACE_TO_URL = {
+  home: 'index.html',
+  historia: 'historia.html',
+  personajes: 'personajes.html',
+  mapa: 'mapa.html',
+  comic: 'comic.html',
+  testimonios: 'testimonios.html',
+}
 
-/* ============================================
-   CORTINAS (Theatre Curtain)
-   ============================================ */
-const Curtains = {
-  left: null,
-  right: null,
+function createCurtains() {
+  let left = null
+  let right = null
 
-  getLeft() {
-    if (!this.left) {
-      this.left = document.createElement('div');
-      this.left.className = 'curtain-panel curtain-panel--left';
-      document.body.appendChild(this.left);
+  function getLeft() {
+    if (!left) {
+      left = document.createElement('div')
+      left.className = 'curtain-panel curtain-panel--left'
+      document.body.appendChild(left)
     }
-    return this.left;
-  },
+    return left
+  }
 
-  getRight() {
-    if (!this.right) {
-      this.right = document.createElement('div');
-      this.right.className = 'curtain-panel curtain-panel--right';
-      document.body.appendChild(this.right);
+  function getRight() {
+    if (!right) {
+      right = document.createElement('div')
+      right.className = 'curtain-panel curtain-panel--right'
+      document.body.appendChild(right)
     }
-    return this.right;
-  },
-};
+    return right
+  }
 
-/* ============================================
-   NAV UPDATER
-   ============================================ */
-const NavUpdater = {
-  update(namespace) {
-    const map = {
-      home: 'index.html',
-      historia: 'historia.html',
-      personajes: 'personajes.html',
-      mapa: 'mapa.html',
-      comic: 'comic.html',
-      testimonios: 'testimonios.html',
-    };
-    const target = map[namespace];
-    if (!target) return;
+  return { getLeft, getRight }
+}
 
-    document.querySelectorAll('.nav__link').forEach((link) => {
-      link.classList.toggle('active', link.getAttribute('href') === target);
-    });
-  },
-};
+function updateActiveNav(namespace) {
+  const target = NAMESPACE_TO_URL[namespace]
+  if (!target) return
 
-/* ============================================
-   THEATRE WIPE TRANSITION
-   ============================================ */
+  document.querySelectorAll('.nav__link').forEach((link) => {
+    link.classList.toggle('active', link.getAttribute('href') === target)
+  })
+}
+
+const curtains = createCurtains()
+
 const theatreWipe = {
   name: 'theatre-wipe',
 
   beforeLeave() {
-    document.body.classList.add('is-transitioning');
-    const lenis = getLenis();
-    if (lenis) lenis.stop();
+    document.body.classList.add('is-transitioning')
+    const lenis = getLenis()
+    if (lenis) lenis.stop()
   },
 
-  leave({ current }) {
-    const done = this.async();
-    const left = Curtains.getLeft();
-    const right = Curtains.getRight();
+  leave() {
+    const done = this.async()
+    const left = curtains.getLeft()
+    const right = curtains.getRight()
 
-    // Reset curtain positions (closed = 0, open = -100/+100)
-    gsap.set(left,  { xPercent: -100 });
-    gsap.set(right, { xPercent: 100 });
+    gsap.set(left, { xPercent: -100 })
+    gsap.set(right, { xPercent: 100 })
 
-    const tl = gsap.timeline({ onComplete: done });
-
-    // Content fades gently while curtains close
-    tl.to(current.container, {
-      opacity: 0,
-      duration: 0.35,
-      ease: 'power2.inOut',
-    }, 0);
-
-    // Curtains close simultaneously — buttery expo easing
-    tl.to(left,  { xPercent: 0, duration: 0.75, ease: 'expo.inOut' }, 0);
-    tl.to(right, { xPercent: 0, duration: 0.75, ease: 'expo.inOut' }, 0);
+    const tl = gsap.timeline({ onComplete: done })
+    tl.to(left, { xPercent: 0, duration: 0.75, ease: 'expo.inOut' }, 0)
+    tl.to(right, { xPercent: 0, duration: 0.75, ease: 'expo.inOut' }, 0)
   },
 
   enter({ next }) {
-    const done = this.async();
-    const lenis = getLenis();
-    const left = Curtains.getLeft();
-    const right = Curtains.getRight();
+    const done = this.async()
+    const lenis = getLenis()
+    const left = curtains.getLeft()
+    const right = curtains.getRight()
 
-    // Reset scroll instantly
-    window.scrollTo({ top: 0, behavior: 'instant' });
-
-    // New content is ready behind the curtains
-    gsap.set(next.container, { opacity: 1, y: 0 });
+    window.scrollTo({ top: 0, behavior: 'instant' })
+    gsap.set(next.container, { opacity: 1, y: 0 })
 
     const tl = gsap.timeline({
       onComplete: () => {
-        // Park curtains off-screen for next time
-        gsap.set(left,  { xPercent: -100 });
-        gsap.set(right, { xPercent: 100 });
-        document.body.classList.remove('is-transitioning');
-        if (lenis) lenis.start();
-        done();
+        gsap.set(left, { xPercent: -100 })
+        gsap.set(right, { xPercent: 100 })
+        document.body.classList.remove('is-transitioning')
+        if (lenis) lenis.start()
+        done()
       },
-    });
+    })
 
-    // Dramatic beat: curtains stay closed for 90ms so the viewer
-    // perceives the "page has changed" before the reveal.
-    tl.to({}, { duration: 0.09 });
-
-    // Curtains open simultaneously — reveal the new page
-    tl.to(left,  { xPercent: -100, duration: 0.75, ease: 'expo.inOut' }, 'open');
-    tl.to(right, { xPercent: 100,  duration: 0.75, ease: 'expo.inOut' }, 'open');
+    tl.to({}, { duration: 0.09 })
+    tl.to(left, { xPercent: -100, duration: 0.75, ease: 'expo.inOut' }, 'open')
+    tl.to(right, { xPercent: 100, duration: 0.75, ease: 'expo.inOut' }, 'open')
   },
 
   after({ next }) {
-    NavUpdater.update(next.namespace);
-    PageReinit.run();
+    updateActiveNav(next.namespace)
+    reinit()
   },
-};
+}
 
-/* ============================================
-   BARBA INIT
-   ============================================ */
-const BarbaController = {
-  init() {
-    // Ensure curtains exist and are hidden
-    const left = Curtains.getLeft();
-    const right = Curtains.getRight();
-    gsap.set(left,  { xPercent: -100 });
-    gsap.set(right, { xPercent: 100 });
+function initBarba() {
+  const left = curtains.getLeft()
+  const right = curtains.getRight()
+  gsap.set(left, { xPercent: -100 })
+  gsap.set(right, { xPercent: 100 })
 
-    barba.init({
-      prevent: ({ el }) => el.classList?.contains('no-barba'),
-      timeout: 10000,
-      transitions: [theatreWipe],
-    });
-  },
-};
+  barba.init({
+    prevent: ({ el }) => el.classList?.contains('no-barba'),
+    timeout: 10000,
+    transitions: [theatreWipe],
+  })
+}
+
+export { initBarba as initTransitions }
 
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => BarbaController.init());
+  document.addEventListener('DOMContentLoaded', initBarba)
 } else {
-  BarbaController.init();
+  initBarba()
 }
