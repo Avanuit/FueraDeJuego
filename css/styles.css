@@ -77,8 +77,10 @@ img {
     display: block;
     max-width: 100%;
     height: auto;
-    background-color: var(--color-surface-2); /* Placeholder for missing images */
-    color: transparent; /* Hide broken image alt text if img is stylized */
+    background-color: var(--color-surface-2);
+    /* Placeholder for missing images */
+    color: transparent;
+    /* Hide broken image alt text if img is stylized */
 }
 
 a {
