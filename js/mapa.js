@@ -28,7 +28,7 @@ function createSmallIcon() {
   });
 }
 
-function initMap() {
+function buildMap() {
   const mapEl = document.getElementById('leafletMap');
   if (!mapEl) return;
   if (mapInstance) {
@@ -109,20 +109,16 @@ function initMap() {
       .bindPopup(`<h4>${city[2]}</h4><div class="popup-location">Ciudad sede FIFA 2026</div>`);
   });
 
-  setTimeout(() => { mapInstance.invalidateSize(); }, 300);
+  // Ensure tiles render correctly after container is fully laid out
+  requestAnimationFrame(() => {
+    mapInstance.invalidateSize();
+  });
 }
 
 export function initMap() {
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initMapImpl);
+    document.addEventListener('DOMContentLoaded', () => requestAnimationFrame(buildMap));
   } else {
-    initMapImpl();
+    requestAnimationFrame(buildMap);
   }
-}
-
-function initMapImpl() {
-  // Small delay to ensure Leaflet CSS/JS and container are ready
-  requestAnimationFrame(() => {
-    initMap();
-  });
 }
