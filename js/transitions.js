@@ -1,149 +1,146 @@
 /**
  * transitions.js
- * Barba.js + GSAP transiciones fluidas y premium.
+ * Barba.js + GSAP transiciones cinematograficas.
+ * ES Module.
  */
 
-'use strict';
+import gsap from 'gsap';
+import barba from '@barba/core';
+import { PageReinit, initLenis, getLenis } from './app.js';
 
-// ─── OVERLAY SETUP ────────────────────────────────────────────────────
-const TransitionOverlay = (() => {
-    let overlay = null;
+/* ============================================
+   OVERLAY SETUP
+   ============================================ */
+const TransitionOverlay = {
+  overlay: null,
+  get() {
+    if (!this.overlay) {
+      this.overlay = document.createElement('div');
+      this.overlay.className = 'barba-overlay';
+      document.body.appendChild(this.overlay);
+    }
+    return this.overlay;
+  },
+};
 
-    const get = () => {
-        if (!overlay) {
-            overlay = document.createElement('div');
-            overlay.className = 'barba-overlay';
-            document.body.appendChild(overlay);
-        }
-        return overlay;
-    };
-
-    return { get };
-})();
-
-// ─── NAV UPDATER ──────────────────────────────────────────────────────
+/* ============================================
+   NAV UPDATER
+   ============================================ */
 const NavUpdater = {
-    update(namespace) {
-        const links = document.querySelectorAll('.nav__link');
-        links.forEach(link => {
-            link.classList.remove('active');
-            const href = link.getAttribute('href') || '';
-            if (
-                (namespace === 'home' && href === 'index.html') ||
-                (namespace === 'historia' && href === 'historia.html') ||
-                (namespace === 'personajes' && href === 'personajes.html') ||
-                (namespace === 'mapa' && href === 'mapa.html') ||
-                (namespace === 'comic' && href === 'comic.html') ||
-                (namespace === 'testimonios' && href === 'testimonios.html')
-            ) {
-                link.classList.add('active');
-            }
-        });
-    }
+  update(namespace) {
+    const map = {
+      home: 'index.html',
+      historia: 'historia.html',
+      personajes: 'personajes.html',
+      mapa: 'mapa.html',
+      comic: 'comic.html',
+      testimonios: 'testimonios.html',
+    };
+    const targetHref = map[namespace];
+    if (!targetHref) return;
+
+    document.querySelectorAll('.nav__link').forEach((link) => {
+      link.classList.remove('active');
+      const href = link.getAttribute('href') || '';
+      if (href === targetHref) link.classList.add('active');
+    });
+  },
 };
 
-// ─── PAGE REINITIALIZER ───────────────────────────────────────────────
-const PageReinit = {
-    run() {
-        if (typeof CounterAnimation !== 'undefined') CounterAnimation.init();
-        if (typeof CharCounter !== 'undefined') CharCounter.init();
-        if (typeof TestimonyForm !== 'undefined') TestimonyForm.init();
-        if (typeof ScrollReveal !== 'undefined') ScrollReveal.init();
-        if (typeof Navigation !== 'undefined') Navigation.init();
-        if (typeof ComicReader !== 'undefined') ComicReader.init();
-    }
-};
+/* ============================================
+   WIPE TRANSITION
+   ============================================ */
+const wipeTransition = {
+  name: 'wipe-transition',
 
-// ─── BARBA INITIALIZATION ─────────────────────────────────────────────
-const BarbaController = {
-    init() {
-        if (typeof barba === 'undefined') {
-            console.warn('Barba.js no está disponible. Navegación normal activa.');
-            return;
-        }
+  leave({ current }) {
+    const done = this.async();
+    const overlay = TransitionOverlay.get();
+    const lenis = getLenis();
+    if (lenis) lenis.stop();
 
-        if (typeof gsap === 'undefined') {
-            console.warn('GSAP no está disponible. Transiciones deshabilitadas.');
-            return;
-        }
+    const tl = gsap.timeline({
+      onComplete: done,
+    });
 
-        const overlay = TransitionOverlay.get();
+    // Content fade out with stagger
+    tl.to(current.container.children, {
+      opacity: 0,
+      y: -20,
+      duration: 0.35,
+      stagger: 0.03,
+      ease: 'power2.in',
+    });
 
-        barba.init({
-            prevent: ({ el }) => el.classList?.contains('no-barba'),
-            // Timeout largo para evitar errores
-            timeout: 10000,
+    // Overlay wipe up
+    tl.fromTo(overlay,
+      { yPercent: 100 },
+      { yPercent: 0, duration: 0.5, ease: 'power4.inOut' },
+      '-=0.1'
+    );
+  },
 
-            transitions: [{
-                name: 'wipe-transition',
+  enter({ next }) {
+    const done = this.async();
+    const overlay = TransitionOverlay.get();
+    const lenis = getLenis();
 
-                leave({ current }) {
-                    const done = this.async();
+    window.scrollTo({ top: 0, behavior: 'instant' });
 
-                    // Animación del contenido actual desapareciendo
-                    gsap.to(current.container, {
-                        opacity: 0,
-                        y: -30,
-                        duration: 0.4,
-                        ease: 'power2.in',
-                        onComplete: () => {
-                            // Overlay sube desde abajo
-                            gsap.fromTo(overlay,
-                                { yPercent: 100 },
-                                {
-                                    yPercent: 0,
-                                    duration: 0.5,
-                                    ease: 'power4.inOut',
-                                    onComplete: done
-                                }
-                            );
-                        }
-                    });
-                },
+    gsap.set(next.container.children, { opacity: 0, y: 30 });
 
-                enter({ next }) {
-                    const done = this.async();
-
-                    // Scroll al inicio
-                    window.scrollTo({ top: 0, behavior: 'instant' });
-
-                    // Preparar nuevo contenido invisible
-                    gsap.set(next.container, { opacity: 0, y: 30 });
-
-                    // Overlay sube/sale por arriba
-                    gsap.to(overlay, {
-                        yPercent: -100,
-                        duration: 0.5,
-                        ease: 'power4.inOut',
-                        onComplete: () => {
-                            // Reset overlay para próxima transición
-                            gsap.set(overlay, { yPercent: 100 });
-
-                            // Fade-in del nuevo contenido
-                            gsap.to(next.container, {
-                                opacity: 1,
-                                y: 0,
-                                duration: 0.5,
-                                ease: 'power2.out',
-                                onComplete: done
-                            });
-                        }
-                    });
-                },
-
-                after({ next }) {
-                    NavUpdater.update(next.namespace);
-                    PageReinit.run();
-                }
-            }]
-        });
-
-        // Reset overlay position
+    const tl = gsap.timeline({
+      onComplete: () => {
         gsap.set(overlay, { yPercent: 100 });
-    }
+        if (lenis) lenis.start();
+        done();
+      },
+    });
+
+    // Overlay exits up
+    tl.to(overlay, {
+      yPercent: -100,
+      duration: 0.5,
+      ease: 'power4.inOut',
+    });
+
+    // New content staggers in
+    tl.to(next.container.children, {
+      opacity: 1,
+      y: 0,
+      duration: 0.6,
+      stagger: 0.05,
+      ease: 'power2.out',
+    }, '-=0.2');
+  },
+
+  after({ next }) {
+    NavUpdater.update(next.namespace);
+    PageReinit.run();
+  },
 };
 
-// ─── BOOTSTRAP ────────────────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', () => {
-    BarbaController.init();
-});
+/* ============================================
+   BARBA CONTROLLER
+   ============================================ */
+const BarbaController = {
+  init() {
+    const overlay = TransitionOverlay.get();
+    gsap.set(overlay, { yPercent: 100 });
+
+    barba.init({
+      prevent: ({ el }) => el.classList?.contains('no-barba'),
+      timeout: 10000,
+      transitions: [wipeTransition],
+    });
+  },
+};
+
+/* ============================================
+   BOOTSTRAP
+   ============================================ */
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => BarbaController.init());
+} else {
+  BarbaController.init();
+}
