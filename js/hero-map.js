@@ -58,7 +58,7 @@ function buildPopupHtml(city) {
   `
 }
 
-function initHeroMap() {
+function setupHeroMap() {
   const container = document.getElementById('heroMap')
   if (!container || typeof L === 'undefined') return
 
@@ -128,8 +128,8 @@ function initHeroMap() {
 
 export function initHeroMap() {
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initHeroMap)
+    document.addEventListener('DOMContentLoaded', setupHeroMap)
   } else {
-    initHeroMap()
+    setupHeroMap()
   }
 }
