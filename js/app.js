@@ -420,6 +420,14 @@ async function initPageModules() {
       console.warn('Map init failed:', e);
     }
   }
+  if (document.getElementById('heroMap')) {
+    try {
+      const { initHeroMapModule } = await import('./heroMap.js');
+      initHeroMapModule();
+    } catch (e) {
+      console.warn('Hero map init failed:', e);
+    }
+  }
 }
 
 /* ============================================

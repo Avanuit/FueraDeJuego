@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="css/main.css" />
   <link rel="stylesheet" href="css/animations.css" />
   <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script type="importmap">
   {
     "imports": {
@@ -102,56 +103,68 @@
       </div>
     </section>
 
-    <!-- CITIES -->
+    <!-- CITIES + MAP -->
     <section class="content-section">
       <div class="cities__container">
         <span class="section-label">Tres ciudades</span>
         <h2 class="section-title">Una historia.</h2>
-        <div class="cities__grid">
 
-          <article class="city-card" data-city="juarez">
-            <div class="city-card__img-wrap">
-              <img src="img/Anapra.png" alt="Ciudad Juarez, calles de tierra cerca del estadio" loading="lazy" />
-              <div class="city-card__overlay"></div>
-              <span class="city-card__flag">MX</span>
-            </div>
-            <div class="city-card__body">
-              <span class="city-card__location">Anapra, Ciudad Juarez</span>
-              <h3 class="city-card__name">Lucia</h3>
-              <p class="city-card__desc">Trenzas negras, hoodie verde, cuadernos de bocetos en la mochila. Desde que anunciaron el Mundial su barrio cambio: primero los precios, luego los vecinos.</p>
-              <a href="personajes.html" class="city-card__link">Ver historia →</a>
-            </div>
-          </article>
+        <div class="cities-map-layout">
+          <div class="cities-map-layout__cards">
 
-          <article class="city-card" data-city="inglewood">
-            <div class="city-card__img-wrap">
-              <img src="img/Inglewood.png" alt="Inglewood, Los Angeles" loading="lazy" />
-              <div class="city-card__overlay"></div>
-              <span class="city-card__flag">US</span>
-            </div>
-            <div class="city-card__body">
-              <span class="city-card__location">Inglewood, Los Angeles</span>
-              <h3 class="city-card__name">Marcus</h3>
-              <p class="city-card__desc">Hoodie rojo, contextura atletica. Crecio a tres cuadras del SoFi Stadium — hasta que su familia recibio una notificacion de desalojo.</p>
-              <a href="personajes.html" class="city-card__link">Ver historia →</a>
-            </div>
-          </article>
+            <article class="city-card" data-city="juarez">
+              <div class="city-card__img-wrap">
+                <img src="img/Anapra.png" alt="Ciudad Juarez, calles de tierra cerca del estadio" loading="lazy" />
+                <div class="city-card__overlay"></div>
+                <span class="city-card__flag">MX</span>
+              </div>
+              <div class="city-card__body">
+                <span class="city-card__location">Anapra, Ciudad Juarez</span>
+                <h3 class="city-card__name">Lucia</h3>
+                <p class="city-card__desc">Trenzas negras, hoodie verde, cuadernos de bocetos en la mochila. Desde que anunciaron el Mundial su barrio cambio: primero los precios, luego los vecinos.</p>
+                <a href="personajes.html" class="city-card__link">Ver historia →</a>
+              </div>
+            </article>
 
-          <article class="city-card" data-city="vancouver">
-            <div class="city-card__img-wrap">
-              <img src="img/NacionSquamish.png" alt="Territorio Squamish, Vancouver" loading="lazy" />
-              <div class="city-card__overlay"></div>
-              <span class="city-card__flag">CA</span>
-            </div>
-            <div class="city-card__body">
-              <span class="city-card__location">Nacion Squamish, Vancouver</span>
-              <h3 class="city-card__name">Aiyana</h3>
-              <p class="city-card__desc">Pelo largo y negro, hoodie verde, audifonos al cuello. Graba los cantos de su abuela antes de que las excavadoras los borren para siempre.</p>
-              <a href="personajes.html" class="city-card__link">Ver historia →</a>
-            </div>
-          </article>
+            <article class="city-card" data-city="inglewood">
+              <div class="city-card__img-wrap">
+                <img src="img/Inglewood.png" alt="Inglewood, Los Angeles" loading="lazy" />
+                <div class="city-card__overlay"></div>
+                <span class="city-card__flag">US</span>
+              </div>
+              <div class="city-card__body">
+                <span class="city-card__location">Inglewood, Los Angeles</span>
+                <h3 class="city-card__name">Marcus</h3>
+                <p class="city-card__desc">Hoodie rojo, contextura atletica. Crecio a tres cuadras del SoFi Stadium — hasta que su familia recibio una notificacion de desalojo.</p>
+                <a href="personajes.html" class="city-card__link">Ver historia →</a>
+              </div>
+            </article>
 
+            <article class="city-card" data-city="vancouver">
+              <div class="city-card__img-wrap">
+                <img src="img/NacionSquamish.png" alt="Territorio Squamish, Vancouver" loading="lazy" />
+                <div class="city-card__overlay"></div>
+                <span class="city-card__flag">CA</span>
+              </div>
+              <div class="city-card__body">
+                <span class="city-card__location">Nacion Squamish, Vancouver</span>
+                <h3 class="city-card__name">Aiyana</h3>
+                <p class="city-card__desc">Pelo largo y negro, hoodie verde, audifonos al cuello. Graba los cantos de su abuela antes de que las excavadoras los borren para siempre.</p>
+                <a href="personajes.html" class="city-card__link">Ver historia →</a>
+              </div>
+            </article>
+
+          </div>
+
+          <div class="cities-map-layout__map">
+            <div id="heroMap"></div>
+            <div class="hero-map-caption">
+              <span class="pulse-dot"></span>
+              <span>Pasa el cursor sobre una ciudad para explorar el mapa</span>
+            </div>
+          </div>
         </div>
+
       </div>
     </section>
 
@@ -178,6 +191,7 @@
 
   </main>
 
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script type="module" src="js/app.js"></script>
   <script type="module" src="js/transitions.js"></script>
 </body>
