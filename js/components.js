@@ -19,7 +19,10 @@ const NAV_HTML = `
 const FOOTER_HTML = `
   <div class="footer__container">
     <div class="footer__brand">
-      <span class="footer__logo">Fuera de Juego</span>
+      <div class="footer__logo-group">
+        <img src="img/isotipo.svg" alt="FJ" class="footer__logo-icon" />
+        <span class="footer__logo">Fuera de Juego</span>
+      </div>
       <p>Proyecto Transmedia — Copa del Mundo FIFA 2026</p>
       <p>Universidad de San Buenaventura · Ingenieria Multimedia</p>
     </div>
