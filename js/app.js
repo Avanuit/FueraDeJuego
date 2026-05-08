@@ -31,9 +31,12 @@ async function loadPageModules() {
 function initCommon() {
   initNavigation()
   initCounters()
-  initScrollReveal()
   initCharCounter()
   initTestimonyForm()
+}
+
+function initVisualAnimations() {
+  initScrollReveal()
 }
 
 export const reinit = async () => {
@@ -46,7 +49,9 @@ export async function initApp() {
   injectComponents()
   createLenis()
   initCommon()
+  initVisualAnimations()
   await loadPageModules()
+  ScrollTrigger.refresh()
 }
 
 export { getLenis }
