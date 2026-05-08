@@ -1,5 +1,6 @@
 const NAV_HTML = `
   <a href="index.html" class="nav__logo">
+    <img src="img/isotipo.svg" alt="FJ" class="nav__logo-icon" />
     <span class="nav__logo-text">FUERA<em>DE</em>JUEGO</span>
   </a>
   <ul class="nav__links">

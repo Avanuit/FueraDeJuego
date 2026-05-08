@@ -257,6 +257,14 @@ a {
   display: flex;
   align-items: center;
   text-decoration: none;
+  gap: 0.5rem;
+}
+
+.nav__logo-icon {
+  width: 2.25rem;
+  height: 2.25rem;
+  display: block;
+  flex-shrink: 0;
 }
 
 .nav__logo-text {
