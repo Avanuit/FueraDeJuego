@@ -1,6 +1,12 @@
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { splitText } from '../text-split.js'
+import {
+  animateSectionLabel,
+  animateSectionTitle,
+  animateParagraphs,
+  animateNumberCounter,
+} from './shared.js'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -31,11 +37,44 @@ function animatePageHero() {
   if (sub) {
     tl.fromTo(sub, { opacity: 0, y: 25 }, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, '-=0.4')
   }
+
+  const imgWrap = hero.querySelector('.page-hero__img-wrap')
+  if (imgWrap) {
+    gsap.set(imgWrap, { clipPath: 'circle(0% at 50% 50%)' })
+    tl.to(imgWrap, { clipPath: 'circle(75% at 50% 50%)', duration: 1.4, ease: 'power4.inOut' }, '-=0.9')
+  }
+}
+
+function animateHeroParallax() {
+  const hero = document.querySelector('.page-hero')
+  if (!hero) return
+
+  const heroImg = hero.querySelector('.page-hero__img-wrap img')
+  if (heroImg) {
+    gsap.set(heroImg, { scale: 1.15 })
+    gsap.to(heroImg, {
+      scale: 1,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: hero,
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 1,
+        _persistent: true,
+      },
+    })
+  }
 }
 
 function animateMapSection() {
   const mapWrapper = document.querySelector('.map-wrapper--leaflet')
   if (!mapWrapper) return
+
+  const label = mapWrapper.parentElement.querySelector('.section-label')
+  const title = mapWrapper.parentElement.querySelector('.section-title')
+
+  if (label) animateSectionLabel(mapWrapper.parentElement)
+  if (title) animateSectionTitle(mapWrapper.parentElement, { y: 40, rotateX: -10 })
 
   const mapEl = mapWrapper.querySelector('#leafletMap')
   const legend = mapWrapper.querySelector('.map-legend')
@@ -79,8 +118,11 @@ function animateDataCards() {
   const grid = document.querySelector('.data-grid')
   if (!grid) return
 
+  animateSectionLabel(grid.parentElement)
+  animateSectionTitle(grid.parentElement, { y: 40, rotateX: -10 })
+
   const cards = grid.querySelectorAll('.data-card')
-  cards.forEach((card, i) => {
+  cards.forEach((card) => {
     const tl = gsap.timeline({
       scrollTrigger: { trigger: card, start: 'top 88%', once: true },
     })
@@ -149,6 +191,12 @@ function animateDataCards() {
 }
 
 function animateEvidence() {
+  const section = document.querySelector('.evidence-section')
+  if (section) {
+    animateSectionLabel(section)
+    animateSectionTitle(section, { y: 40, rotateX: -10 })
+  }
+
   const items = document.querySelectorAll('.evidence-item')
   if (!items.length) return
 
@@ -193,6 +241,7 @@ function animateEvidence() {
 
 export function init() {
   animatePageHero()
+  animateHeroParallax()
   animateMapSection()
   animateDataCards()
   animateEvidence()

@@ -1,6 +1,11 @@
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { splitText } from '../text-split.js'
+import {
+  animateSectionLabel,
+  animateSectionTitle,
+  animateParagraphs,
+} from './shared.js'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -31,6 +36,33 @@ function animatePageHero() {
   if (sub) {
     tl.fromTo(sub, { opacity: 0, y: 25 }, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, '-=0.4')
   }
+
+  const imgWrap = hero.querySelector('.page-hero__img-wrap')
+  if (imgWrap) {
+    gsap.set(imgWrap, { clipPath: 'circle(0% at 50% 50%)' })
+    tl.to(imgWrap, { clipPath: 'circle(75% at 50% 50%)', duration: 1.4, ease: 'power4.inOut' }, '-=0.9')
+  }
+}
+
+function animateHeroParallax() {
+  const hero = document.querySelector('.page-hero')
+  if (!hero) return
+
+  const heroImg = hero.querySelector('.page-hero__img-wrap img')
+  if (heroImg) {
+    gsap.set(heroImg, { scale: 1.15 })
+    gsap.to(heroImg, {
+      scale: 1,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: hero,
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 1,
+        _persistent: true,
+      },
+    })
+  }
 }
 
 function animateCharacterCards() {
@@ -56,6 +88,12 @@ function animateCharacterCards() {
         duration: 1.2, ease: 'power4.inOut',
       })
     }
+
+    tl.fromTo(card,
+      { opacity: 0, y: 50, rotateY: -5 },
+      { opacity: 1, y: 0, rotateY: 0, duration: 0.9, ease: 'power3.out' },
+      '<'
+    )
 
     if (flag) {
       tl.fromTo(flag,
@@ -114,6 +152,11 @@ function animateConnection() {
   const box = document.querySelector('.connection-box')
   if (!box) return
 
+  const label = box.querySelector('.section-label')
+  const title = box.querySelector('.section-title')
+  if (label) animateSectionLabel(box, { start: 'top 85%' })
+  if (title) animateSectionTitle(box, { y: 40, rotateX: -10, start: 'top 85%' })
+
   gsap.set(box, { clipPath: 'inset(0 100% 0 0)' })
   gsap.to(box, {
     clipPath: 'inset(0 0% 0 0)',
@@ -134,6 +177,7 @@ function animateConnection() {
 
 export function init() {
   animatePageHero()
+  animateHeroParallax()
   animateCharacterCards()
   animateConnection()
 }

@@ -1,6 +1,11 @@
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { splitText } from '../text-split.js'
+import {
+  animateSectionLabel,
+  animateSectionTitle,
+  animateParagraphs,
+} from './shared.js'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -31,11 +36,43 @@ function animatePageHero() {
   if (sub) {
     tl.fromTo(sub, { opacity: 0, y: 25 }, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, '-=0.4')
   }
+
+  const imgWrap = hero.querySelector('.page-hero__img-wrap')
+  if (imgWrap) {
+    gsap.set(imgWrap, { clipPath: 'circle(0% at 50% 50%)' })
+    tl.to(imgWrap, { clipPath: 'circle(75% at 50% 50%)', duration: 1.4, ease: 'power4.inOut' }, '-=0.9')
+  }
+}
+
+function animateHeroParallax() {
+  const hero = document.querySelector('.page-hero')
+  if (!hero) return
+
+  const heroImg = hero.querySelector('.page-hero__img-wrap img')
+  if (heroImg) {
+    gsap.set(heroImg, { scale: 1.15 })
+    gsap.to(heroImg, {
+      scale: 1,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: hero,
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 1,
+        _persistent: true,
+      },
+    })
+  }
 }
 
 function animateUnlockBanner() {
   const box = document.querySelector('.unlock-box')
   if (!box) return
+
+  const label = box.querySelector('.section-label')
+  const title = box.querySelector('.section-title')
+  if (label) animateSectionLabel(box, { start: 'top 85%' })
+  if (title) animateSectionTitle(box, { y: 40, rotateX: -10, start: 'top 85%' })
 
   gsap.fromTo(box,
     { opacity: 0, y: 30 },
@@ -77,43 +114,12 @@ function animateUnlockBanner() {
 function animateFormSection() {
   const formInfo = document.querySelector('.form-info')
   if (formInfo) {
-    const label = formInfo.querySelector('.section-label')
-    if (label) {
-      const split = splitText(label, { type: 'chars', charsClass: 'label-char' })
-      if (split && split.chars.length) {
-        gsap.set(split.chars, { opacity: 0, y: 20 })
-        ScrollTrigger.create({
-          trigger: label,
-          start: 'top 88%',
-          once: true,
-          onEnter: () => gsap.to(split.chars, { opacity: 1, y: 0, duration: 0.5, stagger: 0.03, ease: 'power2.out' }),
-        })
-      }
-    }
-
-    const title = formInfo.querySelector('.section-title')
-    if (title) {
-      const split = splitText(title, { type: 'words', wordsClass: 'title-word' })
-      if (split && split.words.length) {
-        gsap.set(split.words, { opacity: 0, y: 40 })
-        ScrollTrigger.create({
-          trigger: title,
-          start: 'top 88%',
-          once: true,
-          onEnter: () => gsap.to(split.words, { opacity: 1, y: 0, duration: 0.8, stagger: 0.06, ease: 'power3.out' }),
-        })
-      }
-    }
+    animateSectionLabel(formInfo)
+    animateSectionTitle(formInfo, { y: 40, rotateX: -10 })
 
     const paragraphs = formInfo.querySelectorAll('p')
     if (paragraphs.length) {
-      gsap.fromTo(paragraphs,
-        { opacity: 0, y: 20 },
-        {
-          opacity: 1, y: 0, duration: 0.6, stagger: 0.12, ease: 'power2.out',
-          scrollTrigger: { trigger: paragraphs[0], start: 'top 88%', once: true },
-        }
-      )
+      animateParagraphs(paragraphs, { y: 20 })
     }
 
     const benefits = formInfo.querySelectorAll('.benefit')
@@ -167,11 +173,18 @@ function animateFormSection() {
 }
 
 function animateTestimonials() {
+  const section = document.querySelector('.testimonials-section')
+  if (section) {
+    animateSectionLabel(section)
+    animateSectionTitle(section, { y: 40, rotateX: -10 })
+  }
+
   const cards = document.querySelectorAll('.testimonial-card')
   if (!cards.length) return
 
   cards.forEach((card) => {
     const avatar = card.querySelector('.testimonial-card__avatar')
+    const img = avatar ? avatar.querySelector('img') : null
 
     const tl = gsap.timeline({
       scrollTrigger: { trigger: card, start: 'top 88%', once: true },
@@ -182,7 +195,15 @@ function animateTestimonials() {
       { opacity: 1, y: 0, rotation: 0, duration: 0.8, ease: 'back.out(1.2)' }
     )
 
-    if (avatar) {
+    if (img) {
+      gsap.set(img, { clipPath: 'circle(0% at 50% 50%)', scale: 1.2 })
+      tl.to(img, {
+        clipPath: 'circle(50% at 50% 50%)',
+        scale: 1,
+        duration: 0.8,
+        ease: 'power2.inOut',
+      }, '-=0.5')
+    } else if (avatar) {
       gsap.set(avatar, { clipPath: 'circle(0% at 50% 50%)' })
       tl.to(avatar, {
         clipPath: 'circle(50% at 50% 50%)',
@@ -203,11 +224,20 @@ function animateTestimonials() {
     if (tag) {
       tl.fromTo(tag, { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.3, ease: 'back.out(2)' }, '-=0.2')
     }
+
+    if (img) {
+      gsap.to(img, {
+        yPercent: 8,
+        ease: 'none',
+        scrollTrigger: { trigger: card, start: 'top bottom', end: 'bottom top', scrub: 1, _persistent: true },
+      })
+    }
   })
 }
 
 export function init() {
   animatePageHero()
+  animateHeroParallax()
   animateUnlockBanner()
   animateFormSection()
   animateTestimonials()

@@ -1,6 +1,12 @@
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { splitText } from '../text-split.js'
+import {
+  animateSectionLabel,
+  animateSectionTitle,
+  animateParagraphs,
+  animateStatItems,
+} from './shared.js'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -106,113 +112,16 @@ function animateStats() {
   const statsContainer = stats.querySelector('.stats__container')
   if (!statsContainer) return
 
-  const statItems = statsContainer.querySelectorAll('.stat')
-  if (!statItems.length) return
-
-  gsap.set(statItems, { opacity: 0, y: 40, scale: 0.95 })
-  gsap.set(statItems, { borderLeftColor: 'var(--border-2)' })
-
-  ScrollTrigger.create({
-    trigger: stats,
-    start: 'top 85%',
-    once: true,
-    onEnter: () => {
-      gsap.to(statItems, {
-        opacity: 1, y: 0, scale: 1,
-        duration: 0.7,
-        stagger: 0.15,
-        ease: 'back.out(1.2)',
-      })
-
-      statItems.forEach((stat, i) => {
-        gsap.to(stat, {
-          borderLeftColor: 'var(--accent)',
-          duration: 0.5,
-          delay: i * 0.15,
-        })
-
-        const numberEl = stat.querySelector('.stat__number[data-target]')
-        if (numberEl) {
-          const target = parseInt(numberEl.dataset.target, 10)
-          const counter = { val: 0 }
-          gsap.to(counter, {
-            val: target,
-            duration: 2.2,
-            delay: i * 0.15,
-            ease: 'power2.out',
-            onUpdate() {
-              numberEl.textContent = Math.round(counter.val)
-            },
-          })
-        }
-      })
-    },
-  })
+  animateStatItems(statsContainer)
 }
 
 function animateIntro() {
   const section = document.querySelector('.intro__container')
   if (!section) return
 
-  const label = section.querySelector('.section-label')
-  if (label) {
-    const split = splitText(label, { type: 'chars', charsClass: 'label-char' })
-    if (split && split.chars.length) {
-      gsap.set(split.chars, { opacity: 0, y: 20 })
-      ScrollTrigger.create({
-        trigger: label,
-        start: 'top 88%',
-        once: true,
-        onEnter: () => {
-          gsap.to(split.chars, {
-            opacity: 1, y: 0,
-            duration: 0.5,
-            stagger: 0.03,
-            ease: 'power2.out',
-          })
-        },
-      })
-    }
-  }
-
-  const title = section.querySelector('.section-title')
-  if (title) {
-    const split = splitText(title, { type: 'words', wordsClass: 'title-word' })
-    if (split && split.words.length) {
-      gsap.set(split.words, { opacity: 0, y: 40, rotateX: -15 })
-      ScrollTrigger.create({
-        trigger: title,
-        start: 'top 88%',
-        once: true,
-        onEnter: () => {
-          gsap.to(split.words, {
-            opacity: 1, y: 0, rotateX: 0,
-            duration: 0.8,
-            stagger: 0.06,
-            ease: 'power3.out',
-          })
-        },
-      })
-    }
-  }
-
-  const paragraphs = section.querySelectorAll('.intro__lead, .intro__body')
-  if (paragraphs.length) {
-    gsap.fromTo(paragraphs,
-      { opacity: 0, y: 30 },
-      {
-        opacity: 1, y: 0,
-        duration: 0.8,
-        stagger: 0.2,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: paragraphs[0],
-          start: 'top 85%',
-          once: true,
-        },
-      }
-    )
-  }
+  animateSectionLabel(section)
+  animateSectionTitle(section, { rotateX: -15 })
+  animateParagraphs(section.querySelectorAll('.intro__lead, .intro__body'), { y: 30 })
 
   const quote = section.querySelector('.intro__quote')
   if (quote) {
@@ -304,50 +213,11 @@ function animateCities() {
   const container = document.querySelector('.cities__container')
   if (!container) return
 
-  const label = container.querySelector('.section-label')
-  if (label) {
-    const split = splitText(label, { type: 'chars', charsClass: 'label-char' })
-    if (split && split.chars.length) {
-      gsap.set(split.chars, { opacity: 0, y: 20 })
-      ScrollTrigger.create({
-        trigger: label,
-        start: 'top 88%',
-        once: true,
-        onEnter: () => {
-          gsap.to(split.chars, {
-            opacity: 1, y: 0,
-            duration: 0.5,
-            stagger: 0.03,
-            ease: 'power2.out',
-          })
-        },
-      })
-    }
-  }
-
-  const title = container.querySelector('.section-title')
-  if (title) {
-    const split = splitText(title, { type: 'words', wordsClass: 'title-word' })
-    if (split && split.words.length) {
-      gsap.set(split.words, { opacity: 0, y: 40 })
-      ScrollTrigger.create({
-        trigger: title,
-        start: 'top 88%',
-        once: true,
-        onEnter: () => {
-          gsap.to(split.words, {
-            opacity: 1, y: 0,
-            duration: 0.8,
-            stagger: 0.08,
-            ease: 'power3.out',
-          })
-        },
-      })
-    }
-  }
+  animateSectionLabel(container)
+  animateSectionTitle(container, { stagger: 0.08 })
 
   const cards = container.querySelectorAll('.city-card')
-  cards.forEach((card, i) => {
+  cards.forEach((card) => {
     const img = card.querySelector('.city-card__img-wrap')
     const body = card.querySelector('.city-card__body')
     const flag = card.querySelector('.city-card__flag')
@@ -372,6 +242,12 @@ function animateCities() {
         duration: 0.8,
         ease: 'power2.inOut',
       }, '-=0.7')
+
+      gsap.to(img, {
+        yPercent: 8,
+        ease: 'none',
+        scrollTrigger: { trigger: card, start: 'top bottom', end: 'bottom top', scrub: 1, _persistent: true },
+      })
     }
 
     if (flag) {

@@ -1,6 +1,11 @@
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { splitText } from '../text-split.js'
+import {
+  animateSectionLabel,
+  animateSectionTitle,
+  animateParagraphs,
+} from './shared.js'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -30,6 +35,33 @@ function animatePageHero() {
   const sub = hero.querySelector('.page-hero__sub')
   if (sub) {
     tl.fromTo(sub, { opacity: 0, y: 25 }, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, '-=0.4')
+  }
+
+  const imgWrap = hero.querySelector('.page-hero__img-wrap')
+  if (imgWrap) {
+    gsap.set(imgWrap, { clipPath: 'circle(0% at 50% 50%)' })
+    tl.to(imgWrap, { clipPath: 'circle(75% at 50% 50%)', duration: 1.4, ease: 'power4.inOut' }, '-=0.9')
+  }
+}
+
+function animateHeroParallax() {
+  const hero = document.querySelector('.page-hero')
+  if (!hero) return
+
+  const heroImg = hero.querySelector('.page-hero__img-wrap img')
+  if (heroImg) {
+    gsap.set(heroImg, { scale: 1.15 })
+    gsap.to(heroImg, {
+      scale: 1,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: hero,
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 1,
+        _persistent: true,
+      },
+    })
   }
 }
 
@@ -75,6 +107,13 @@ function animateInfoCards() {
   const cards = document.querySelectorAll('.comic-info-card')
   if (!cards.length) return
 
+  const section = cards[0].closest('section') || cards[0].parentElement
+  if (section) {
+    animateSectionLabel(section)
+    animateSectionTitle(section, { y: 40, rotateX: -10 })
+    animateParagraphs(section.querySelectorAll('p'), { y: 20 })
+  }
+
   cards.forEach((card, i) => {
     gsap.fromTo(card,
       { opacity: 0, y: 40, rotateY: 8 },
@@ -84,6 +123,18 @@ function animateInfoCards() {
         scrollTrigger: { trigger: card, start: 'top 88%', once: true },
       }
     )
+
+    const icon = card.querySelector('.comic-info-card__icon')
+    if (icon) {
+      gsap.fromTo(icon,
+        { scale: 0, rotation: -15 },
+        {
+          scale: 1, rotation: 0,
+          duration: 0.5, ease: 'back.out(2)',
+          scrollTrigger: { trigger: card, start: 'top 88%', once: true },
+        }
+      )
+    }
   })
 }
 
@@ -109,6 +160,17 @@ function animateComicCTA() {
     }
   }
 
+  const sub = cta.querySelector('p')
+  if (sub) {
+    gsap.fromTo(sub,
+      { opacity: 0, y: 15 },
+      {
+        opacity: 1, y: 0, duration: 0.6, ease: 'power2.out',
+        scrollTrigger: { trigger: sub, start: 'top 88%', once: true },
+      }
+    )
+  }
+
   const buttons = cta.querySelectorAll('.btn')
   if (buttons.length) {
     gsap.fromTo(buttons,
@@ -123,6 +185,7 @@ function animateComicCTA() {
 
 export function init() {
   animatePageHero()
+  animateHeroParallax()
   animateComicViewer()
   animateInfoCards()
   animateComicCTA()
