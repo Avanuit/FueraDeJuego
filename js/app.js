@@ -3,7 +3,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { createLenis, getLenis } from './lenis.js'
 import { injectComponents } from './components.js'
 import { initNavigation } from './navigation.js'
-import { initCounters } from './counter.js'
 import { initCharCounter } from './char-counter.js'
 import { initTestimonyForm } from './testimony-form.js'
 import { initPageAnimations, killPageAnimations, refreshAnimations } from './animations/index.js'
@@ -38,7 +37,6 @@ function getNamespace() {
 
 function initCommon() {
   initNavigation()
-  initCounters()
   initCharCounter()
   initTestimonyForm()
 }

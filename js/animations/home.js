@@ -109,34 +109,44 @@ function animateStats() {
   const statItems = statsContainer.querySelectorAll('.stat')
   if (!statItems.length) return
 
-  gsap.fromTo(statItems,
-    { opacity: 0, y: 40, scale: 0.95 },
-    {
-      opacity: 1, y: 0, scale: 1,
-      duration: 0.7,
-      stagger: 0.15,
-      ease: 'back.out(1.2)',
-      scrollTrigger: {
-        trigger: stats,
-        start: 'top 85%',
-        once: true,
-      },
-    }
-  )
+  gsap.set(statItems, { opacity: 0, y: 40, scale: 0.95 })
+  gsap.set(statItems, { borderLeftColor: 'var(--border-2)' })
 
-  statItems.forEach((stat) => {
-    const divider = stat.querySelector('.divider-accent') || stat.querySelector('::before')
-    gsap.fromTo(stat, {
-      borderLeftColor: 'var(--border-2)',
-    }, {
-      borderLeftColor: 'var(--accent)',
-      duration: 0.5,
-      scrollTrigger: {
-        trigger: stat,
-        start: 'top 85%',
-        once: true,
-      },
-    })
+  ScrollTrigger.create({
+    trigger: stats,
+    start: 'top 85%',
+    once: true,
+    onEnter: () => {
+      gsap.to(statItems, {
+        opacity: 1, y: 0, scale: 1,
+        duration: 0.7,
+        stagger: 0.15,
+        ease: 'back.out(1.2)',
+      })
+
+      statItems.forEach((stat, i) => {
+        gsap.to(stat, {
+          borderLeftColor: 'var(--accent)',
+          duration: 0.5,
+          delay: i * 0.15,
+        })
+
+        const numberEl = stat.querySelector('.stat__number[data-target]')
+        if (numberEl) {
+          const target = parseInt(numberEl.dataset.target, 10)
+          const counter = { val: 0 }
+          gsap.to(counter, {
+            val: target,
+            duration: 2.2,
+            delay: i * 0.15,
+            ease: 'power2.out',
+            onUpdate() {
+              numberEl.textContent = Math.round(counter.val)
+            },
+          })
+        }
+      })
+    },
   })
 }
 

@@ -198,16 +198,20 @@ function animateMetrics() {
     if (value) {
       const target = parseInt(value.textContent, 10)
       if (!isNaN(target) && target > 0) {
-        gsap.fromTo(value,
-          { textContent: 0 },
-          {
-            textContent: target,
-            duration: 2,
-            ease: 'power2.out',
-            snap: { textContent: 1 },
-            scrollTrigger: { trigger: value, start: 'top 88%', once: true },
-          }
-        )
+        const counter = { val: 0 }
+        ScrollTrigger.create({
+          trigger: value,
+          start: 'top 88%',
+          once: true,
+          onEnter: () => {
+            gsap.to(counter, {
+              val: target,
+              duration: 2,
+              ease: 'power2.out',
+              onUpdate() { value.textContent = Math.round(counter.val) },
+            })
+          },
+        })
       }
     }
   })
