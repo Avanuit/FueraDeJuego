@@ -33,6 +33,8 @@ const CONNECTIONS = [
   { from: 'vancouver', to: 'juarez', color: '#00E5FF', opacity: 0.3 },
 ]
 
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
 function getTileUrl() {
   const theme = document.documentElement.dataset.theme
   return theme === 'light'
@@ -62,6 +64,10 @@ function highlightCard(key) {
   })
 }
 
+function resetCards() {
+  document.querySelectorAll('.city-card').forEach((c) => c.classList.remove('city-card--active'))
+}
+
 function buildPopupHtml(city) {
   return `
     <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">${city.name}</div>
@@ -69,6 +75,15 @@ function buildPopupHtml(city) {
     <div style="font-size:0.8rem;color:var(--text-muted);line-height:1.4;margin-bottom:6px;">${city.desc}</div>
     <div style="font-family:var(--font-mono);font-size:0.7rem;color:${city.color};font-weight:700;">${city.stat}</div>
   `
+}
+
+function moveMapTo(coords, zoom) {
+  if (!heroMapInstance) return
+  if (prefersReducedMotion) {
+    heroMapInstance.setView(coords, zoom)
+  } else {
+    heroMapInstance.flyTo(coords, zoom, { duration: 1.2 })
+  }
 }
 
 function setupHeroMap() {
@@ -104,7 +119,7 @@ function setupHeroMap() {
     marker.on('click', () => {
       highlightCard(key)
       const card = document.querySelector(`.city-card[data-city="${key}"]`)
-      if (card) card.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      if (card) card.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'center' })
     })
 
     markers[key] = marker
@@ -123,17 +138,31 @@ function setupHeroMap() {
     const key = card.dataset.city
     if (!key || !CITIES[key]) return
 
+    // Desktop hover
     card.addEventListener('mouseenter', () => {
       highlightCard(key)
-      heroMapInstance.flyTo(CITIES[key].coords, 6, { duration: 1.2 })
+      moveMapTo(CITIES[key].coords, 6)
       if (markers[key]) markers[key].openPopup()
     })
 
     card.addEventListener('mouseleave', () => {
-      document.querySelectorAll('.city-card').forEach((c) => c.classList.remove('city-card--active'))
-      heroMapInstance.flyTo([37, -105], 4, { duration: 1.2 })
+      resetCards()
+      moveMapTo([37, -105], 4)
       if (markers[key]) markers[key].closePopup()
     })
+
+    // Touch / click support for mobile/tablet
+    card.addEventListener('click', () => {
+      highlightCard(key)
+      moveMapTo(CITIES[key].coords, 6)
+      if (markers[key]) markers[key].openPopup()
+    })
+  })
+
+  // Click on map background resets view
+  heroMapInstance.on('click', () => {
+    resetCards()
+    moveMapTo([37, -105], 4)
   })
 
   setTimeout(() => heroMapInstance.invalidateSize(), 300)

@@ -6,6 +6,9 @@ let isFlipping = false
 let isMobile = false
 let keyHandler = null
 
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+const TRANSITION_MS = prefersReducedMotion ? 0 : FLIP_MS
+
 function $(id) { return document.getElementById(id) }
 
 function checkMobile() { isMobile = window.innerWidth < 700 }
@@ -48,6 +51,14 @@ function flipForward() {
   if (!viewer) { isFlipping = false; return }
   const pages = [...viewer.querySelectorAll('.comic-page')]
 
+  if (prefersReducedMotion) {
+    spread++
+    isFlipping = false
+    renderSpread()
+    updateUI()
+    return
+  }
+
   if (isMobile) {
     const cur = pages[spread]
     const next = pages[spread + 1]
@@ -70,7 +81,7 @@ function flipForward() {
     }))
   }
 
-  setTimeout(() => { spread++; isFlipping = false; renderSpread(); updateUI() }, FLIP_MS)
+  setTimeout(() => { spread++; isFlipping = false; renderSpread(); updateUI() }, TRANSITION_MS)
 }
 
 function flipBackward() {
@@ -79,6 +90,14 @@ function flipBackward() {
   const viewer = $('comicViewer')
   if (!viewer) { isFlipping = false; return }
   const pages = [...viewer.querySelectorAll('.comic-page')]
+
+  if (prefersReducedMotion) {
+    spread--
+    isFlipping = false
+    renderSpread()
+    updateUI()
+    return
+  }
 
   if (isMobile) {
     const cur = pages[spread]
@@ -102,7 +121,7 @@ function flipBackward() {
     }))
   }
 
-  setTimeout(() => { spread--; isFlipping = false; renderSpread(); updateUI() }, FLIP_MS)
+  setTimeout(() => { spread--; isFlipping = false; renderSpread(); updateUI() }, TRANSITION_MS)
 }
 
 function updateUI() {
@@ -127,9 +146,9 @@ function updateUI() {
 function hideHint() {
   const hint = $('comicHint')
   if (hint && hint.style.opacity !== '0') {
-    hint.style.transition = 'opacity 0.4s ease'
+    hint.style.transition = prefersReducedMotion ? 'none' : 'opacity 0.4s ease'
     hint.style.opacity = '0'
-    setTimeout(() => { if (hint) hint.style.display = 'none' }, 400)
+    setTimeout(() => { if (hint) hint.style.display = 'none' }, prefersReducedMotion ? 0 : 400)
   }
 }
 
@@ -161,13 +180,20 @@ function jumpToPage(targetPage) {
   const targetSpread = isMobile ? targetPage : Math.floor(targetPage / 2)
   if (targetSpread === spread) return
 
+  if (prefersReducedMotion) {
+    spread = targetSpread
+    renderSpread()
+    updateUI()
+    return
+  }
+
   const dir = targetSpread > spread ? 'fwd' : 'bwd'
   const doFlip = () => {
-    if (isFlipping) { setTimeout(doFlip, FLIP_MS + 60); return }
+    if (isFlipping) { setTimeout(doFlip, TRANSITION_MS + 60); return }
     if (dir === 'fwd' && spread < targetSpread) {
-      flipForward(); setTimeout(doFlip, FLIP_MS + 60)
+      flipForward(); setTimeout(doFlip, TRANSITION_MS + 60)
     } else if (dir === 'bwd' && spread > targetSpread) {
-      flipBackward(); setTimeout(doFlip, FLIP_MS + 60)
+      flipBackward(); setTimeout(doFlip, TRANSITION_MS + 60)
     }
   }
   doFlip()

@@ -403,4 +403,16 @@ body.is-transitioning {
   .scroll-progress {
     display: none;
   }
+
+  .flip-to-left,
+  .flip-to-right,
+  .fade-out,
+  .anim-slide-out-left,
+  .anim-slide-out-right,
+  .anim-slide-in-right,
+  .anim-slide-in-left {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
