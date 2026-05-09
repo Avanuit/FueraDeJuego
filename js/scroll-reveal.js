@@ -3,56 +3,55 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const DEFAULT_SELECTORS = [
-  '.city-card',
-  '.chapter-card',
-  '.data-card',
-  '.testimonial-card',
-  '.flow-step',
-  '.char-card',
-  '.evidence-item',
-  '.metric-item',
-  '.comic-info-card',
-].join(', ')
+export function createScrollReveal(selector, opts = {}) {
+  const elements = document.querySelectorAll(selector)
+  if (!elements.length) return
 
-export function initScrollReveal() {
-  const elements = document.querySelectorAll(DEFAULT_SELECTORS)
-  elements.forEach((el) => {
-    gsap.fromTo(el,
-      { opacity: 0, y: 30 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        ease: 'power2.out',
-        scrollTrigger: { trigger: el, start: 'top 88%', once: true },
-      }
-    )
-  })
+  const defaults = {
+    y: 30,
+    opacity: 0,
+    duration: 0.8,
+    stagger: 0.1,
+    ease: 'power2.out',
+    start: 'top 88%',
+    once: true,
+  }
 
-  document.querySelectorAll('[data-stagger]').forEach((group) => {
-    gsap.fromTo(group.children,
-      { opacity: 0, y: 24 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.7,
-        stagger: 0.1,
-        ease: 'power2.out',
-        scrollTrigger: { trigger: group, start: 'top 85%', once: true },
-      }
-    )
-  })
+  const config = { ...defaults, ...opts }
 
-  document.querySelectorAll('[data-parallax]').forEach((img) => {
-    gsap.to(img, {
-      yPercent: 10,
-      ease: 'none',
+  gsap.fromTo(elements,
+    { opacity: config.opacity, y: config.y, x: config.x || 0, scale: config.scale || 1 },
+    {
+      opacity: 1, y: 0, x: 0, scale: 1,
+      duration: config.duration,
+      stagger: config.stagger,
+      ease: config.ease,
       scrollTrigger: {
-        trigger: img.parentElement,
-        start: 'top bottom',
-        end: 'bottom top',
-        scrub: true,
+        trigger: opts.trigger || elements[0],
+        start: config.start,
+        once: config.once,
+      },
+    }
+  )
+}
+
+export function createParallax(selector, opts = {}) {
+  const elements = document.querySelectorAll(selector)
+  if (!elements.length) return
+
+  elements.forEach((el) => {
+    const yPercent = parseFloat(el.dataset.parallax) || opts.yPercent || 10
+
+    gsap.to(el, {
+      yPercent,
+      ease: 'none',
+      force3d: true,
+      scrollTrigger: {
+        trigger: opts.trigger || el.parentElement || el,
+        start: opts.start || 'top bottom',
+        end: opts.end || 'bottom top',
+        scrub: opts.scrub || 1,
+        _persistent: true,
       },
     })
   })

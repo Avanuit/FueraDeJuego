@@ -313,5 +313,18 @@
     });
   </script>
   <script type="module" src="js/theme.js"></script>
+  <script type="module">
+    import gsap from 'gsap'
+    import { ScrollTrigger } from 'gsap/ScrollTrigger'
+    import { initPageAnimations } from './js/animations/index.js'
+
+    gsap.registerPlugin(ScrollTrigger)
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => initPageAnimations('digital'))
+    } else {
+      initPageAnimations('digital')
+    }
+  </script>
 </body>
 </html>

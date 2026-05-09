@@ -3,10 +3,10 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { createLenis, getLenis } from './lenis.js'
 import { injectComponents } from './components.js'
 import { initNavigation } from './navigation.js'
-import { initScrollReveal } from './scroll-reveal.js'
 import { initCounters } from './counter.js'
 import { initCharCounter } from './char-counter.js'
 import { initTestimonyForm } from './testimony-form.js'
+import { initPageAnimations, killPageAnimations, refreshAnimations } from './animations/index.js'
 import './theme.js'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -29,6 +29,13 @@ async function loadPageModules() {
   }
 }
 
+function getNamespace() {
+  const container = document.querySelector('[data-barba-namespace]')
+  if (container) return container.dataset.barbaNamespace
+  if (document.querySelector('.digital-hero')) return 'digital'
+  return 'home'
+}
+
 function initCommon() {
   initNavigation()
   initCounters()
@@ -36,13 +43,11 @@ function initCommon() {
   initTestimonyForm()
 }
 
-function initVisualAnimations() {
-  initScrollReveal()
-}
-
 export const reinit = async () => {
   initCommon()
   await loadPageModules()
+  const namespace = getNamespace()
+  await initPageAnimations(namespace)
   ScrollTrigger.refresh()
 }
 
@@ -50,12 +55,13 @@ export async function initApp() {
   injectComponents()
   createLenis()
   initCommon()
-  initVisualAnimations()
   await loadPageModules()
+  const namespace = getNamespace()
+  await initPageAnimations(namespace)
   ScrollTrigger.refresh()
 }
 
-export { getLenis }
+export { getLenis, killPageAnimations }
 
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initApp)

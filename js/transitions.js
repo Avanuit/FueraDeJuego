@@ -1,7 +1,7 @@
 import gsap from 'gsap'
 import barba from '@barba/core'
 import { getLenis } from './lenis.js'
-import { reinit } from './app.js'
+import { reinit, killPageAnimations } from './app.js'
 
 const CURTAIN_DURATION = 0.75
 const SETTLE_DELAY = 0.1
@@ -24,6 +24,14 @@ const VISIBLE_SELECTORS = [
   '.anim-slide-left',
   '.anim-slide-right',
   '.anim-scale-in',
+  '.char',
+  '.word',
+  '.hero-char',
+  '.title-word',
+  '[data-animate]',
+  '.page-hero__title',
+  '.page-hero__sub',
+  '.page-hero__title *',
 ]
 
 function createCurtains() {
@@ -58,6 +66,7 @@ function hideCurtains(left, right) {
 
 function prepareLeave() {
   document.body.classList.add('is-transitioning')
+  killPageAnimations()
   const lenis = getLenis()
   if (lenis) lenis.stop()
 }
@@ -84,9 +93,26 @@ function forceVisible(container) {
   VISIBLE_SELECTORS.forEach((selector) => {
     const elements = container.querySelectorAll(selector)
     if (elements.length) {
-      gsap.set(elements, { opacity: 1, y: 0, x: 0, scale: 1 })
+      gsap.set(elements, {
+        opacity: 1, y: 0, x: 0, scale: 1,
+        clipPath: 'inset(0 0 0 0)',
+        rotateX: 0, rotateY: 0, rotateZ: 0,
+        clearProps: 'transform',
+      })
     }
   })
+
+  const heroImgs = container.querySelectorAll('.hero__img-wrap, .intro__img--back, .intro__img--front')
+  if (heroImgs.length) {
+    gsap.set(heroImgs, { clipPath: 'inset(0 0 0 0)', scale: 1 })
+  }
+
+  const pageHeroTitle = container.querySelector('.page-hero__title')
+  if (pageHeroTitle) {
+    gsap.set(pageHeroTitle, { opacity: 1 })
+    const chars = pageHeroTitle.querySelectorAll('.hero-char')
+    if (chars.length) gsap.set(chars, { opacity: 1, y: 0, clipPath: 'inset(0 0 0 0)' })
+  }
 }
 
 async function waitForContentReady(container) {
