@@ -1,17 +1,19 @@
 import { getLenis } from './lenis.js'
 
+let closeTimer = null
+
 export function initNavigation() {
   const toggle = document.getElementById('navToggle')
   const links = document.querySelector('.nav__links')
   if (!toggle || !links) return
 
   const lenis = getLenis()
-  let closeHandler = null
+  const CLOSE_DELAY = 350
 
   const open = () => {
-    if (closeHandler) {
-      links.removeEventListener('transitionend', closeHandler)
-      closeHandler = null
+    if (closeTimer) {
+      clearTimeout(closeTimer)
+      closeTimer = null
     }
     links.classList.add('visible')
     requestAnimationFrame(() => {
@@ -32,14 +34,13 @@ export function initNavigation() {
     document.body.classList.remove('menu-open')
     if (lenis) lenis.start()
 
-    closeHandler = () => {
+    if (closeTimer) clearTimeout(closeTimer)
+    closeTimer = setTimeout(() => {
       if (!links.classList.contains('open')) {
         links.classList.remove('visible')
       }
-      links.removeEventListener('transitionend', closeHandler)
-      closeHandler = null
-    }
-    links.addEventListener('transitionend', closeHandler)
+      closeTimer = null
+    }, CLOSE_DELAY)
   }
 
   const toggleMenu = () => {

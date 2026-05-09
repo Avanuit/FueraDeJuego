@@ -617,6 +617,7 @@ a {
 
   .nav__links.visible {
     display: flex;
+    pointer-events: none;
   }
 
   .nav__links::before {
@@ -643,6 +644,7 @@ a {
   .nav__links.open {
     opacity: 1;
     transform: translateY(0);
+    pointer-events: auto;
   }
 
   .nav__links li {
