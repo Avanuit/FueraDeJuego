@@ -7,6 +7,7 @@ import { initScrollReveal } from './scroll-reveal.js'
 import { initCounters } from './counter.js'
 import { initCharCounter } from './char-counter.js'
 import { initTestimonyForm } from './testimony-form.js'
+import './theme.js'
 
 gsap.registerPlugin(ScrollTrigger)
 

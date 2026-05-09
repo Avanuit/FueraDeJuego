@@ -63,10 +63,33 @@ const CONNECTIONS = [
   { from: 0, to: 2, color: '#00E5FF', opacity: 0.4 },
 ]
 
+function getTileUrl() {
+  const theme = document.documentElement.dataset.theme
+  return theme === 'light'
+    ? 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png'
+    : 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
+}
+
+function getMarkerBorder() {
+  const theme = document.documentElement.dataset.theme
+  return theme === 'light' ? 'rgba(10,10,10,0.9)' : 'rgba(255,255,255,0.9)'
+}
+
+function getSmallIconBg() {
+  const theme = document.documentElement.dataset.theme
+  return theme === 'light' ? 'rgba(10,10,10,0.5)' : 'rgba(255,255,255,0.5)'
+}
+
+function getSmallIconBorder() {
+  const theme = document.documentElement.dataset.theme
+  return theme === 'light' ? 'rgba(10,10,10,0.3)' : 'rgba(255,255,255,0.3)'
+}
+
 function createMarkerIcon(color, size) {
+  const border = getMarkerBorder()
   return L.divIcon({
     className: 'pulse-marker',
-    html: `<div style="width:${size}px;height:${size}px;background:${color};border:2px solid rgba(255,255,255,0.9);box-shadow:0 0 12px ${color}80;"></div>`,
+    html: `<div style="width:${size}px;height:${size}px;background:${color};border:2px solid ${border};box-shadow:0 0 12px ${color}80;"></div>`,
     iconSize: [size, size],
     iconAnchor: [size / 2, size / 2],
     popupAnchor: [0, -size / 2 - 4],
@@ -74,9 +97,11 @@ function createMarkerIcon(color, size) {
 }
 
 function createSmallIcon() {
+  const bg = getSmallIconBg()
+  const border = getSmallIconBorder()
   return L.divIcon({
     className: '',
-    html: '<div style="width:8px;height:8px;background:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.3);"></div>',
+    html: `<div style="width:8px;height:8px;background:${bg};border:1px solid ${border};"></div>`,
     iconSize: [8, 8],
     iconAnchor: [4, 4],
     popupAnchor: [0, -6],
@@ -100,7 +125,7 @@ function buildMap() {
     scrollWheelZoom: true,
   })
 
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+  L.tileLayer(getTileUrl(), {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>',
     subdomains: 'abcd',
     maxZoom: 19,
@@ -137,4 +162,14 @@ export function initLeafletMap() {
   } else {
     requestAnimationFrame(buildMap)
   }
+
+  const observer = new MutationObserver((mutations) => {
+    for (const m of mutations) {
+      if (m.attributeName === 'data-theme') {
+        requestAnimationFrame(buildMap)
+        break
+      }
+    }
+  })
+  observer.observe(document.documentElement, { attributes: true })
 }

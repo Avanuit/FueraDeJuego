@@ -165,6 +165,17 @@
     .back-top.visible { opacity: 1; pointer-events: auto; }
     .back-top:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-3px); }
 
+    .theme-toggle-float-wrap {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 1000;
+    }
+
+    [data-theme="light"] .page-entry__img {
+      background: var(--surface-2);
+    }
+
     @media (max-width: 480px) {
       .digital-hero { padding: calc(var(--nav-height) + var(--space-lg)) var(--space-sm) var(--space-lg); }
       .page-entry { padding: 0 var(--space-sm); }
@@ -173,6 +184,29 @@
   </style>
 </head>
 <body>
+
+  <div class="theme-toggle-float-wrap">
+    <button class="theme-toggle" id="themeToggle" aria-label="Activar modo claro" type="button">
+      <span class="theme-toggle__icon">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g class="theme-sun">
+            <circle cx="12" cy="12" r="5" />
+            <line x1="12" y1="1" x2="12" y2="3" class="sun-ray" />
+            <line x1="12" y1="21" x2="12" y2="23" class="sun-ray" />
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" class="sun-ray" />
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" class="sun-ray" />
+            <line x1="1" y1="12" x2="3" y2="12" class="sun-ray" />
+            <line x1="21" y1="12" x2="23" y2="12" class="sun-ray" />
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" class="sun-ray" />
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" class="sun-ray" />
+          </g>
+          <g class="theme-moon">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+          </g>
+        </svg>
+      </span>
+    </button>
+  </div>
 
   <main>
 
@@ -278,5 +312,6 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   </script>
+  <script type="module" src="js/theme.js"></script>
 </body>
 </html>

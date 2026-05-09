@@ -33,10 +33,23 @@ const CONNECTIONS = [
   { from: 'vancouver', to: 'juarez', color: '#00E5FF', opacity: 0.3 },
 ]
 
+function getTileUrl() {
+  const theme = document.documentElement.dataset.theme
+  return theme === 'light'
+    ? 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png'
+    : 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
+}
+
+function getMarkerBorder() {
+  const theme = document.documentElement.dataset.theme
+  return theme === 'light' ? '#0A0A0A' : '#fff'
+}
+
 function createMarkerIcon(color) {
+  const border = getMarkerBorder()
   return L.divIcon({
     className: 'hero-map-marker',
-    html: `<div style="width:18px;height:18px;background:${color};border:2px solid #fff;box-shadow:0 0 0 2px ${color}40;"></div>`,
+    html: `<div style="width:18px;height:18px;background:${color};border:2px solid ${border};box-shadow:0 0 0 2px ${color}40;"></div>`,
     iconSize: [18, 18],
     iconAnchor: [9, 9],
     popupAnchor: [0, -12],
@@ -77,7 +90,7 @@ function setupHeroMap() {
     attributionControl: false,
   })
 
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+  L.tileLayer(getTileUrl(), {
     subdomains: 'abcd',
     maxZoom: 19,
   }).addTo(heroMapInstance)
@@ -132,4 +145,14 @@ export function initHeroMap() {
   } else {
     setupHeroMap()
   }
+
+  const observer = new MutationObserver((mutations) => {
+    for (const m of mutations) {
+      if (m.attributeName === 'data-theme') {
+        setupHeroMap()
+        break
+      }
+    }
+  })
+  observer.observe(document.documentElement, { attributes: true })
 }
