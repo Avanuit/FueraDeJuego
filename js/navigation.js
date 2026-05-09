@@ -8,7 +8,7 @@ export function initNavigation() {
   if (!toggle || !links) return
 
   const lenis = getLenis()
-  const CLOSE_DELAY = 350
+  const CLOSE_DELAY = 450
 
   const open = () => {
     if (closeTimer) {

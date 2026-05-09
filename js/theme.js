@@ -21,30 +21,41 @@ function applyTheme(theme, animate = false) {
   root.dataset.theme = theme
   localStorage.setItem(STORAGE_KEY, theme)
 
-  const toggle = document.querySelector('.theme-toggle')
-  if (!toggle) return
+  const toggles = document.querySelectorAll('.theme-toggle')
+  if (!toggles.length) return
 
-  toggle.setAttribute('aria-label', theme === 'dark' ? 'Activar modo claro' : 'Activar modo oscuro')
+  toggles.forEach((toggle) => {
+    toggle.setAttribute('aria-label', theme === 'dark' ? 'Activar modo claro' : 'Activar modo oscuro')
+  })
 
-  const sunGroup = toggle.querySelector('.theme-sun')
-  const moonGroup = toggle.querySelector('.theme-moon')
+  const firstToggle = toggles[0]
+  const sunGroup = firstToggle.querySelector('.theme-sun')
+  const moonGroup = firstToggle.querySelector('.theme-moon')
 
   if (!sunGroup || !moonGroup) return
 
   if (!animate) {
     if (theme === 'dark') {
-      gsap.set(sunGroup, { opacity: 1, scale: 1, rotation: 0 })
-      gsap.set(moonGroup, { opacity: 0, scale: 0.5, rotation: -90 })
+      toggles.forEach((t) => {
+        const sg = t.querySelector('.theme-sun')
+        const mg = t.querySelector('.theme-moon')
+        if (sg) gsap.set(sg, { opacity: 1, scale: 1, rotation: 0 })
+        if (mg) gsap.set(mg, { opacity: 0, scale: 0.5, rotation: -90 })
+      })
     } else {
-      gsap.set(sunGroup, { opacity: 0, scale: 0.5, rotation: 90 })
-      gsap.set(moonGroup, { opacity: 1, scale: 1, rotation: 0 })
+      toggles.forEach((t) => {
+        const sg = t.querySelector('.theme-sun')
+        const mg = t.querySelector('.theme-moon')
+        if (sg) gsap.set(sg, { opacity: 0, scale: 0.5, rotation: 90 })
+        if (mg) gsap.set(mg, { opacity: 1, scale: 1, rotation: 0 })
+      })
     }
     return
   }
 
   const tl = gsap.timeline()
 
-  tl.to(toggle, {
+  tl.to(firstToggle, {
     scale: 0.75,
     duration: 0.12,
     ease: 'power2.in',
@@ -84,19 +95,33 @@ function applyTheme(theme, animate = false) {
     }, '-=0.1')
   }
 
-  tl.to(toggle, {
+  tl.to(firstToggle, {
     scale: 1.15,
     duration: 0.15,
     ease: 'power2.out',
   }, '-=0.2')
 
-  tl.to(toggle, {
+  tl.to(firstToggle, {
     scale: 1,
     duration: 0.3,
     ease: 'elastic.out(1, 0.4)',
   })
 
-  createRipple(toggle, theme)
+  createRipple(firstToggle, theme)
+
+  toggles.forEach((t) => {
+    if (t !== firstToggle) {
+      const sg = t.querySelector('.theme-sun')
+      const mg = t.querySelector('.theme-moon')
+      if (theme === 'dark') {
+        if (sg) gsap.set(sg, { opacity: 1, scale: 1, rotation: 0 })
+        if (mg) gsap.set(mg, { opacity: 0, scale: 0.5, rotation: -90 })
+      } else {
+        if (sg) gsap.set(sg, { opacity: 0, scale: 0.5, rotation: 90 })
+        if (mg) gsap.set(mg, { opacity: 1, scale: 1, rotation: 0 })
+      }
+    }
+  })
 }
 
 function createRipple(button, theme) {
@@ -134,22 +159,24 @@ function setupDelegation() {
 }
 
 function initIconState() {
-  const toggle = document.querySelector('.theme-toggle')
-  if (!toggle) return
+  const toggles = document.querySelectorAll('.theme-toggle')
+  if (!toggles.length) return
 
-  const sunGroup = toggle.querySelector('.theme-sun')
-  const moonGroup = toggle.querySelector('.theme-moon')
-  if (!sunGroup || !moonGroup) return
+  toggles.forEach((toggle) => {
+    const sunGroup = toggle.querySelector('.theme-sun')
+    const moonGroup = toggle.querySelector('.theme-moon')
+    if (!sunGroup || !moonGroup) return
 
-  if (currentTheme === 'dark') {
-    gsap.set(sunGroup, { opacity: 1, scale: 1, rotation: 0 })
-    gsap.set(moonGroup, { opacity: 0, scale: 0.5, rotation: -90 })
-  } else {
-    gsap.set(sunGroup, { opacity: 0, scale: 0.5, rotation: 90 })
-    gsap.set(moonGroup, { opacity: 1, scale: 1, rotation: 0 })
-  }
+    if (currentTheme === 'dark') {
+      gsap.set(sunGroup, { opacity: 1, scale: 1, rotation: 0 })
+      gsap.set(moonGroup, { opacity: 0, scale: 0.5, rotation: -90 })
+    } else {
+      gsap.set(sunGroup, { opacity: 0, scale: 0.5, rotation: 90 })
+      gsap.set(moonGroup, { opacity: 1, scale: 1, rotation: 0 })
+    }
 
-  toggle.setAttribute('aria-label', currentTheme === 'dark' ? 'Activar modo claro' : 'Activar modo oscuro')
+    toggle.setAttribute('aria-label', currentTheme === 'dark' ? 'Activar modo claro' : 'Activar modo oscuro')
+  })
 }
 
 export function initTheme() {
