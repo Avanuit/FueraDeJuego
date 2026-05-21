@@ -2,71 +2,33 @@ import gsap from '../animation-engine.js'
 import { ScrollTrigger } from '../animation-engine.js'
 import { splitText } from '../text-split.js'
 import {
+  revealTextChars,
+  revealTextWords,
+  staggerReveal,
+  animateCounter,
+  drawSVG,
+  initMagneticButtons,
+  reducedMotion,
+} from '../animation-utils.js'
+import {
   animateSectionLabel,
   animateSectionTitle,
   animateParagraphs,
   createParallaxImage,
   animateStatItems,
   animateNumberCounter,
-  animateCTA,
+  animatePageHeroAdvanced,
+  animateHeroParallax,
 } from './shared.js'
 
 gsap.registerPlugin(ScrollTrigger)
 
 function animatePageHero() {
-  const hero = document.querySelector('.page-hero')
-  if (!hero) return
-
-  const tl = gsap.timeline({ delay: 0.2 })
-
-  const tag = hero.querySelector('.tag')
-  if (tag) {
-    tl.fromTo(tag, { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' })
-  }
-
-  const title = hero.querySelector('.page-hero__title')
-  if (title) {
-    const split = splitText(title, { type: 'chars', charsClass: 'hero-char' })
-    if (split && split.chars.length) {
-      gsap.set(split.chars, { opacity: 0, y: 50, clipPath: 'inset(0 0 100% 0)' })
-      tl.to(split.chars, {
-        opacity: 1, y: 0, clipPath: 'inset(0 0 0% 0)',
-        duration: 0.8, stagger: 0.025, ease: 'power3.out',
-      }, '-=0.3')
-    }
-  }
-
-  const sub = hero.querySelector('.page-hero__sub')
-  if (sub) {
-    tl.fromTo(sub, { opacity: 0, y: 25 }, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, '-=0.4')
-  }
-
-  const imgWrap = hero.querySelector('.page-hero__img-wrap')
-  if (imgWrap) {
-    gsap.set(imgWrap, { clipPath: 'circle(0% at 50% 50%)' })
-    tl.to(imgWrap, { clipPath: 'circle(75% at 50% 50%)', duration: 1.4, ease: 'power4.inOut' }, '-=0.9')
-  }
+  animatePageHeroAdvanced(document.querySelector('.page-hero'))
 }
 
-function animateHeroParallax() {
-  const hero = document.querySelector('.page-hero')
-  if (!hero) return
-
-  const heroImg = hero.querySelector('.page-hero__img-wrap img')
-  if (heroImg) {
-    gsap.set(heroImg, { scale: 1.15 })
-    gsap.to(heroImg, {
-      scale: 1,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: hero,
-        start: 'top top',
-        end: 'bottom top',
-        scrub: 1,
-        _persistent: true,
-      },
-    })
-  }
+function animateHeroParallaxWrapper() {
+  animateHeroParallax(document.querySelector('.page-hero'))
 }
 
 function animateSinopsis() {
@@ -98,22 +60,22 @@ function animateChapters() {
   if (!grid) return
 
   const cards = grid.querySelectorAll('.chapter-card')
-  cards.forEach((card) => {
+  cards.forEach((card, i) => {
     const tl = gsap.timeline({
       scrollTrigger: { trigger: card, start: 'top 88%', once: true },
     })
 
     tl.fromTo(card,
-      { opacity: 0, y: 50, rotateX: 8 },
-      { opacity: 1, y: 0, rotateX: 0, duration: 0.9, ease: 'power3.out' }
+      { opacity: 0, y: 60, rotateX: 12, rotateY: i % 2 === 0 ? -6 : 6 },
+      { opacity: 1, y: 0, rotateX: 0, rotateY: 0, duration: 1, ease: 'power3.out' }
     )
 
     const number = card.querySelector('.chapter-card__number')
     if (number) {
       tl.fromTo(number,
-        { scale: 0.5, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 0.5, ease: 'back.out(2)' },
-        '-=0.6'
+        { scale: 0.4, opacity: 0, rotateY: -90 },
+        { scale: 1, opacity: 1, rotateY: 0, duration: 0.6, ease: 'back.out(2)' },
+        '-=0.7'
       )
     }
 
@@ -121,8 +83,8 @@ function animateChapters() {
     if (content) {
       const children = content.querySelectorAll('h3, p, a')
       tl.fromTo(children,
-        { opacity: 0, y: 15 },
-        { opacity: 1, y: 0, duration: 0.5, stagger: 0.08, ease: 'power2.out' },
+        { opacity: 0, y: 18 },
+        { opacity: 1, y: 0, duration: 0.55, stagger: 0.08, ease: 'power2.out' },
         '-=0.4'
       )
     }
@@ -132,9 +94,9 @@ function animateChapters() {
       gsap.set(img, { clipPath: 'inset(0 0 100% 0)' })
       tl.to(img, {
         clipPath: 'inset(0 0 0% 0)',
-        duration: 0.8,
+        duration: 0.9,
         ease: 'power2.inOut',
-      }, '-=0.7')
+      }, '-=0.8')
     }
   })
 }
@@ -149,16 +111,30 @@ function animateTransmedia() {
   const steps = section.querySelectorAll('.flow-step')
   const arrows = section.querySelectorAll('.flow-arrow')
 
-  steps.forEach((step) => {
+  steps.forEach((step, i) => {
     gsap.fromTo(step,
-      { opacity: 0, y: 40, scale: 0.92 },
+      { opacity: 0, y: 50, scale: 0.9 },
       {
         opacity: 1, y: 0, scale: 1,
-        duration: 0.8,
+        duration: 0.9,
         ease: 'power3.out',
         scrollTrigger: { trigger: step, start: 'top 88%', once: true },
       }
     )
+
+    // Pop the icon inside the step
+    const icon = step.querySelector('.flow-step__icon')
+    if (icon) {
+      gsap.fromTo(icon,
+        { scale: 0, rotation: -45 },
+        {
+          scale: 1, rotation: 0,
+          duration: 0.5,
+          ease: 'back.out(2)',
+          scrollTrigger: { trigger: step, start: 'top 85%', once: true },
+        }
+      )
+    }
   })
 
   arrows.forEach((arrow) => {
@@ -166,7 +142,7 @@ function animateTransmedia() {
       { opacity: 0, scaleX: 0 },
       {
         opacity: 1, scaleX: 1,
-        duration: 0.6,
+        duration: 0.7,
         ease: 'power2.inOut',
         scrollTrigger: { trigger: arrow, start: 'top 88%', once: true },
       }
@@ -183,12 +159,12 @@ function animateMetrics() {
 
   const items = grid.querySelectorAll('.metric-item')
   gsap.fromTo(items,
-    { opacity: 0, y: 40, scale: 0.95 },
+    { opacity: 0, y: 50, scale: 0.92 },
     {
       opacity: 1, y: 0, scale: 1,
-      duration: 0.7,
+      duration: 0.8,
       stagger: 0.15,
-      ease: 'back.out(1.2)',
+      ease: 'back.out(1.4)',
       scrollTrigger: { trigger: grid, start: 'top 85%', once: true },
     }
   )
@@ -196,8 +172,11 @@ function animateMetrics() {
   items.forEach((item, i) => {
     const value = item.querySelector('.metric-item__value')
     if (value) {
-      const target = parseInt(value.textContent, 10)
-      if (!isNaN(target) && target > 0) {
+      const text = value.textContent.trim()
+      const match = text.match(/(\d+)/)
+      if (match) {
+        const target = parseInt(match[1], 10)
+        const suffix = text.replace(/[\d,]/g, '')
         const counter = { val: 0 }
         ScrollTrigger.create({
           trigger: value,
@@ -206,10 +185,12 @@ function animateMetrics() {
           onEnter: () => {
             gsap.to(counter, {
               val: target,
-              duration: 2,
+              duration: 2.2,
               ease: 'power2.out',
               delay: i * 0.15,
-              onUpdate() { value.textContent = Math.round(counter.val) },
+              onUpdate() {
+                value.textContent = Math.round(counter.val).toLocaleString() + suffix
+              },
             })
           },
         })
@@ -220,7 +201,7 @@ function animateMetrics() {
 
 export function init() {
   animatePageHero()
-  animateHeroParallax()
+  animateHeroParallaxWrapper()
   animateSinopsis()
   animateChapters()
   animateTransmedia()

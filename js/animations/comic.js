@@ -2,67 +2,26 @@ import gsap from '../animation-engine.js'
 import { ScrollTrigger } from '../animation-engine.js'
 import { splitText } from '../text-split.js'
 import {
+  staggerReveal,
+  initMagneticButtons,
+  reducedMotion,
+} from '../animation-utils.js'
+import {
   animateSectionLabel,
   animateSectionTitle,
   animateParagraphs,
+  animatePageHeroAdvanced,
+  animateHeroParallax,
 } from './shared.js'
 
 gsap.registerPlugin(ScrollTrigger)
 
 function animatePageHero() {
-  const hero = document.querySelector('.page-hero')
-  if (!hero) return
-
-  const tl = gsap.timeline({ delay: 0.2 })
-
-  const tag = hero.querySelector('.tag')
-  if (tag) {
-    tl.fromTo(tag, { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' })
-  }
-
-  const title = hero.querySelector('.page-hero__title')
-  if (title) {
-    const split = splitText(title, { type: 'chars', charsClass: 'hero-char' })
-    if (split && split.chars.length) {
-      gsap.set(split.chars, { opacity: 0, y: 50, clipPath: 'inset(0 0 100% 0)' })
-      tl.to(split.chars, {
-        opacity: 1, y: 0, clipPath: 'inset(0 0 0% 0)',
-        duration: 0.8, stagger: 0.025, ease: 'power3.out',
-      }, '-=0.3')
-    }
-  }
-
-  const sub = hero.querySelector('.page-hero__sub')
-  if (sub) {
-    tl.fromTo(sub, { opacity: 0, y: 25 }, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, '-=0.4')
-  }
-
-  const imgWrap = hero.querySelector('.page-hero__img-wrap')
-  if (imgWrap) {
-    gsap.set(imgWrap, { clipPath: 'circle(0% at 50% 50%)' })
-    tl.to(imgWrap, { clipPath: 'circle(75% at 50% 50%)', duration: 1.4, ease: 'power4.inOut' }, '-=0.9')
-  }
+  animatePageHeroAdvanced(document.querySelector('.page-hero'))
 }
 
-function animateHeroParallax() {
-  const hero = document.querySelector('.page-hero')
-  if (!hero) return
-
-  const heroImg = hero.querySelector('.page-hero__img-wrap img')
-  if (heroImg) {
-    gsap.set(heroImg, { scale: 1.15 })
-    gsap.to(heroImg, {
-      scale: 1,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: hero,
-        start: 'top top',
-        end: 'bottom top',
-        scrub: 1,
-        _persistent: true,
-      },
-    })
-  }
+function animateHeroParallaxWrapper() {
+  animateHeroParallax(document.querySelector('.page-hero'))
 }
 
 function animateComicViewer() {
@@ -72,8 +31,13 @@ function animateComicViewer() {
   gsap.set(wrapper, { opacity: 0, rotateY: -15, scale: 0.9, transformPerspective: 2000 })
   gsap.to(wrapper, {
     opacity: 1, rotateY: 0, scale: 1,
-    duration: 1.2, ease: 'power3.out',
-    scrollTrigger: { trigger: wrapper, start: 'top 85%', once: true },
+    duration: 1.2,
+    ease: 'power3.out',
+    scrollTrigger: {
+      trigger: wrapper,
+      start: 'top 85%',
+      once: true,
+    },
   })
 
   const controls = document.querySelector('.comic-controls')
@@ -81,25 +45,30 @@ function animateComicViewer() {
     gsap.fromTo(controls,
       { opacity: 0, y: 20 },
       {
-        opacity: 1, y: 0, duration: 0.6, ease: 'power2.out',
+        opacity: 1, y: 0,
+        duration: 0.6,
+        ease: 'power2.out',
         scrollTrigger: { trigger: controls, start: 'top 90%', once: true },
       }
     )
   }
 
-  const thumbs = document.querySelector('.comic-thumbs-wrapper')
-  if (thumbs) {
-    const thumbItems = thumbs.querySelectorAll('.comic-thumb')
-    if (thumbItems.length) {
-      gsap.fromTo(thumbItems,
-        { opacity: 0, scale: 0.85, y: 15 },
-        {
-          opacity: 1, scale: 1, y: 0,
-          duration: 0.5, stagger: 0.08, ease: 'back.out(1.5)',
-          scrollTrigger: { trigger: thumbs, start: 'top 90%', once: true },
-        }
-      )
-    }
+  const thumbs = document.querySelectorAll('.comic-thumb')
+  if (thumbs.length) {
+    gsap.fromTo(thumbs,
+      { opacity: 0, scale: 0.8 },
+      {
+        opacity: 1, scale: 1,
+        duration: 0.4,
+        stagger: 0.05,
+        ease: 'back.out(1.5)',
+        scrollTrigger: {
+          trigger: thumbs[0].parentElement,
+          start: 'top 90%',
+          once: true,
+        },
+      }
+    )
   }
 }
 
@@ -107,53 +76,66 @@ function animateInfoCards() {
   const cards = document.querySelectorAll('.comic-info-card')
   if (!cards.length) return
 
-  const section = cards[0].closest('section') || cards[0].parentElement
+  const section = cards[0].closest('section')
   if (section) {
     animateSectionLabel(section)
-    animateSectionTitle(section, { y: 40, rotateX: -10 })
-    animateParagraphs(section.querySelectorAll('p'), { y: 20 })
+    animateSectionTitle(section, { y: 35, rotateX: -10 })
   }
 
   cards.forEach((card, i) => {
-    gsap.fromTo(card,
-      { opacity: 0, y: 40, rotateY: 8 },
-      {
-        opacity: 1, y: 0, rotateY: 0,
-        duration: 0.8, ease: 'power3.out',
-        scrollTrigger: { trigger: card, start: 'top 88%', once: true },
-      }
+    const tl = gsap.timeline({
+      scrollTrigger: { trigger: card, start: 'top 88%', once: true },
+    })
+
+    tl.fromTo(card,
+      { opacity: 0, y: 50, rotateX: 10 },
+      { opacity: 1, y: 0, rotateX: 0, duration: 0.9, ease: 'power3.out' }
     )
 
     const icon = card.querySelector('.comic-info-card__icon')
     if (icon) {
-      gsap.fromTo(icon,
-        { scale: 0, rotation: -15 },
-        {
-          scale: 1, rotation: 0,
-          duration: 0.5, ease: 'back.out(2)',
-          scrollTrigger: { trigger: card, start: 'top 88%', once: true },
-        }
+      tl.fromTo(icon,
+        { scale: 0, rotation: -30 },
+        { scale: 1, rotation: 0, duration: 0.5, ease: 'back.out(2)' },
+        '-=0.5'
       )
+    }
+
+    const title = card.querySelector('h4')
+    if (title) {
+      const split = splitText(title, { type: 'chars', charsClass: 'info-char' })
+      if (split && split.chars.length) {
+        gsap.set(split.chars, { opacity: 0, y: 20 })
+        tl.to(split.chars, {
+          opacity: 1, y: 0,
+          duration: 0.4,
+          stagger: 0.015,
+          ease: 'power2.out',
+        }, '-=0.3')
+      }
     }
   })
 }
 
 function animateComicCTA() {
-  const cta = document.querySelector('.comic-cta')
+  const cta = document.querySelector('.comic-cta__inner')
   if (!cta) return
 
   const title = cta.querySelector('h3')
   if (title) {
     const split = splitText(title, { type: 'words', wordsClass: 'cta-word' })
     if (split && split.words.length) {
-      gsap.set(split.words, { opacity: 0, y: 30 })
+      gsap.set(split.words, { opacity: 0, y: 40, rotateX: -15 })
       ScrollTrigger.create({
         trigger: title,
-        start: 'top 88%',
+        start: 'top 85%',
         once: true,
         onEnter: () => {
           gsap.to(split.words, {
-            opacity: 1, y: 0, duration: 0.7, stagger: 0.06, ease: 'power3.out',
+            opacity: 1, y: 0, rotateX: 0,
+            duration: 0.8,
+            stagger: 0.05,
+            ease: 'power3.out',
           })
         },
       })
@@ -163,9 +145,11 @@ function animateComicCTA() {
   const sub = cta.querySelector('p')
   if (sub) {
     gsap.fromTo(sub,
-      { opacity: 0, y: 15 },
+      { opacity: 0, y: 20 },
       {
-        opacity: 1, y: 0, duration: 0.6, ease: 'power2.out',
+        opacity: 1, y: 0,
+        duration: 0.6,
+        ease: 'power2.out',
         scrollTrigger: { trigger: sub, start: 'top 88%', once: true },
       }
     )
@@ -174,18 +158,22 @@ function animateComicCTA() {
   const buttons = cta.querySelectorAll('.btn')
   if (buttons.length) {
     gsap.fromTo(buttons,
-      { opacity: 0, scale: 0.85 },
+      { opacity: 0, scale: 0.85, y: 15 },
       {
-        opacity: 1, scale: 1, duration: 0.6, stagger: 0.1, ease: 'back.out(1.5)',
+        opacity: 1, scale: 1, y: 0,
+        duration: 0.6,
+        stagger: 0.12,
+        ease: 'back.out(1.5)',
         scrollTrigger: { trigger: buttons[0], start: 'top 88%', once: true },
       }
     )
+    initMagneticButtons('.comic-cta__inner .btn')
   }
 }
 
 export function init() {
   animatePageHero()
-  animateHeroParallax()
+  animateHeroParallaxWrapper()
   animateComicViewer()
   animateInfoCards()
   animateComicCTA()

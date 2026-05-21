@@ -188,6 +188,8 @@
       .page-entry__img:hover { box-shadow: 6px 6px 0px var(--surface-3); transform: none; }
     }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 </head>
 <body>
 
@@ -320,6 +322,7 @@
   </script>
   <script type="module" src="js/theme.js"></script>
   <script type="module">
+    import './js/gsap-setup.js'
     import gsap from './js/animation-engine.js'
     import { ScrollTrigger } from './js/animation-engine.js'
     import { initPageAnimations } from './js/animations/index.js'

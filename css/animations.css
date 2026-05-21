@@ -390,13 +390,130 @@ body.is-transitioning {
 }
 
 /* ============================================
+   TILT & MAGNETIC HELPERS
+   ============================================ */
+.tilt-card {
+  transform-style: preserve-3d;
+  transition: box-shadow 0.3s ease;
+}
+
+.magnetic {
+  will-change: transform;
+}
+
+/* ============================================
+   MAGNETIC BUTTON GLOW
+   ============================================ */
+.btn--accent {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn--accent::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(135deg, rgba(255, 42, 0, 0.4), rgba(255, 214, 0, 0.2));
+  opacity: 0;
+  filter: blur(8px);
+  z-index: -1;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.btn--accent:hover::after {
+  opacity: 1;
+}
+
+/* ============================================
+   SCROLL PROGRESS COLOR
+   ============================================ */
+.scroll-progress {
+  background: linear-gradient(90deg, #FF2A00, #FFD600);
+}
+
+/* ============================================
+   CHARACTER NAME HIGHLIGHT
+   ============================================ */
+.char-name {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+/* ============================================
+   QUOTE CHARACTER
+   ============================================ */
+.quote-char {
+  display: inline-block;
+  will-change: opacity;
+}
+
+.lema-char {
+  display: inline-block;
+  will-change: opacity;
+}
+
+/* ============================================
+   CITY CARD 3D
+   ============================================ */
+.city-card {
+  transform-style: preserve-3d;
+}
+
+/* ============================================
+   BAR CHART ANIMATION SETUP
+   ============================================ */
+.bar-fill {
+  transform-origin: left;
+  will-change: transform;
+}
+
+/* ============================================
+   PROGRESS RING
+   ============================================ */
+.progress-ring svg circle:last-child {
+  will-change: stroke-dashoffset;
+}
+
+/* ============================================
+   EVIDENCE ITEM CLIP
+   ============================================ */
+.evidence-item img {
+  will-change: clip-path, transform;
+}
+
+/* ============================================
+   TESTIMONIAL AVATAR
+   ============================================ */
+.testimonial-card__avatar {
+  will-change: clip-path;
+}
+
+/* ============================================
+   COMIC PAGE ENTRY
+   ============================================ */
+.page-entry__img {
+  will-change: clip-path, transform;
+}
+
+/* ============================================
+   NAV LINK UNDERLINE
+   ============================================ */
+.nav__link {
+  position: relative;
+}
+
+/* ============================================
    REDUCED MOTION PREFERENCES
    ============================================ */
 @media (prefers-reduced-motion: reduce) {
   .char,
   .word,
   .hero-char,
-  .title-word {
+  .title-word,
+  .char-name,
+  .quote-char,
+  .lema-char {
     will-change: auto;
   }
 
@@ -415,4 +532,17 @@ body.is-transitioning {
     opacity: 1 !important;
     transform: none !important;
   }
+
+  .tilt-card,
+  .city-card,
+  .char-card,
+  .testimonial-card {
+    transform: none !important;
+  }
 }
+
+/* Global reduced-motion class hook */
+.reduced-motion .scroll-progress {
+  display: none !important;
+}
+

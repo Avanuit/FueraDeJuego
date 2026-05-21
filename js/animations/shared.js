@@ -1,84 +1,75 @@
 import gsap from '../animation-engine.js'
 import { ScrollTrigger } from '../animation-engine.js'
 import { splitText } from '../text-split.js'
+import {
+  revealTextChars,
+  revealTextWords,
+  revealImage,
+  parallaxImage,
+  staggerReveal,
+  animateCounter,
+  heroParallax,
+  reducedMotion,
+} from '../animation-utils.js'
 
 gsap.registerPlugin(ScrollTrigger)
 
+// ── Section Label ─────────────────────────────
 export function animateSectionLabel(element, options = {}) {
   if (!element) return
 
   const label = element.querySelector('.section-label')
   if (!label) return
 
-  const split = splitText(label, { type: 'chars', charsClass: 'label-char' })
-  if (!split || !split.chars.length) return
+  const { start = 'top 88%' } = options
 
-  const {
-    delay = 0,
-    duration = 0.5,
-    stagger = 0.03,
-    ease = 'power2.out',
-    start = 'top 88%',
-  } = options
-
-  gsap.set(split.chars, { opacity: 0, y: 20 })
-  ScrollTrigger.create({
-    trigger: label,
-    start,
-    once: true,
-    onEnter: () => {
-      gsap.to(split.chars, {
-        opacity: 1,
-        y: 0,
-        duration,
-        stagger,
-        ease,
-        delay,
-      })
+  const result = revealTextChars(label, {
+    y: 20,
+    duration: 0.5,
+    stagger: 0.03,
+    ease: 'power2.out',
+    scrollTrigger: {
+      trigger: label,
+      start,
+      once: true,
     },
   })
+
+  return result
 }
 
+// ── Section Title ─────────────────────────────
 export function animateSectionTitle(element, options = {}) {
   if (!element) return
 
   const title = element.querySelector('.section-title')
   if (!title) return
 
-  const split = splitText(title, { type: 'words', wordsClass: 'title-word' })
-  if (!split || !split.words.length) return
-
   const {
-    delay = 0,
-    duration = 0.8,
-    stagger = 0.06,
-    ease = 'power3.out',
     start = 'top 88%',
     y = 40,
     rotateX = -15,
   } = options
 
-  gsap.set(split.words, { opacity: 0, y, rotateX })
-  ScrollTrigger.create({
-    trigger: title,
-    start,
-    once: true,
-    onEnter: () => {
-      gsap.to(split.words, {
-        opacity: 1,
-        y: 0,
-        rotateX: 0,
-        duration,
-        stagger,
-        ease,
-        delay,
-      })
+  const result = revealTextWords(title, {
+    y,
+    rotateX,
+    duration: 0.8,
+    stagger: 0.06,
+    ease: 'power3.out',
+    scrollTrigger: {
+      trigger: title,
+      start,
+      once: true,
     },
   })
+
+  return result
 }
 
+// ── Paragraphs ──────────────────────────────────
 export function animateParagraphs(paragraphs, options = {}) {
-  if (!paragraphs || !paragraphs.length) return
+  if (!paragraphs || !paragraphs.length) return null
 
   const {
     duration = 0.8,
@@ -88,7 +79,7 @@ export function animateParagraphs(paragraphs, options = {}) {
     start = 'top 85%',
   } = options
 
-  gsap.fromTo(
+  return gsap.fromTo(
     paragraphs,
     { opacity: 0, y },
     {
@@ -106,8 +97,9 @@ export function animateParagraphs(paragraphs, options = {}) {
   )
 }
 
+// ── Parallax Image (single) ───────────────────
 export function createParallaxImage(imgElement, options = {}) {
-  if (!imgElement) return
+  if (!imgElement) return null
 
   const {
     clipPathStart = 'inset(100% 0 0 0)',
@@ -120,37 +112,28 @@ export function createParallaxImage(imgElement, options = {}) {
     scrub = 1,
   } = options
 
-  gsap.set(imgElement, { clipPath: clipPathStart })
-
-  ScrollTrigger.create({
-    trigger: imgElement,
-    start: clipStart,
-    end: clipEnd,
-    scrub,
-    onEnter: () => {
-      gsap.to(imgElement, {
-        clipPath: clipPathEnd,
-        ease: 'power2.inOut',
-        duration: 1,
-      })
+  // Reveal
+  revealImage(imgElement, 'up', {
+    scrollTrigger: {
+      trigger: imgElement,
+      start: clipStart,
+      end: clipEnd,
+      scrub,
     },
   })
 
+  // Parallax
   if (parentElement) {
-    gsap.to(imgElement, {
-      yPercent: yPercentPositive,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: parentElement,
-        start: 'top bottom',
-        end: 'bottom top',
-        scrub,
-        _persistent: true,
-      },
+    parallaxImage(imgElement, yPercentPositive, {
+      trigger: parentElement,
+      start: 'top bottom',
+      end: 'bottom top',
+      scrub,
     })
   }
 }
 
+// ── Dual Parallax ─────────────────────────────
 export function createDualParallax(frontImg, backImg, options = {}) {
   if (frontImg) {
     createParallaxImage(frontImg, {
@@ -169,6 +152,7 @@ export function createDualParallax(frontImg, backImg, options = {}) {
   }
 }
 
+// ── Card Timeline ───────────────────────────────
 export function animateCardTimeline(card, elements, options = {}) {
   if (!card) return
 
@@ -250,7 +234,6 @@ export function animateCardTimeline(card, elements, options = {}) {
         start: 'top bottom',
         end: 'bottom top',
         scrub: 1,
-        _persistent: true,
       },
     })
   }
@@ -258,6 +241,7 @@ export function animateCardTimeline(card, elements, options = {}) {
   return tl
 }
 
+// ── Number Counter ────────────────────────────
 export function animateNumberCounter(element, options = {}) {
   if (!element) return
 
@@ -266,26 +250,19 @@ export function animateNumberCounter(element, options = {}) {
 
   const { duration = 2.2, ease = 'power2.out', delay = 0 } = options
 
-  const counter = { val: 0 }
-
-  ScrollTrigger.create({
-    trigger: element,
-    start: 'top 88%',
-    once: true,
-    onEnter: () => {
-      gsap.to(counter, {
-        val: target,
-        duration,
-        ease,
-        delay,
-        onUpdate() {
-          element.textContent = Math.round(counter.val)
-        },
-      })
+  return animateCounter(element, {
+    duration,
+    ease,
+    delay,
+    scrollTrigger: {
+      trigger: element,
+      start: 'top 88%',
+      once: true,
     },
   })
 }
 
+// ── Stat Items ────────────────────────────────
 export function animateStatItems(statsContainer, options = {}) {
   if (!statsContainer) return
 
@@ -337,6 +314,7 @@ export function animateStatItems(statsContainer, options = {}) {
   })
 }
 
+// ── CTA Section ─────────────────────────────────
 export function animateCTA(ctaElement, options = {}) {
   if (!ctaElement) return
 
@@ -448,6 +426,7 @@ export function animateCTA(ctaElement, options = {}) {
   }
 }
 
+// ── Page Hero Advanced ──────────────────────────
 export function animatePageHeroAdvanced(hero, options = {}) {
   if (!hero) return
 
@@ -468,18 +447,14 @@ export function animatePageHeroAdvanced(hero, options = {}) {
 
   const title = hero.querySelector('.page-hero__title')
   if (title) {
-    const split = splitText(title, { type: 'chars', charsClass: 'hero-char' })
-    if (split && split.chars.length) {
-      const { opacity = 0, y = 50, clipPathIn = 'inset(0 0 100% 0)', duration = 0.8, stagger = 0.025, ease = 'power3.out' } = titleOptions
-      gsap.set(split.chars, { opacity, y, clipPath: clipPathIn })
-      tl.to(split.chars, {
-        opacity: 1,
-        y: 0,
-        clipPath: 'inset(0 0 0% 0)',
-        duration,
-        stagger,
-        ease,
-      }, '-=0.3')
+    const result = revealTextChars(title, {
+      y: 50,
+      duration: 0.8,
+      stagger: 0.025,
+      ease: 'power3.out',
+    })
+    if (result) {
+      tl.add(result.tween, '-=0.3')
     }
   }
 
@@ -495,8 +470,11 @@ export function animatePageHeroAdvanced(hero, options = {}) {
     gsap.set(imgWrap, { clipPath })
     tl.to(imgWrap, { clipPath: clipPathEnd, duration, ease }, '-=0.9')
   }
+
+  return tl
 }
 
+// ── Hero Parallax ─────────────────────────────
 export function animateHeroParallax(hero, options = {}) {
   if (!hero) return
 
@@ -519,7 +497,6 @@ export function animateHeroParallax(hero, options = {}) {
         start,
         end,
         scrub,
-        _persistent: true,
       },
     })
   }
@@ -535,8 +512,56 @@ export function animateHeroParallax(hero, options = {}) {
         start,
         end,
         scrub,
-        _persistent: true,
       },
     })
   }
+}
+
+// ── Quote Reveal (special) ──────────────────────
+export function animateQuoteReveal(quoteEl, options = {}) {
+  if (!quoteEl) return
+
+  const { start = 'top 85%' } = options
+
+  gsap.set(quoteEl, { opacity: 0, borderLeftColor: 'transparent' })
+
+  ScrollTrigger.create({
+    trigger: quoteEl,
+    start,
+    once: true,
+    onEnter: () => {
+      const tl = gsap.timeline()
+
+      tl.to(quoteEl, { opacity: 1, duration: 0.4, ease: 'power2.out' })
+      tl.fromTo(quoteEl, { borderLeftColor: 'transparent' }, {
+        borderLeftColor: 'var(--accent)',
+        duration: 0.8,
+        ease: 'power2.inOut',
+      }, '<')
+
+      const split = splitText(quoteEl, { type: 'chars', charsClass: 'quote-char' })
+      if (split && split.chars.length) {
+        gsap.set(split.chars, { opacity: 0 })
+        tl.to(split.chars, {
+          opacity: 1,
+          duration: 0.4,
+          stagger: 0.015,
+          ease: 'none',
+        }, '-=0.5')
+      }
+    },
+  })
+}
+
+// ── Reusable Scrub Reveal ───────────────────────
+export function scrubReveal(el, vars, scrollVars) {
+  if (!el) return null
+  return gsap.fromTo(el, vars.from, {
+    ...vars.to,
+    scrollTrigger: {
+      trigger: el,
+      once: true,
+      ...scrollVars,
+    },
+  })
 }

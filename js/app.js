@@ -1,3 +1,4 @@
+import './gsap-setup.js'
 import gsap from './animation-engine.js'
 import { ScrollTrigger } from './animation-engine.js'
 import { createLenis, getLenis } from './lenis.js'

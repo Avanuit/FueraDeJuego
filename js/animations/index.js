@@ -1,5 +1,6 @@
 import gsap from '../animation-engine.js'
 import { ScrollTrigger } from '../animation-engine.js'
+import { scrollProgressColor } from '../animation-utils.js'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -17,30 +18,40 @@ const PAGE_ANIMATIONS = {
 }
 
 function createScrollProgress() {
-  if (progressBar) return
+  if (progressBar) {
+    progressBar.remove()
+    progressBar = null
+  }
+
   progressBar = document.createElement('div')
   progressBar.className = 'scroll-progress'
   document.body.appendChild(progressBar)
 
-  gsap.to(progressBar, {
-    scaleX: 1,
-    ease: 'none',
-    scrollTrigger: {
-      trigger: document.body,
-      start: 'top top',
-      end: 'bottom bottom',
-      scrub: 0.3,
-    },
+  // Color-shifting scroll progress
+  scrollProgressColor(progressBar, {
+    fromColor: '#FF2A00',
+    toColor: '#FFD600',
+    scrub: 0.3,
   })
 }
 
 export function killPageAnimations() {
   if (currentContext) {
-    currentContext.revert()
+    try {
+      currentContext.revert()
+    } catch (e) {
+      // ignore
+    }
     currentContext = null
   }
   ScrollTrigger.getAll().forEach((st) => {
-    if (st.vars && !st.vars._persistent) st.kill()
+    if (st.vars && !st.vars._persistent) {
+      try {
+        st.kill()
+      } catch (e) {
+        // ignore
+      }
+    }
   })
 }
 
@@ -60,7 +71,13 @@ export async function initPageAnimations(namespace) {
   }
 
   createScrollProgress()
-  ScrollTrigger.refresh()
+
+  // Small delay to let DOM settle before refresh
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      ScrollTrigger.refresh()
+    })
+  })
 }
 
 export function refreshAnimations() {

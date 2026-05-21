@@ -1,220 +1,205 @@
-const instances = new Map()
+// ──────────────────────────────────────────────
+// Text Split — Fuera de Juego
+// Lightweight vanilla text splitter (chars / words / lines)
+// Compatible API with the original; enhanced for lines
+// ──────────────────────────────────────────────
 
-function wrapCharsAndWords(el, opts) {
-  const original = el.innerHTML
-  const text = el.textContent
+const instances = /* @__PURE__ */ new Map()
+
+function wrapChars(node, charsClass) {
+  const text = node.textContent
+  if (!text) return []
+
+  const span = document.createElement('span')
+  span.className = charsClass || 'char'
+  span.style.display = 'inline-block'
+  span.style.willChange = 'transform, opacity'
+
   const chars = []
-  const words = []
+  for (const char of text) {
+    const clone = span.cloneNode(false)
+    clone.textContent = char === ' ' ? '\u00A0' : char
+    chars.push(clone)
+  }
+
+  const wrapper = document.createElement('span')
+  wrapper.style.display = 'inline'
+  chars.forEach((c) => wrapper.appendChild(c))
+
+  return { wrapper, chars }
+}
+
+function wrapWords(node, wordsClass) {
+  const text = node.textContent
+  if (!text) return []
+
+  const words = text.split(/(\s+)/).filter(Boolean)
+  const wordSpan = document.createElement('span')
+  wordSpan.className = wordsClass || 'word'
+  wordSpan.style.display = 'inline-block'
+  wordSpan.style.overflow = 'hidden'
+  wordSpan.style.verticalAlign = 'top'
+
+  const wordEls = []
+  const wrapper = document.createElement('span')
+  wrapper.style.display = 'inline'
+
+  words.forEach((word) => {
+    if (/^\s+$/.test(word)) {
+      const space = document.createTextNode(' ')
+      wrapper.appendChild(space)
+      return
+    }
+    const clone = wordSpan.cloneNode(false)
+    clone.textContent = word
+    wordEls.push(clone)
+    wrapper.appendChild(clone)
+  })
+
+  return { wrapper, words: wordEls }
+}
+
+function wrapLines(el, wordsClass, charsClass) {
+  // First wrap words, then detect lines by offsetTop
+  const wordResult = wrapWords(el, wordsClass)
+  const tempContainer = document.createElement('div')
+  tempContainer.style.position = 'absolute'
+  tempContainer.style.visibility = 'hidden'
+  tempContainer.style.width = getComputedStyle(el).width
+  tempContainer.appendChild(wordResult.wrapper.cloneNode(true))
+  document.body.appendChild(tempContainer)
+
+  const tempWords = tempContainer.querySelectorAll('.' + (wordsClass || 'word'))
   const lines = []
+  let currentLine = []
+  let currentTop = null
 
-  const frag = document.createDocumentFragment()
-  const textNodes = []
-
-  function processNode(node) {
-    if (node.nodeType === Node.TEXT_NODE) {
-      const text = node.textContent
-      let wordBuffer = ''
-
-      for (let i = 0; i < text.length; i++) {
-        const ch = text[i]
-
-        if (ch === ' ' || ch === '\n' || ch === '\t') {
-          if (wordBuffer) {
-            const wordSpan = document.createElement('span')
-            wordSpan.className = opts.wordsClass || 'word'
-            wordSpan.style.display = 'inline-block'
-            wordSpan.style.overflow = 'hidden'
-
-            const innerWord = document.createElement('span')
-            innerWord.style.display = 'inline-block'
-
-            for (const c of wordBuffer) {
-              const charSpan = document.createElement('span')
-              charSpan.className = opts.charsClass || 'char'
-              charSpan.style.display = 'inline-block'
-              charSpan.textContent = c
-              innerWord.appendChild(charSpan)
-              chars.push(charSpan)
-            }
-
-            wordSpan.appendChild(innerWord)
-            words.push(wordSpan)
-            frag.appendChild(wordSpan)
-            wordBuffer = ''
-          }
-
-          const space = document.createElement('span')
-          space.innerHTML = '&nbsp;'
-          space.style.display = 'inline-block'
-          space.style.width = '0.25em'
-          frag.appendChild(space)
-        } else {
-          wordBuffer += ch
-        }
-      }
-
-      if (wordBuffer) {
-        const wordSpan = document.createElement('span')
-        wordSpan.className = opts.wordsClass || 'word'
-        wordSpan.style.display = 'inline-block'
-        wordSpan.style.overflow = 'hidden'
-
-        const innerWord = document.createElement('span')
-        innerWord.style.display = 'inline-block'
-
-        for (const c of wordBuffer) {
-          const charSpan = document.createElement('span')
-          charSpan.className = opts.charsClass || 'char'
-          charSpan.style.display = 'inline-block'
-          charSpan.textContent = c
-          innerWord.appendChild(charSpan)
-          chars.push(charSpan)
-        }
-
-        wordSpan.appendChild(innerWord)
-        words.push(wordSpan)
-        frag.appendChild(wordSpan)
-        wordBuffer = ''
-      }
-    } else if (node.nodeType === Node.ELEMENT_NODE) {
-      const clone = node.cloneNode(false)
-
-      if (node.tagName === 'BR') {
-        frag.appendChild(clone)
-        return
-      }
-
-      for (const child of node.childNodes) {
-        const childFrag = document.createDocumentFragment()
-        processElementChild(child, clone, opts, chars, words)
-      }
-
-      frag.appendChild(clone)
+  tempWords.forEach((word) => {
+    const top = word.offsetTop
+    if (currentTop === null || Math.abs(top - currentTop) < 2) {
+      currentLine.push(word.textContent)
+    } else {
+      lines.push(currentLine.join(' '))
+      currentLine = [word.textContent]
     }
-  }
+    currentTop = top
+  })
+  if (currentLine.length) lines.push(currentLine.join(' '))
 
-  function processElementChild(node, parent, opts, chars, words) {
-    if (node.nodeType === Node.TEXT_NODE) {
-      const text = node.textContent
-      let wordBuffer = ''
+  document.body.removeChild(tempContainer)
 
-      for (let i = 0; i < text.length; i++) {
-        const ch = text[i]
+  // Now build line wrappers
+  const lineSpan = document.createElement('span')
+  lineSpan.className = 'line'
+  lineSpan.style.display = 'block'
+  lineSpan.style.overflow = 'hidden'
 
-        if (ch === ' ' || ch === '\n' || ch === '\t') {
-          if (wordBuffer) {
-            const wordSpan = document.createElement('span')
-            wordSpan.className = opts.wordsClass || 'word'
-            wordSpan.style.display = 'inline-block'
-            wordSpan.style.overflow = 'hidden'
+  const lineEls = []
+  const wrapper = document.createElement('span')
+  wrapper.style.display = 'inline'
 
-            const innerWord = document.createElement('span')
-            innerWord.style.display = 'inline-block'
+  lines.forEach((lineText) => {
+    const clone = lineSpan.cloneNode(false)
+    const inner = document.createElement('span')
+    inner.style.display = 'inline-block'
+    inner.textContent = lineText
+    clone.appendChild(inner)
+    lineEls.push(clone)
+    wrapper.appendChild(clone)
+  })
 
-            for (const c of wordBuffer) {
-              const charSpan = document.createElement('span')
-              charSpan.className = opts.charsClass || 'char'
-              charSpan.style.display = 'inline-block'
-              charSpan.textContent = c
-              innerWord.appendChild(charSpan)
-              chars.push(charSpan)
-            }
+  return { wrapper, lines: lineEls, words: [], chars: [] }
+}
 
-            wordSpan.appendChild(innerWord)
-            words.push(wordSpan)
-            parent.appendChild(wordSpan)
-            wordBuffer = ''
-          }
-
-          const space = document.createElement('span')
-          space.innerHTML = '&nbsp;'
-          space.style.display = 'inline-block'
-          space.style.width = '0.25em'
-          parent.appendChild(space)
-        } else {
-          wordBuffer += ch
-        }
-      }
-
-      if (wordBuffer) {
-        const wordSpan = document.createElement('span')
-        wordSpan.className = opts.wordsClass || 'word'
-        wordSpan.style.display = 'inline-block'
-        wordSpan.style.overflow = 'hidden'
-
-        const innerWord = document.createElement('span')
-        innerWord.style.display = 'inline-block'
-
-        for (const c of wordBuffer) {
-          const charSpan = document.createElement('span')
-          charSpan.className = opts.charsClass || 'char'
-          charSpan.style.display = 'inline-block'
-          charSpan.textContent = c
-          innerWord.appendChild(charSpan)
-          chars.push(charSpan)
-        }
-
-        wordSpan.appendChild(innerWord)
-        words.push(wordSpan)
-        parent.appendChild(wordSpan)
-        wordBuffer = ''
-      }
-    } else if (node.nodeType === Node.ELEMENT_NODE) {
-      const clone = node.cloneNode(false)
-      for (const child of node.childNodes) {
-        processElementChild(child, clone, opts, chars, words)
-      }
-      parent.appendChild(clone)
+function processNode(node, type, charsClass, wordsClass) {
+  if (node.nodeType === Node.TEXT_NODE) {
+    if (type === 'chars') {
+      const result = wrapChars(node, charsClass)
+      return { wrapper: result.wrapper, chars: result.chars }
     }
+    if (type === 'words') {
+      const result = wrapWords(node, wordsClass)
+      return { wrapper: result.wrapper, words: result.words }
+    }
+    return { wrapper: document.createTextNode(node.textContent) }
   }
 
-  for (const child of el.childNodes) {
-    processNode(child)
+  if (node.nodeType === Node.ELEMENT_NODE) {
+    const clone = node.cloneNode(false)
+    const childChars = []
+    const childWords = []
+
+    Array.from(node.childNodes).forEach((child) => {
+      const result = processNode(child, type, charsClass, wordsClass)
+      clone.appendChild(result.wrapper)
+      if (result.chars) childChars.push(...result.chars)
+      if (result.words) childWords.push(...result.words)
+    })
+
+    return { wrapper: clone, chars: childChars, words: childWords }
   }
 
-  el.innerHTML = ''
-  el.appendChild(frag)
+  return { wrapper: node.cloneNode(false) }
+}
+
+export function splitText(selector, opts = {}) {
+  const el = typeof selector === 'string' ? document.querySelector(selector) : selector
+  if (!el) return null
+
+  const key = el
+  if (instances.has(key)) {
+    return instances.get(key)
+  }
+
+  const {
+    type = 'chars',
+    charsClass = 'char',
+    wordsClass = 'word',
+  } = opts
+
+  // Save original HTML for revert
+  const original = el.innerHTML
+
+  let chars = []
+  let words = []
+  let lines = []
+
+  if (type === 'lines') {
+    const result = wrapLines(el, wordsClass, charsClass)
+    el.innerHTML = ''
+    el.appendChild(result.wrapper)
+    lines = result.lines
+  } else {
+    const result = processNode(el, type, charsClass, wordsClass)
+    el.innerHTML = ''
+    el.appendChild(result.wrapper)
+    chars = result.chars || []
+    words = result.words || []
+  }
 
   const instance = {
+    el,
     chars,
     words,
     lines,
     original,
-    el,
     revert() {
       el.innerHTML = original
-      instances.delete(el)
+      instances.delete(key)
     },
   }
 
-  instances.set(el, instance)
+  instances.set(key, instance)
   return instance
 }
 
-export function splitText(selector, opts = {}) {
-  const els = typeof selector === 'string'
-    ? document.querySelectorAll(selector)
-    : [selector]
-
-  const results = []
-
-  for (const el of els) {
-    if (instances.has(el)) {
-      results.push(instances.get(el))
-      continue
-    }
-
-    const type = opts.type || 'chars'
-    const instance = wrapCharsAndWords(el, opts)
-    results.push(instance)
-  }
-
-  return results.length === 1 ? results[0] : results
+export function revertAll() {
+  instances.forEach((instance) => {
+    instance.el.innerHTML = instance.original
+  })
+  instances.clear()
 }
 
-export function revertAll() {
-  for (const [, instance] of instances) {
-    instance.el.innerHTML = instance.original
-  }
-  instances.clear()
+export function getInstances() {
+  return Array.from(instances.values())
 }
