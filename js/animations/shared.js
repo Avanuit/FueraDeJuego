@@ -241,23 +241,31 @@ export function animateCardTimeline(card, elements, options = {}) {
   return tl
 }
 
-// ── Number Counter ────────────────────────────
+// ── Number Counter (direct, no ScrollTrigger) ──
 export function animateNumberCounter(element, options = {}) {
-  if (!element) return
+  if (!element) return null
 
   const target = parseInt(element.dataset.target || element.textContent, 10)
-  if (isNaN(target) || target <= 0) return
+  if (isNaN(target) || target <= 0) {
+    // If no valid target, just show the text as-is
+    return null
+  }
 
   const { duration = 2.2, ease = 'power2.out', delay = 0 } = options
 
-  return animateCounter(element, {
+  if (reducedMotion) {
+    element.textContent = target
+    return null
+  }
+
+  const obj = { val: 0 }
+  return gsap.to(obj, {
+    val: target,
     duration,
     ease,
     delay,
-    scrollTrigger: {
-      trigger: element,
-      start: 'top 88%',
-      once: true,
+    onUpdate() {
+      element.textContent = Math.round(obj.val)
     },
   })
 }
@@ -284,34 +292,56 @@ export function animateStatItems(statsContainer, options = {}) {
   gsap.set(statItems, { opacity, y, scale })
   gsap.set(statItems, { borderLeftColor: borderColorFrom })
 
-  ScrollTrigger.create({
-    trigger: statsContainer,
-    start: 'top 85%',
-    once: true,
-    onEnter: () => {
-      gsap.to(statItems, {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        duration,
-        stagger,
-        ease,
+  const runAnimations = () => {
+    gsap.to(statItems, {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      duration,
+      stagger,
+      ease,
+    })
+
+    statItems.forEach((stat, i) => {
+      gsap.to(stat, {
+        borderLeftColor: borderColorTo,
+        duration: 0.5,
+        delay: i * counterDelay,
       })
 
-      statItems.forEach((stat, i) => {
-        gsap.to(stat, {
-          borderLeftColor: borderColorTo,
-          duration: 0.5,
-          delay: i * counterDelay,
-        })
+      const numberEl = stat.querySelector('.stat__number[data-target]')
+      if (numberEl) {
+        animateNumberCounter(numberEl, { delay: i * counterDelay })
+      }
+    })
+  }
 
-        const numberEl = stat.querySelector('.stat__number[data-target]')
-        if (numberEl) {
-          animateNumberCounter(numberEl, { delay: i * counterDelay })
-        }
-      })
-    },
-  })
+  // Check if already in viewport
+  const rect = statsContainer.getBoundingClientRect()
+  const vh = window.innerHeight
+  const isInViewport = rect.top < vh * 0.85 && rect.bottom > 0
+
+  if (isInViewport) {
+    runAnimations()
+  } else {
+    ScrollTrigger.create({
+      trigger: statsContainer,
+      start: 'top 85%',
+      once: true,
+      onEnter: runAnimations,
+    })
+  }
+
+  // Safety fallback: if counters are still at 0 after 3s, run them
+  setTimeout(() => {
+    const anyStillZero = Array.from(statItems).some((stat) => {
+      const num = stat.querySelector('.stat__number')
+      return num && num.textContent.trim() === '0'
+    })
+    if (anyStillZero) {
+      runAnimations()
+    }
+  }, 3000)
 }
 
 // ── CTA Section ─────────────────────────────────

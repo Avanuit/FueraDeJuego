@@ -348,7 +348,8 @@ function animateCTA() {
 
 export function init() {
   animateHero()
-  animateStats()
+  // Stats section removed per request — now static text only
+  // animateStats()
   animateIntro()
   animateCities()
   animateCTA()
