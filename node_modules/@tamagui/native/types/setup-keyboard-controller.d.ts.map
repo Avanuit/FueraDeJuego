@@ -1,0 +1,11 @@
+{
+  "mappings": "",
+  "names": [],
+  "sources": [
+    "src/setup-keyboard-controller.ts"
+  ],
+  "version": 3,
+  "sourcesContent": [
+    "/**\n * Setup keyboard controller for Tamagui native components.\n *\n * Simply import this module at the top of your app entry point:\n *\n * @example\n * ```tsx\n * import '@tamagui/native/setup-keyboard-controller'\n * ```\n *\n * This automatically detects and configures react-native-keyboard-controller\n * for use with Sheet and other keyboard-aware components.\n *\n * When enabled, Sheet gains:\n * - Frame-by-frame keyboard tracking (60/120 FPS)\n * - Smooth gesture + keyboard handoff\n * - Interactive keyboard dismiss on sheet drag\n */\n\nimport { setKeyboardControllerState } from './keyboardControllerState'\n\nfunction setup() {\n  const g = globalThis as any\n  if (g.__tamagui_native_keyboard_controller_setup_complete) {\n    return\n  }\n  g.__tamagui_native_keyboard_controller_setup_complete = true\n\n  try {\n    // dynamically require keyboard-controller - it should already be imported by the app\n    const rnkc = require('react-native-keyboard-controller')\n    const {\n      KeyboardProvider,\n      KeyboardAwareScrollView,\n      useKeyboardHandler,\n      useReanimatedKeyboardAnimation,\n      KeyboardController,\n      KeyboardEvents,\n      KeyboardStickyView,\n    } = rnkc\n\n    if (useKeyboardHandler && KeyboardProvider) {\n      setKeyboardControllerState({\n        enabled: true,\n        KeyboardProvider: KeyboardProvider || null,\n        KeyboardAwareScrollView: KeyboardAwareScrollView || null,\n        useKeyboardHandler: useKeyboardHandler || null,\n        useReanimatedKeyboardAnimation: useReanimatedKeyboardAnimation || null,\n        KeyboardController: KeyboardController || null,\n        KeyboardEvents: KeyboardEvents || null,\n        KeyboardStickyView: KeyboardStickyView || null,\n      })\n    }\n  } catch {\n    // keyboard-controller not available, that's fine\n  }\n}\n\n// run setup immediately on import\nsetup()\n"
+  ]
+}

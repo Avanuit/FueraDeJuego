@@ -1,0 +1,11 @@
+{
+  "mappings": "AAAA,SAAS,yBAAyB;AAClC,cACE,6BACA,wBACA,0BACK;AACP,SACE,+BAA+B,sCAC/B,iCAAiC,8CAC5B;AACP,SAAS,qBAAqB;AAC9B,cAAc,0BAA0B;AACxC,SACE,yBACA,0BACK,4BACA",
+  "names": [],
+  "sources": [
+    "src/gesture-handler.ts"
+  ],
+  "version": 3,
+  "sourcesContent": [
+    "export { getGestureHandler } from './gestureState'\nexport type {\n  ExternalPressOwnershipToken,\n  GestureHandlerAccessor,\n  PressGestureConfig,\n} from './gestureState'\nexport {\n  claimExternalPressOwnership as unstable_claimExternalPressOwnership,\n  releaseExternalPressOwnership as unstable_releaseExternalPressOwnership,\n} from './gestureState'\nexport { PressBoundary } from './PressBoundary'\nexport type { PressBoundaryProps } from './PressBoundary'\nexport {\n  getGestureHandlerConfig,\n  setupGestureHandler,\n  type GestureHandlerConfig,\n} from './setup-gesture-handler'\n"
+  ]
+}

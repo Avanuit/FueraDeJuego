@@ -1,0 +1,1 @@
+{"version":3,"file":"withStaticProperties.d.ts","sourceRoot":"","sources":["../src/withStaticProperties.tsx"],"names":[],"mappings":"AAEA,KAAK,QAAQ,CAAC,CAAC,EAAE,CAAC,IAAI,CAAC,GAAG,CAAC,CAAA;AAE3B,eAAO,MAAM,oBAAoB,GAAI,CAAC,SAAS,QAAQ,EAAE,CAAC,SAAS,MAAM,CAAC,MAAM,EAAE,GAAG,CAAC,EACpF,WAAW,CAAC,EACZ,aAAa,CAAC,KACb,QAAQ,CAAC,CAAC,EAAE,CAAC,CAMf,CAAA"}

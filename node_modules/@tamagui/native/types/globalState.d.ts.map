@@ -1,0 +1,11 @@
+{
+  "mappings": "AAAA,OAAO,iBAAS,kBAAkB,UAAU;CAAE;GAC5C,aACA,cAAc,IACb;CACD,WAAW;CACX,MAAM,MAAM",
+  "names": [],
+  "sources": [
+    "src/globalState.ts"
+  ],
+  "version": 3,
+  "sourcesContent": [
+    "export function createGlobalState<T extends { enabled: boolean }>(\n  key: string,\n  defaultValue: T\n): {\n  get: () => T\n  set: (next: T) => void\n} {\n  const GLOBAL_KEY = `__tamagui_${key}__`\n\n  type TamaguiGlobal = typeof globalThis & {\n    [GLOBAL_KEY]?: T\n  }\n\n  function getGlobalState(): T {\n    const g = globalThis as TamaguiGlobal\n    if (!g[GLOBAL_KEY]) {\n      // reset on module load so reloadReactNative gets a clean state\n      // (globalThis persists across reloads but module scope re-evaluates)\n      g[GLOBAL_KEY] = defaultValue\n    }\n    return g[GLOBAL_KEY]!\n  }\n\n  function setGlobalState(newState: T): void {\n    ;(globalThis as TamaguiGlobal)[GLOBAL_KEY] = newState\n  }\n\n  return {\n    get: getGlobalState,\n    set: setGlobalState,\n  }\n}\n"
+  ]
+}

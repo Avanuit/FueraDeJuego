@@ -1,0 +1,11 @@
+{
+  "mappings": "",
+  "names": [],
+  "sources": [
+    "src/setup-worklets.ts"
+  ],
+  "version": 3,
+  "sourcesContent": [
+    "/**\n * Setup worklets for Tamagui native components.\n *\n * Simply import this module at the top of your app entry point:\n *\n * @example\n * ```tsx\n * import '@tamagui/native/setup-worklets'\n * ```\n *\n * This automatically detects and configures react-native-worklets-core\n * for use with Sheet and other components that benefit from synchronous\n * native-thread execution.\n *\n * When combined with setup-gesture-handler, Sheet gets native-quality\n * gesture coordination between sheet dragging and scroll views.\n *\n * @see https://docs.swmansion.com/react-native-worklets/docs/\n */\n\nimport { getWorklets } from './workletsState'\n\nfunction setup() {\n  const g = globalThis as any\n  if (g.__tamagui_native_worklets_setup_complete) {\n    return\n  }\n  g.__tamagui_native_worklets_setup_complete = true\n\n  try {\n    // dynamically require worklets-core\n    const worklets = require('react-native-worklets-core')\n\n    if (worklets) {\n      getWorklets().set({\n        enabled: true,\n        Worklets: worklets.Worklets,\n        useRunOnJS: worklets.useRunOnJS,\n        useWorklet: worklets.useWorklet,\n        createWorkletContextValue: worklets.createWorkletContextValue,\n      })\n    }\n  } catch {\n    // worklets not available, that's fine - will fall back to JS thread\n  }\n}\n\n// run setup immediately on import\nsetup()\n"
+  ]
+}

@@ -12,8 +12,6 @@
   <script type="importmap">
   {
     "imports": {
-      "gsap": "https://esm.sh/gsap@3.12.5",
-      "gsap/ScrollTrigger": "https://esm.sh/gsap@3.12.5/ScrollTrigger",
       "lenis": "https://esm.sh/lenis@1.1.13",
       "@barba/core": "https://esm.sh/@barba/core@2.9.7"
     }
@@ -322,8 +320,8 @@
   </script>
   <script type="module" src="js/theme.js"></script>
   <script type="module">
-    import gsap from 'gsap'
-    import { ScrollTrigger } from 'gsap/ScrollTrigger'
+    import gsap from './js/animation-engine.js'
+    import { ScrollTrigger } from './js/animation-engine.js'
     import { initPageAnimations } from './js/animations/index.js'
 
     gsap.registerPlugin(ScrollTrigger)

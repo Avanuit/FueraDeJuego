@@ -1,0 +1,11 @@
+{
+  "mappings": "AACA,cAAc,kBAAkB;AAQhC,iBAAiB,cAAc;UACpB;UACA,OAAO;CAChB,IAAI,UAAU;;AAGhB,OAAO,iBAAS,YAAY",
+  "names": [],
+  "sources": [
+    "src/zeegoState.ts"
+  ],
+  "version": 3,
+  "sourcesContent": [
+    "import { createGlobalState } from './globalState'\nimport type { ZeegoState } from './types'\n\nconst state = createGlobalState<ZeegoState>(`zeego`, {\n  enabled: false,\n  DropdownMenu: null,\n  ContextMenu: null,\n})\n\nexport interface ZeegoAccessor {\n  readonly isEnabled: boolean\n  readonly state: ZeegoState\n  set(newState: ZeegoState): void\n}\n\nexport function getZeego(): ZeegoAccessor {\n  return {\n    get isEnabled(): boolean {\n      return state.get().enabled\n    },\n    get state(): ZeegoState {\n      return state.get()\n    },\n    set(newState: ZeegoState): void {\n      state.set(newState)\n    },\n  }\n}\n"
+  ]
+}

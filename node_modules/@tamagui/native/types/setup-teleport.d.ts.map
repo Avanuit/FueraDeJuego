@@ -1,0 +1,11 @@
+{
+  "mappings": "",
+  "names": [],
+  "sources": [
+    "src/setup-teleport.ts"
+  ],
+  "version": 3,
+  "sourcesContent": [
+    "/**\n * Setup native portal support for Tamagui.\n *\n * Simply import this module at the top of your app entry point:\n *\n * @example\n * ```tsx\n * import '@tamagui/native/setup-teleport'\n * ```\n *\n * This automatically detects and configures react-native-teleport for portals.\n * Falls back to legacy RN shims if teleport is not installed.\n */\n\nimport { getPortal } from './portalState'\n\nfunction setup(): void {\n  const g = globalThis as any\n  if (g.__tamagui_native_portal_setup) return\n  g.__tamagui_native_portal_setup = true\n\n  // try teleport first (preferred)\n  try {\n    const teleport = require('react-native-teleport')\n    if (teleport?.Portal && teleport?.PortalHost && teleport?.PortalProvider) {\n      g.__tamagui_teleport = teleport\n      getPortal().set({ enabled: true, type: 'teleport' })\n      return\n    }\n  } catch {\n    // react-native-teleport not installed, that's ok\n  }\n}\n\n// run setup immediately on import\nsetup()\n"
+  ]
+}

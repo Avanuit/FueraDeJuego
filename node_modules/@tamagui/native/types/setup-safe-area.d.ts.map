@@ -1,0 +1,11 @@
+{
+  "mappings": "",
+  "names": [],
+  "sources": [
+    "src/setup-safe-area.ts"
+  ],
+  "version": 3,
+  "sourcesContent": [
+    "/**\n * Setup react-native-safe-area-context for Tamagui native components.\n *\n * Simply import this module at the top of your app entry point:\n *\n * @example\n * ```tsx\n * import '@tamagui/native/setup-safe-area'\n * ```\n *\n * This automatically detects and configures react-native-safe-area-context\n * for use with Tamagui components that need safe area awareness.\n *\n * Note: You must still wrap your app with SafeAreaProvider yourself:\n * ```tsx\n * import { SafeAreaProvider } from 'react-native-safe-area-context'\n * <SafeAreaProvider>\n *   <App />\n * </SafeAreaProvider>\n * ```\n *\n * On web, this is a no-op since CSS env(safe-area-inset-*) values work natively.\n */\n\nimport { getSafeArea } from './safeAreaState'\n\nfunction setup() {\n  // only run on native\n  if (process.env.TAMAGUI_TARGET !== 'native') {\n    return\n  }\n\n  const g = globalThis as any\n  if (g.__tamagui_native_safe_area_setup_complete) {\n    return\n  }\n  g.__tamagui_native_safe_area_setup_complete = true\n\n  try {\n    const safeAreaContext = require('react-native-safe-area-context')\n    const { useSafeAreaInsets, useSafeAreaFrame, initialWindowMetrics } = safeAreaContext\n\n    if (useSafeAreaInsets) {\n      getSafeArea().set({\n        enabled: true,\n        useSafeAreaInsets,\n        useSafeAreaFrame: useSafeAreaFrame || null,\n        initialMetrics: initialWindowMetrics || null,\n      })\n    }\n  } catch {\n    // react-native-safe-area-context not available\n  }\n}\n\nsetup()\n"
+  ]
+}

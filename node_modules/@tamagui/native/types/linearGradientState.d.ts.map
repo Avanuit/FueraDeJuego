@@ -1,0 +1,11 @@
+{
+  "mappings": "AACA,cAAc,2BAA2B;AAOzC,iBAAiB,uBAAuB;UAC7B;UACA,OAAO;CAChB,IAAI,UAAU;;AAGhB,OAAO,iBAAS,qBAAqB",
+  "names": [],
+  "sources": [
+    "src/linearGradientState.ts"
+  ],
+  "version": 3,
+  "sourcesContent": [
+    "import { createGlobalState } from './globalState'\nimport type { LinearGradientState } from './types'\n\nconst state = createGlobalState<LinearGradientState>(`linear_gradient`, {\n  enabled: false,\n  Component: null,\n})\n\nexport interface LinearGradientAccessor {\n  readonly isEnabled: boolean\n  readonly state: LinearGradientState\n  set(newState: LinearGradientState): void\n}\n\nexport function getLinearGradient(): LinearGradientAccessor {\n  return {\n    get isEnabled(): boolean {\n      return state.get().enabled\n    },\n    get state(): LinearGradientState {\n      return state.get()\n    },\n    set(newState: LinearGradientState): void {\n      state.set(newState)\n    },\n  }\n}\n"
+  ]
+}

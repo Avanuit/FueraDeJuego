@@ -1,4 +1,4 @@
-import gsap from 'gsap'
+import gsap from './animation-engine.js'
 import { createValidator } from './form-validator.js'
 
 const VALIDATION_RULES = [

@@ -1,0 +1,11 @@
+{
+  "mappings": "AACA,cAAc,kBAAkB;AAQhC,iBAAiB,cAAc;UACpB;UACA,OAAO;CAChB,IAAI,UAAU;;AAGhB,OAAO,iBAAS,YAAY",
+  "names": [],
+  "sources": [
+    "src/burntState.ts"
+  ],
+  "version": 3,
+  "sourcesContent": [
+    "import { createGlobalState } from './globalState'\nimport type { BurntState } from './types'\n\nconst state = createGlobalState<BurntState>(`burnt`, {\n  enabled: false,\n  toast: null,\n  dismissAllAlerts: null,\n})\n\nexport interface BurntAccessor {\n  readonly isEnabled: boolean\n  readonly state: BurntState\n  set(newState: BurntState): void\n}\n\nexport function getBurnt(): BurntAccessor {\n  return {\n    get isEnabled(): boolean {\n      return state.get().enabled\n    },\n    get state(): BurntState {\n      return state.get()\n    },\n    set(newState: BurntState): void {\n      state.set(newState)\n    },\n  }\n}\n"
+  ]
+}

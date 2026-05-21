@@ -1,0 +1,11 @@
+{
+  "mappings": "",
+  "names": [],
+  "sources": [
+    "src/setup-keyboard-controller.web.ts"
+  ],
+  "version": 3,
+  "sourcesContent": [
+    "/**\n * Web stub for keyboard controller setup.\n * No-op on web - keyboard-controller is native-only.\n */\n\n// intentionally empty - web doesn't need keyboard-controller\n"
+  ]
+}

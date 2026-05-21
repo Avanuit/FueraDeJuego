@@ -1,0 +1,11 @@
+{
+  "mappings": "AAAA,cAAc,iBAAiB;AAE/B,cACE,mBACA,uBACA,iCACK;AAEP,cAAc,mBAAmB,uBAAuB;;;;;AAMxD,OAAO,iBAAS,aAAa,EAC3B,UACA,YACC,oBAAoB;;;;;AAYvB,OAAO,iBAAS,iBAAiB,EAAE,QAAQ,wBAAwB;;;;;AAYnE,OAAO,iBAAS,qBAAqB,EAAE,YAAY,4BAA4B",
+  "names": [],
+  "sources": [
+    "src/components.tsx"
+  ],
+  "version": 3,
+  "sourcesContent": [
+    "import type { ReactNode } from 'react'\nimport { getPortal } from './portalState'\nimport type {\n  NativePortalProps,\n  NativePortalHostProps,\n  NativePortalProviderProps,\n} from './types'\n\nexport type { NativePortalProps, NativePortalHostProps, NativePortalProviderProps }\n\n/**\n * Renders children into a teleport Portal when available.\n * Returns null when teleport is not set up (allows fallback handling by caller).\n */\nexport function NativePortal({\n  hostName = 'root',\n  children,\n}: NativePortalProps): ReactNode {\n  const state = getPortal().state\n  if (state.type !== 'teleport') return null\n\n  const { Portal } = (globalThis as any).__tamagui_teleport\n  return <Portal hostName={hostName}>{children}</Portal>\n}\n\n/**\n * Renders a teleport PortalHost when available.\n * Returns null when teleport is not set up.\n */\nexport function NativePortalHost({ name }: NativePortalHostProps): ReactNode {\n  const state = getPortal().state\n  if (state.type !== 'teleport') return null\n\n  const { PortalHost } = (globalThis as any).__tamagui_teleport\n  return <PortalHost name={name} />\n}\n\n/**\n * Wraps children with teleport PortalProvider when available.\n * Returns children as-is when teleport is not set up.\n */\nexport function NativePortalProvider({ children }: NativePortalProviderProps): ReactNode {\n  const state = getPortal().state\n  if (state.type !== 'teleport') return <>{children}</>\n\n  const { PortalProvider } = (globalThis as any).__tamagui_teleport\n  return <PortalProvider>{children}</PortalProvider>\n}\n"
+  ]
+}

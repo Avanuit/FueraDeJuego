@@ -1,0 +1,11 @@
+{
+  "mappings": "AACA,cAAc,yBAAyB;AAOvC,iBAAiB,eAAe;UACrB;UACA,OAAO;CAChB,IAAI,UAAU;;AAGhB,OAAO,iBAAS,aAAa",
+  "names": [],
+  "sources": [
+    "src/portalState.ts"
+  ],
+  "version": 3,
+  "sourcesContent": [
+    "import { createGlobalState } from './globalState'\nimport type { NativePortalState } from './types'\n\nconst state = createGlobalState<NativePortalState>(`portal`, {\n  enabled: false,\n  type: null,\n})\n\nexport interface PortalAccessor {\n  readonly isEnabled: boolean\n  readonly state: NativePortalState\n  set(newState: NativePortalState): void\n}\n\nexport function getPortal(): PortalAccessor {\n  return {\n    get isEnabled(): boolean {\n      return state.get().enabled\n    },\n    get state(): NativePortalState {\n      return state.get()\n    },\n    set(newState: NativePortalState): void {\n      state.set(newState)\n    },\n  }\n}\n"
+  ]
+}

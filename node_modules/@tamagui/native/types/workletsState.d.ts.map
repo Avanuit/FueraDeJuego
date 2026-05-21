@@ -1,0 +1,11 @@
+{
+  "mappings": "AACA,cAAc,qBAAqB;AAUnC,iBAAiB,iBAAiB;UACvB;UACA,OAAO;CAChB,IAAI,SAAS,QAAQ;;AAGvB,OAAO,iBAAS,eAAe",
+  "names": [],
+  "sources": [
+    "src/workletsState.ts"
+  ],
+  "version": 3,
+  "sourcesContent": [
+    "import { createGlobalState } from './globalState'\nimport type { WorkletsState } from './types'\n\nconst state = createGlobalState<WorkletsState>(`worklets`, {\n  enabled: false,\n  Worklets: null,\n  useRunOnJS: null,\n  useWorklet: null,\n  createWorkletContextValue: null,\n})\n\nexport interface WorkletsAccessor {\n  readonly isEnabled: boolean\n  readonly state: WorkletsState\n  set(updates: Partial<WorkletsState>): void\n}\n\nexport function getWorklets(): WorkletsAccessor {\n  return {\n    get isEnabled(): boolean {\n      return state.get().enabled\n    },\n    get state(): WorkletsState {\n      return state.get()\n    },\n    set(updates: Partial<WorkletsState>): void {\n      Object.assign(state.get(), updates)\n    },\n  }\n}\n"
+  ]
+}

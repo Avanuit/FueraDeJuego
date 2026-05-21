@@ -1,0 +1,1 @@
+{"version":3,"names":["validStyles","createComponent","View","acceptsClassName"],"sources":["../../../src/views/View.tsx"],"sourcesContent":[null],"mappings":"AAAA,SAASA,WAAA,QAAmB;AAE5B,SAASC,eAAA,QAAuB;AAczB,MAAMC,IAAA,GAAOD,eAAA,CAKlB;EACAE,gBAAA,EAAkB;EAClBH;AACF,CAAC","ignoreList":[]}

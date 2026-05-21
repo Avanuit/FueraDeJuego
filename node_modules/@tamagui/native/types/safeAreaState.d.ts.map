@@ -1,0 +1,11 @@
+{
+  "mappings": "AACA,cAAc,eAAe,gBAAgB,qBAAqB;AAYlE,iBAAiB,iBAAiB;UACvB;UACA,OAAO;CAChB,IAAI,SAAS,QAAQ;;CAErB,aAAa;;CAEb,YAAY;;AAGd,OAAO,iBAAS,eAAe",
+  "names": [],
+  "sources": [
+    "src/safeAreaState.ts"
+  ],
+  "version": 3,
+  "sourcesContent": [
+    "import { createGlobalState } from './globalState'\nimport type { SafeAreaState, SafeAreaInsets, SafeAreaFrame } from './types'\n\nconst state = createGlobalState<SafeAreaState>(`safe_area`, {\n  enabled: false,\n  useSafeAreaInsets: null,\n  useSafeAreaFrame: null,\n  initialMetrics: null,\n})\n\nconst defaultInsets: SafeAreaInsets = { top: 0, right: 0, bottom: 0, left: 0 }\nconst defaultFrame: SafeAreaFrame = { x: 0, y: 0, width: 0, height: 0 }\n\nexport interface SafeAreaAccessor {\n  readonly isEnabled: boolean\n  readonly state: SafeAreaState\n  set(updates: Partial<SafeAreaState>): void\n  /** Get initial insets (non-reactive, for style resolution) */\n  getInsets(): SafeAreaInsets\n  /** Get initial frame (non-reactive) */\n  getFrame(): SafeAreaFrame\n}\n\nexport function getSafeArea(): SafeAreaAccessor {\n  return {\n    get isEnabled() {\n      return state.get().enabled\n    },\n    get state() {\n      return state.get()\n    },\n    set(updates: Partial<SafeAreaState>) {\n      Object.assign(state.get(), updates)\n    },\n    getInsets() {\n      const s = state.get()\n      if (!s.enabled || !s.initialMetrics) {\n        return defaultInsets\n      }\n      return s.initialMetrics.insets\n    },\n    getFrame() {\n      const s = state.get()\n      if (!s.enabled || !s.initialMetrics) {\n        return defaultFrame\n      }\n      return s.initialMetrics.frame\n    },\n  }\n}\n"
+  ]
+}

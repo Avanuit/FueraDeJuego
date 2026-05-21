@@ -1,0 +1,11 @@
+{
+  "mappings": "AAAA,YAAY,WAAW;AAGvB,OAAO,cAAM,mBAAmB,MAAM",
+  "names": [],
+  "sources": [
+    "src/nativeMenuContext.ts"
+  ],
+  "version": 3,
+  "sourcesContent": [
+    "import type React from 'react'\nimport { createContext } from 'react'\n\nexport const NativeMenuContext: React.Context<boolean> = createContext(false)\n"
+  ]
+}

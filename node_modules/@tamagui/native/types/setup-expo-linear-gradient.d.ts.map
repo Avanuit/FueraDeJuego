@@ -1,0 +1,11 @@
+{
+  "mappings": "",
+  "names": [],
+  "sources": [
+    "src/setup-expo-linear-gradient.ts"
+  ],
+  "version": 3,
+  "sourcesContent": [
+    "/**\n * Setup expo-linear-gradient for Tamagui.\n *\n * Simply import this module at the top of your app entry point:\n *\n * @example\n * ```tsx\n * import '@tamagui/native/setup-expo-linear-gradient'\n * ```\n *\n * This automatically detects and configures expo-linear-gradient.\n * If not installed, LinearGradient will log a warning on native.\n */\n\nimport { getLinearGradient } from './linearGradientState'\n\nfunction setup(): void {\n  const g = globalThis as any\n  if (g.__tamagui_native_linear_gradient_setup) return\n  g.__tamagui_native_linear_gradient_setup = true\n\n  try {\n    const expoLinearGradient = require('expo-linear-gradient')\n    if (expoLinearGradient?.LinearGradient) {\n      getLinearGradient().set({\n        enabled: true,\n        Component: expoLinearGradient.LinearGradient,\n      })\n    }\n  } catch {\n    // expo-linear-gradient not installed, will use CSS fallback\n  }\n}\n\n// run setup immediately on import\nsetup()\n"
+  ]
+}

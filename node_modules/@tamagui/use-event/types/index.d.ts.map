@@ -1,0 +1,11 @@
+{
+  "mappings": "AAAA,cAAc;AACd,cAAc",
+  "names": [],
+  "sources": [
+    "src/index.ts"
+  ],
+  "version": 3,
+  "sourcesContent": [
+    "export * from './useEvent'\nexport * from './useGet'\n"
+  ]
+}

@@ -1,0 +1,1 @@
+{"version":3,"names":["getGestureHandler","claimExternalPressOwnership","releaseExternalPressOwnership","PressBoundary","getGestureHandlerConfig","setupGestureHandler"],"sources":["../../src/gesture-handler.ts"],"sourcesContent":[null],"mappings":"AAAA,SAASA,iBAAA,QAAyB;AAMlC,SACiCC,2BAAA,EACEC,6BAAA,QAC5B;AACP,SAASC,aAAA,QAAqB;AAE9B,SACEC,uBAAA,EACAC,mBAAA,QAEK","ignoreList":[]}

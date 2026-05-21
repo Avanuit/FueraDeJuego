@@ -1,4 +1,4 @@
-import gsap from 'gsap'
+import gsap from './animation-engine.js'
 import barba from '@barba/core'
 import { getLenis } from './lenis.js'
 import { reinit, killPageAnimations } from './app.js'

@@ -1,0 +1,11 @@
+{
+  "mappings": "",
+  "names": [],
+  "sources": [
+    "src/setup-burnt.ts"
+  ],
+  "version": 3,
+  "sourcesContent": [
+    "/**\n * Setup burnt for Tamagui native toasts.\n *\n * Simply import this module at the top of your app entry point:\n *\n * @example\n * ```tsx\n * import '@tamagui/native/setup-burnt'\n * ```\n *\n * This automatically detects and configures burnt for use with\n * native Toast functionality.\n */\n\nimport { getBurnt } from './burntState'\n\nfunction setup(): void {\n  const g = globalThis as any\n  if (g.__tamagui_native_burnt_setup) return\n  g.__tamagui_native_burnt_setup = true\n\n  try {\n    const Burnt = require('burnt') as typeof import('burnt')\n\n    if (Burnt) {\n      getBurnt().set({\n        enabled: true,\n        toast: Burnt.toast,\n        dismissAllAlerts: Burnt.dismissAllAlerts,\n      })\n    }\n  } catch {\n    // burnt not installed\n  }\n}\n\n// run setup immediately on import\nsetup()\n"
+  ]
+}

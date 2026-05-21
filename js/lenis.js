@@ -1,10 +1,8 @@
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Lenis from 'lenis'
-
-gsap.registerPlugin(ScrollTrigger)
+import { ScrollTrigger } from './animation-engine.js'
 
 let instance = null
+let _rafId = 0
 
 export function createLenis() {
   destroyLenis()
@@ -14,8 +12,13 @@ export function createLenis() {
     smoothWheel: true,
   })
   instance.on('scroll', ScrollTrigger.update)
-  gsap.ticker.add((time) => instance.raf(time * 1000))
-  gsap.ticker.lagSmoothing(0)
+
+  function raf(time) {
+    instance.raf(time)
+    _rafId = requestAnimationFrame(raf)
+  }
+  _rafId = requestAnimationFrame(raf)
+
   return instance
 }
 
@@ -27,5 +30,9 @@ export function destroyLenis() {
   if (instance) {
     instance.destroy()
     instance = null
+  }
+  if (_rafId) {
+    cancelAnimationFrame(_rafId)
+    _rafId = 0
   }
 }

@@ -1,4 +1,4 @@
-import gsap from 'gsap'
+import gsap from './animation-engine.js'
 
 const STORAGE_KEY = 'fj-theme'
 const root = document.documentElement

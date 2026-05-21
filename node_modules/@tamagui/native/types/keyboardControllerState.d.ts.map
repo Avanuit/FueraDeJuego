@@ -1,0 +1,11 @@
+{
+  "mappings": "AACA,cAAc,+BAA+B;AAE7C,cAAc;AAad,OAAO,iBAAS;AAIhB,OAAO,iBAAS,8BAA8B;AAI9C,OAAO,iBAAS,2BACd,SAAS,QAAQ",
+  "names": [],
+  "sources": [
+    "src/keyboardControllerState.ts"
+  ],
+  "version": 3,
+  "sourcesContent": [
+    "import { createGlobalState } from './globalState'\nimport type { KeyboardControllerState } from './types'\n\nexport type { KeyboardControllerState }\n\nconst state = createGlobalState<KeyboardControllerState>(`keyboard_controller`, {\n  enabled: false,\n  KeyboardProvider: null,\n  KeyboardAwareScrollView: null,\n  useKeyboardHandler: null,\n  useReanimatedKeyboardAnimation: null,\n  KeyboardController: null,\n  KeyboardEvents: null,\n  KeyboardStickyView: null,\n})\n\nexport function isKeyboardControllerEnabled(): boolean {\n  return state.get().enabled\n}\n\nexport function getKeyboardControllerState(): KeyboardControllerState {\n  return state.get()\n}\n\nexport function setKeyboardControllerState(\n  updates: Partial<KeyboardControllerState>\n): void {\n  Object.assign(state.get(), updates)\n}\n"
+  ]
+}

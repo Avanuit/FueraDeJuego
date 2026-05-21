@@ -1,5 +1,5 @@
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import gsap from '../animation-engine.js'
+import { ScrollTrigger } from '../animation-engine.js'
 
 gsap.registerPlugin(ScrollTrigger)
 

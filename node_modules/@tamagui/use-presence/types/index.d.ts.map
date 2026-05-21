@@ -1,0 +1,11 @@
+{
+  "mappings": "AAAA,SAAS,iBAAiB,qBAAqB;AAC/C,SAAS,WAAW,cAAc,mBAAmB",
+  "names": [],
+  "sources": [
+    "src/index.ts"
+  ],
+  "version": 3,
+  "sourcesContent": [
+    "export { PresenceContext, ResetPresence } from './PresenceContext'\nexport { isPresent, useIsPresent, usePresence } from './usePresence'\n"
+  ]
+}
