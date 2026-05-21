@@ -5,7 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" href="img/favicon.ico" sizes="any" />
   <link rel="icon" type="image/svg+xml" href="img/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Space+Grotesk:wght@400;700;800&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=JetBrains+Mono:wght@400;500;700&family=Alfa+Slab+One&display=swap" />
   <title>Mapa — Fuera de Juego</title>
+  <meta name="description" content="Mapa interactivo del desplazamiento por el Mundial 2026: datos reales de aumento de alquileres, familias desplazadas e inversión en Ciudad Juárez, Inglewood y Vancouver." />
+  <link rel="canonical" href="mapa.html" />
+  <meta property="og:title" content="Mapa — Fuera de Juego" />
+  <meta property="og:description" content="Mapa interactivo del desplazamiento por el Mundial 2026: datos reales de aumento de alquileres, familias desplazadas e inversión en Ciudad Juárez, Inglewood y Vancouver." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="mapa.html" />
+  <meta property="og:image" content="img/Gentrification.png" />
+  <meta property="og:locale" content="es_ES" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Mapa — Fuera de Juego" />
+  <meta name="twitter:description" content="Mapa interactivo del desplazamiento por el Mundial 2026: datos reales de aumento de alquileres, familias desplazadas e inversión en Ciudad Juárez, Inglewood y Vancouver." />
+  <meta name="twitter:image" content="img/Gentrification.png" />
   <link rel="stylesheet" href="css/main.css" />
   <link rel="stylesheet" href="css/animations.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -18,8 +33,26 @@
     }
   }
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+  <!-- Reemplazar G-XXXXXXXXXX con tu Measurement ID real -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Mapa — Fuera de Juego",
+    "description": "Mapa interactivo del desplazamiento por el Mundial 2026: datos reales de aumento de alquileres, familias desplazadas e inversión en Ciudad Juárez, Inglewood y Vancouver.",
+    "url": "mapa.html",
+    "isPartOf": { "@type": "WebSite", "name": "Fuera de Juego", "url": "index.html" }
+  }
+  </script>
 </head>
 <body data-barba="wrapper">
 
@@ -166,9 +199,23 @@
       </div>
     </section>
 
+    <!-- INTERNAL NAVIGATION -->
+    <section class="content-section" style="background: var(--surface); border-top: 2px solid var(--border);">
+      <div class="content-container" style="text-align: center;">
+        <h3 style="font-family: var(--font-display); font-size: 1.4rem; font-weight: 800; margin-bottom: 16px;">Explora mas del proyecto</h3>
+        <p style="color: var(--text-muted); max-width: 480px; margin: 0 auto 24px; line-height: 1.6;">
+          Conoce las historias personales detras de los datos y el comic que une todo.
+        </p>
+        <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+          <a href="personajes.html" class="btn btn--accent">Conocer a Lucia, Marcus y Aiyana</a>
+          <a href="historia.html" class="btn btn--ghost">Leer la historia completa</a>
+        </div>
+      </div>
+    </section>
+
   </main>
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
   <script type="module" src="js/app.js"></script>
   <script type="module" src="js/transitions.js"></script>
 </body>

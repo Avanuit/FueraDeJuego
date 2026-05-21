@@ -5,7 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" href="img/favicon.ico" sizes="any" />
   <link rel="icon" type="image/svg+xml" href="img/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Space+Grotesk:wght@400;700;800&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=JetBrains+Mono:wght@400;500;700&family=Alfa+Slab+One&display=swap" />
   <title>Fuera de Juego — Comic Digital</title>
+  <meta name="description" content="Fuera de Juego — Cómic digital completo de 13 páginas. Las voces que el Mundial FIFA 2026 no transmite: gentrificación, desplazamiento y resistencia en Juárez, Inglewood y Vancouver." />
+  <link rel="canonical" href="comic-digital.html" />
+  <meta property="og:title" content="Fuera de Juego — Comic Digital" />
+  <meta property="og:description" content="Fuera de Juego — Cómic digital completo de 13 páginas. Las voces que el Mundial FIFA 2026 no transmite: gentrificación, desplazamiento y resistencia en Juárez, Inglewood y Vancouver." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="comic-digital.html" />
+  <meta property="og:image" content="comic/1.png" />
+  <meta property="og:locale" content="es_ES" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Fuera de Juego — Comic Digital" />
+  <meta name="twitter:description" content="Fuera de Juego — Cómic digital completo de 13 páginas. Las voces que el Mundial FIFA 2026 no transmite: gentrificación, desplazamiento y resistencia en Juárez, Inglewood y Vancouver." />
+  <meta name="twitter:image" content="comic/1.png" />
   <link rel="stylesheet" href="css/main.css" />
   <link rel="stylesheet" href="css/animations.css" />
   <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" />
@@ -15,6 +30,39 @@
       "lenis": "https://esm.sh/lenis@1.1.13",
       "@barba/core": "https://esm.sh/@barba/core@2.9.7"
     }
+  }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+  <!-- Google Analytics 4 — Reemplaza G-XXXXXXXXXX con tu Measurement ID real -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "ComicIssue",
+        "name": "Fuera de Juego",
+        "issueNumber": "1",
+        "description": "Cómic digital completo de 13 páginas sobre gentrificación y desplazamiento en el Mundial FIFA 2026.",
+        "url": "comic-digital.html",
+        "image": "comic/1.png",
+        "isPartOf": { "@type": "WebSite", "name": "Fuera de Juego", "url": "index.html" }
+      },
+      {
+        "@type": "WebPage",
+        "name": "Fuera de Juego — Comic Digital",
+        "description": "Fuera de Juego — Cómic digital completo de 13 páginas. Las voces que el Mundial FIFA 2026 no transmite: gentrificación, desplazamiento y resistencia.",
+        "url": "comic-digital.html",
+        "isPartOf": { "@type": "WebSite", "name": "Fuera de Juego", "url": "index.html" }
+      }
+    ]
   }
   </script>
   <style>
