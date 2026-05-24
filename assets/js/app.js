@@ -9,7 +9,7 @@ import './gsap-setup.js'
 import gsap from './animation-engine.js'
 import { ScrollTrigger } from './animation-engine.js'
 import { createLenis, getLenis } from './lenis.js'
-import { injectComponents } from './components.js'
+import { injectComponents, updateComponentsPaths } from './components.js'
 import { initNavigation } from './navigation.js'
 import { initCharCounter } from './char-counter.js'
 import { initTestimonyForm } from './testimony-form.js'
@@ -50,6 +50,7 @@ function initCommon() {
 }
 
 export const reinit = async () => {
+  updateComponentsPaths()
   initCommon()
   await loadPageModules()
   const namespace = getNamespace()

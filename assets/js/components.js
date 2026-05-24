@@ -5,26 +5,22 @@
    relativas a los recursos estáticos y páginas según la ubicación del archivo.
    ========================================================================== */
 
-const isSubPage = window.location.pathname.includes('/pages/');
-const base = isSubPage ? '../' : '';
-const pageBase = isSubPage ? '' : 'pages/';
-
 const NAV_HTML = `
-  <a href="${base}index.html" class="nav__logo">
+  <a href="index.html" class="nav__logo">
     <i class="fa-duotone fa-light fa-futbol nav__logo-icon" style="--fa-primary-color: rgb(0, 0, 0); --fa-secondary-color: rgb(0, 0, 0);"></i>
     <span class="nav__logo-text">FUERA<em>DE</em>JUEGO</span>
   </a>
   <ul class="nav__links">
-    <li><a href="${base}index.html" class="nav__link" data-nav="home">Inicio</a></li>
-    <li><a href="${pageBase}historia.html" class="nav__link" data-nav="historia">Historia</a></li>
-    <li><a href="${pageBase}personajes.html" class="nav__link" data-nav="personajes">Personajes</a></li>
-    <li><a href="${pageBase}mapa.html" class="nav__link" data-nav="mapa">Mapa</a></li>
-    <li><a href="${pageBase}comic.html" class="nav__link" data-nav="comic">Comic</a></li>
-    <li><a href="${pageBase}testimonios.html" class="nav__link" data-nav="testimonios">Testimonios</a></li>
-    <li><a href="${pageBase}impacto.html" class="nav__link" data-nav="impacto">Impacto</a></li>
-    <li><a href="${pageBase}investigacion.html" class="nav__link" data-nav="investigacion">Investigación</a></li>
-    <li><a href="${pageBase}glosario.html" class="nav__link" data-nav="glosario">Glosario</a></li>
-    <li><a href="${pageBase}recursos.html" class="nav__link" data-nav="recursos">Recursos</a></li>
+    <li><a href="index.html" class="nav__link" data-nav="home">Inicio</a></li>
+    <li><a href="historia.html" class="nav__link" data-nav="historia">Historia</a></li>
+    <li><a href="personajes.html" class="nav__link" data-nav="personajes">Personajes</a></li>
+    <li><a href="mapa.html" class="nav__link" data-nav="mapa">Mapa</a></li>
+    <li><a href="comic.html" class="nav__link" data-nav="comic">Comic</a></li>
+    <li><a href="testimonios.html" class="nav__link" data-nav="testimonios">Testimonios</a></li>
+    <li><a href="impacto.html" class="nav__link" data-nav="impacto">Impacto</a></li>
+    <li><a href="investigacion.html" class="nav__link" data-nav="investigacion">Investigación</a></li>
+    <li><a href="glosario.html" class="nav__link" data-nav="glosario">Glosario</a></li>
+    <li><a href="recursos.html" class="nav__link" data-nav="recursos">Recursos</a></li>
   </ul>
   <div class="nav__right">
     <button class="theme-toggle" id="themeToggle" aria-label="Activar modo claro" type="button">
@@ -64,16 +60,16 @@ const FOOTER_HTML = `
       <p>Universidad de San Buenaventura · Ingenieria Multimedia</p>
     </div>
     <div class="footer__links">
-      <a href="${base}index.html">Inicio</a>
-      <a href="${pageBase}historia.html">Historia</a>
-      <a href="${pageBase}personajes.html">Personajes</a>
-      <a href="${pageBase}mapa.html">Mapa</a>
-      <a href="${pageBase}comic.html">Comic</a>
-      <a href="${pageBase}testimonios.html">Testimonios</a>
-      <a href="${pageBase}impacto.html">Impacto</a>
-      <a href="${pageBase}investigacion.html">Investigación</a>
-      <a href="${pageBase}glosario.html">Glosario</a>
-      <a href="${pageBase}recursos.html">Recursos</a>
+      <a href="index.html">Inicio</a>
+      <a href="historia.html">Historia</a>
+      <a href="personajes.html">Personajes</a>
+      <a href="mapa.html">Mapa</a>
+      <a href="comic.html">Comic</a>
+      <a href="testimonios.html">Testimonios</a>
+      <a href="impacto.html">Impacto</a>
+      <a href="investigacion.html">Investigación</a>
+      <a href="glosario.html">Glosario</a>
+      <a href="recursos.html">Recursos</a>
     </div>
     <div class="footer__contact">
       <p>proyectofueradejuego@gmail.com</p>
@@ -84,6 +80,58 @@ const FOOTER_HTML = `
     <p>© 2026 Equipo Fuera de Juego · Juan Pablo Chaves · David Florez · Sadid Acosta</p>
   </div>
 `;
+
+export function updateComponentsPaths() {
+  const isSubPage = window.location.pathname.includes('/pages/');
+  const base = isSubPage ? '../' : '';
+  const pageBase = isSubPage ? '' : 'pages/';
+
+  const logo = document.querySelector('.nav__logo');
+  if (logo) {
+    logo.setAttribute('href', `${base}index.html`);
+  }
+
+  const navLinksMap = {
+    home: `${base}index.html`,
+    historia: `${pageBase}historia.html`,
+    personajes: `${pageBase}personajes.html`,
+    mapa: `${pageBase}mapa.html`,
+    comic: `${pageBase}comic.html`,
+    testimonios: `${pageBase}testimonios.html`,
+    impacto: `${pageBase}impacto.html`,
+    investigacion: `${pageBase}investigacion.html`,
+    glosario: `${pageBase}glosario.html`,
+    recursos: `${pageBase}recursos.html`
+  };
+
+  document.querySelectorAll('.nav__link').forEach(link => {
+    const navId = link.getAttribute('data-nav');
+    if (navId && navLinksMap[navId]) {
+      link.setAttribute('href', navLinksMap[navId]);
+    }
+  });
+
+  const footerLinks = document.querySelectorAll('.footer__links a');
+  if (footerLinks.length === 10) {
+    const footerMap = [
+      `${base}index.html`,
+      `${pageBase}historia.html`,
+      `${pageBase}personajes.html`,
+      `${pageBase}mapa.html`,
+      `${pageBase}comic.html`,
+      `${pageBase}testimonios.html`,
+      `${pageBase}impacto.html`,
+      `${pageBase}investigacion.html`,
+      `${pageBase}glosario.html`,
+      `${pageBase}recursos.html`
+    ];
+    footerLinks.forEach((link, idx) => {
+      if (footerMap[idx]) {
+        link.setAttribute('href', footerMap[idx]);
+      }
+    });
+  }
+}
 
 export function injectComponents() {
   const body = document.body;
@@ -102,4 +150,6 @@ export function injectComponents() {
     footer.innerHTML = FOOTER_HTML;
     body.appendChild(footer);
   }
+
+  updateComponentsPaths();
 }
