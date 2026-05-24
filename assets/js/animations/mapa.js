@@ -1,3 +1,9 @@
+/* ==========================================================================
+   ANIMACIONES DEL MAPA INMERSIVO (assets/js/animations/mapa.js)
+   Controla la presentación interactiva y transiciones de la sección
+   del mapa de testimonios.
+   ========================================================================== */
+
 import gsap from '../animation-engine.js'
 import { ScrollTrigger } from '../animation-engine.js'
 import {
@@ -76,7 +82,6 @@ function animateDataCards() {
       { opacity: 1, y: 0, rotateY: 0, duration: 0.9, ease: 'power3.out' }
     )
 
-    // Animate bar chart fills
     const bars = card.querySelectorAll('.bar-fill')
     bars.forEach((bar) => {
       const width = bar.style.getPropertyValue('--w') || '0%'
@@ -88,7 +93,6 @@ function animateDataCards() {
       }, '-=0.6')
     })
 
-    // Animate big numbers
     const bigNumbers = card.querySelectorAll('.big-number__val')
     bigNumbers.forEach((num) => {
       const text = num.textContent.trim()
@@ -118,7 +122,6 @@ function animateDataCards() {
       }
     })
 
-    // Contrast items clip reveal
     const contrastItems = card.querySelectorAll('.contrast-item')
     contrastItems.forEach((item, i) => {
       const clipFrom = i % 2 === 0

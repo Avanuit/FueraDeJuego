@@ -1,3 +1,9 @@
+/* ==========================================================================
+   BIBLIOTECA DE ANIMACIONES COMPARTIDAS (assets/js/animations/shared.js)
+   Proporciona primitivas de animación estandarizadas para etiquetas, títulos,
+   párrafos, contadores y llamadas a la acción.
+   ========================================================================== */
+
 import gsap from '../animation-engine.js'
 import { ScrollTrigger } from '../animation-engine.js'
 import { splitText } from '../text-split.js'
@@ -14,7 +20,6 @@ import {
 
 gsap.registerPlugin(ScrollTrigger)
 
-// ── Section Label ─────────────────────────────
 export function animateSectionLabel(element, options = {}) {
   if (!element) return
 
@@ -38,7 +43,6 @@ export function animateSectionLabel(element, options = {}) {
   return result
 }
 
-// ── Section Title ─────────────────────────────
 export function animateSectionTitle(element, options = {}) {
   if (!element) return
 
@@ -67,7 +71,6 @@ export function animateSectionTitle(element, options = {}) {
   return result
 }
 
-// ── Paragraphs ──────────────────────────────────
 export function animateParagraphs(paragraphs, options = {}) {
   if (!paragraphs || !paragraphs.length) return null
 
@@ -97,7 +100,6 @@ export function animateParagraphs(paragraphs, options = {}) {
   )
 }
 
-// ── Parallax Image (single) ───────────────────
 export function createParallaxImage(imgElement, options = {}) {
   if (!imgElement) return null
 
@@ -112,7 +114,6 @@ export function createParallaxImage(imgElement, options = {}) {
     scrub = 1,
   } = options
 
-  // Reveal
   revealImage(imgElement, 'up', {
     scrollTrigger: {
       trigger: imgElement,
@@ -122,7 +123,6 @@ export function createParallaxImage(imgElement, options = {}) {
     },
   })
 
-  // Parallax
   if (parentElement) {
     parallaxImage(imgElement, yPercentPositive, {
       trigger: parentElement,
@@ -133,7 +133,6 @@ export function createParallaxImage(imgElement, options = {}) {
   }
 }
 
-// ── Dual Parallax ─────────────────────────────
 export function createDualParallax(frontImg, backImg, options = {}) {
   if (frontImg) {
     createParallaxImage(frontImg, {
@@ -152,7 +151,6 @@ export function createDualParallax(frontImg, backImg, options = {}) {
   }
 }
 
-// ── Card Timeline ───────────────────────────────
 export function animateCardTimeline(card, elements, options = {}) {
   if (!card) return
 
@@ -241,13 +239,12 @@ export function animateCardTimeline(card, elements, options = {}) {
   return tl
 }
 
-// ── Number Counter (direct, no ScrollTrigger) ──
 export function animateNumberCounter(element, options = {}) {
   if (!element) return null
 
   const target = parseInt(element.dataset.target || element.textContent, 10)
   if (isNaN(target) || target <= 0) {
-    // If no valid target, just show the text as-is
+    
     return null
   }
 
@@ -270,7 +267,6 @@ export function animateNumberCounter(element, options = {}) {
   })
 }
 
-// ── Stat Items ────────────────────────────────
 export function animateStatItems(statsContainer, options = {}) {
   if (!statsContainer) return
 
@@ -316,7 +312,6 @@ export function animateStatItems(statsContainer, options = {}) {
     })
   }
 
-  // Check if already in viewport
   const rect = statsContainer.getBoundingClientRect()
   const vh = window.innerHeight
   const isInViewport = rect.top < vh * 0.85 && rect.bottom > 0
@@ -332,7 +327,6 @@ export function animateStatItems(statsContainer, options = {}) {
     })
   }
 
-  // Safety fallback: if counters are still at 0 after 3s, run them
   setTimeout(() => {
     const anyStillZero = Array.from(statItems).some((stat) => {
       const num = stat.querySelector('.stat__number')
@@ -344,7 +338,6 @@ export function animateStatItems(statsContainer, options = {}) {
   }, 3000)
 }
 
-// ── CTA Section ─────────────────────────────────
 export function animateCTA(ctaElement, options = {}) {
   if (!ctaElement) return
 
@@ -456,7 +449,6 @@ export function animateCTA(ctaElement, options = {}) {
   }
 }
 
-// ── Page Hero Advanced ──────────────────────────
 export function animatePageHeroAdvanced(hero, options = {}) {
   if (!hero) return
 
@@ -504,7 +496,6 @@ export function animatePageHeroAdvanced(hero, options = {}) {
   return tl
 }
 
-// ── Hero Parallax ─────────────────────────────
 export function animateHeroParallax(hero, options = {}) {
   if (!hero) return
 
@@ -547,7 +538,6 @@ export function animateHeroParallax(hero, options = {}) {
   }
 }
 
-// ── Quote Reveal (special) ──────────────────────
 export function animateQuoteReveal(quoteEl, options = {}) {
   if (!quoteEl) return
 
@@ -583,7 +573,6 @@ export function animateQuoteReveal(quoteEl, options = {}) {
   })
 }
 
-// ── Reusable Scrub Reveal ───────────────────────
 export function scrubReveal(el, vars, scrollVars) {
   if (!el) return null
   return gsap.fromTo(el, vars.from, {

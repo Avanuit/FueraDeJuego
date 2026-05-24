@@ -1,3 +1,9 @@
+/* ==========================================================================
+   CONTROLADOR DE MENÚ RESPONSIVE (assets/js/navigation.js)
+   Administra los estados del menú desplegable móvil, la accesibilidad del teclado (Escape)
+   y los comportamientos de clic del menú de navegación.
+   ========================================================================== */
+
 import { getLenis } from './lenis.js'
 
 let closeTimer = null
@@ -51,7 +57,6 @@ export function initNavigation() {
     }
   }
 
-  // Remove old listener to avoid duplicates on re-init (Barba transitions)
   toggle.removeEventListener('click', toggle._handler)
   toggle._handler = toggleMenu
   toggle.addEventListener('click', toggle._handler)
@@ -61,7 +66,6 @@ export function initNavigation() {
     link.addEventListener('click', close)
   })
 
-  // Close on Escape key
   document.removeEventListener('keydown', handleKeydown)
   document.addEventListener('keydown', handleKeydown)
 
@@ -72,7 +76,6 @@ export function initNavigation() {
     }
   }
 
-  // Close when clicking outside the menu
   document.removeEventListener('click', handleClickOutside)
   document.addEventListener('click', handleClickOutside)
 
@@ -86,6 +89,5 @@ export function initNavigation() {
     }
   }
 
-  // Initialize aria-expanded state
   toggle.setAttribute('aria-expanded', 'false')
 }

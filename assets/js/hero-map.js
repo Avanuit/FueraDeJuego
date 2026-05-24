@@ -1,3 +1,9 @@
+/* ==========================================================================
+   CONTROLADOR DEL MAPA PRINCIPAL (assets/js/hero-map.js)
+   Controla la interactividad del mapa introductorio en la página de inicio,
+   manejando los marcadores de las tres ciudades sede.
+   ========================================================================== */
+
 let heroMapInstance = null
 
 const CITIES = {
@@ -138,7 +144,6 @@ function setupHeroMap() {
     const key = card.dataset.city
     if (!key || !CITIES[key]) return
 
-    // Desktop hover
     card.addEventListener('mouseenter', () => {
       highlightCard(key)
       moveMapTo(CITIES[key].coords, 6)
@@ -151,7 +156,6 @@ function setupHeroMap() {
       if (markers[key]) markers[key].closePopup()
     })
 
-    // Touch / click support for mobile/tablet
     card.addEventListener('click', () => {
       highlightCard(key)
       moveMapTo(CITIES[key].coords, 6)
@@ -159,7 +163,6 @@ function setupHeroMap() {
     })
   })
 
-  // Click on map background resets view
   heroMapInstance.on('click', () => {
     resetCards()
     moveMapTo([37, -105], 4)

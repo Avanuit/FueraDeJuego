@@ -54,9 +54,9 @@ function animateStats() {
 
   const items = grid.querySelectorAll('.metric-item')
   gsap.fromTo(items,
-    { opacity: 0, y: 50, scale: 0.92 },
+    { autoAlpha: 0, y: 50, scale: 0.92 },
     {
-      opacity: 1,
+      autoAlpha: 1,
       y: 0,
       scale: 1,
       duration: 0.8,
@@ -108,9 +108,9 @@ function animateHistoryFlow() {
 
   steps.forEach((step, i) => {
     gsap.fromTo(step,
-      { opacity: 0, y: 50, scale: 0.9 },
+      { autoAlpha: 0, y: 50, scale: 0.9 },
       {
-        opacity: 1, y: 0, scale: 1,
+        autoAlpha: 1, y: 0, scale: 1,
         duration: 0.9,
         ease: 'power3.out',
         scrollTrigger: { trigger: step, start: 'top 88%', once: true },
@@ -133,9 +133,9 @@ function animateHistoryFlow() {
 
   arrows.forEach((arrow) => {
     gsap.fromTo(arrow,
-      { opacity: 0, scaleX: 0 },
+      { autoAlpha: 0, scaleX: 0 },
       {
-        opacity: 1, scaleX: 1,
+        autoAlpha: 1, scaleX: 1,
         duration: 0.7,
         ease: 'power2.inOut',
         scrollTrigger: { trigger: arrow, start: 'top 88%', once: true },

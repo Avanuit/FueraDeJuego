@@ -1,3 +1,9 @@
+/* ==========================================================================
+   REVELACIONES GENERALES DE SCROLL (assets/js/scroll-reveal.js)
+   Este módulo proporciona funciones dinámicas simplificadas de entrada en scroll
+   y efectos de paralaje para elementos del DOM basados en ScrollTrigger de GSAP.
+   ========================================================================== */
+
 import gsap from './animation-engine.js'
 import { ScrollTrigger } from './animation-engine.js'
 

@@ -1,3 +1,9 @@
+/* ==========================================================================
+   ANIMACIONES DE HISTORIA (assets/js/animations/historia.js)
+   Maneja las revelaciones de las etapas del cómic y los contadores
+   de la vista de Historia del proyecto.
+   ========================================================================== */
+
 import gsap from '../animation-engine.js'
 import { ScrollTrigger } from '../animation-engine.js'
 import { splitText } from '../text-split.js'
@@ -122,7 +128,6 @@ function animateTransmedia() {
       }
     )
 
-    // Pop the icon inside the step
     const icon = step.querySelector('.flow-step__icon')
     if (icon) {
       gsap.fromTo(icon,

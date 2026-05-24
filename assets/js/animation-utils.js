@@ -1,14 +1,13 @@
-// ──────────────────────────────────────────────
-// Animation Utils — Fuera de Juego
-// Reusable premium animation helpers
-// ──────────────────────────────────────────────
+/* ==========================================================================
+   UTILIDADES COMPARTIDAS DE ANIMACIÓN (assets/js/animation-utils.js)
+   Biblioteca de funciones auxiliares reutilizables (revelación de texto,
+   efectos parallax de imágenes, botones magnéticos y rotación 3D de tarjetas).
+   ========================================================================== */
 
 import gsap from './animation-engine.js'
 import { ScrollTrigger } from './animation-engine.js'
 import { splitText } from './text-split.js'
 import { reducedMotion, isMobile } from './gsap-setup.js'
-
-// ── Text Reveals ──────────────────────────────
 
 export function revealTextChars(el, options = {}) {
   if (!el || reducedMotion) return null
@@ -74,8 +73,6 @@ export function revealTextWords(el, options = {}) {
   return { tween, split }
 }
 
-// ── Image Wipe Reveals ────────────────────────
-
 export function revealImage(el, direction = 'up', options = {}) {
   if (!el) return null
 
@@ -114,8 +111,6 @@ export function revealImage(el, direction = 'up', options = {}) {
   return gsap.to(el, vars)
 }
 
-// ── Parallax ──────────────────────────────────
-
 export function parallaxImage(el, speed = 12, options = {}) {
   if (!el || isMobile) return null
 
@@ -137,8 +132,6 @@ export function parallaxImage(el, speed = 12, options = {}) {
     },
   })
 }
-
-// ── Magnetic Buttons ──────────────────────────
 
 export function magneticButton(el, options = {}) {
   if (!el || isMobile || reducedMotion) return null
@@ -172,7 +165,6 @@ export function magneticButton(el, options = {}) {
   el.addEventListener('mousemove', onMove)
   el.addEventListener('mouseleave', onLeave)
 
-  // Return cleanup function
   return () => {
     el.removeEventListener('mousemove', onMove)
     el.removeEventListener('mouseleave', onLeave)
@@ -192,8 +184,6 @@ export function initMagneticButtons(selector = '.btn, .magnetic') {
 
   return () => cleaners.forEach((fn) => fn())
 }
-
-// ── Stagger Reveal ────────────────────────────
 
 export function staggerReveal(elements, options = {}) {
   if (!elements || !elements.length) return null
@@ -220,8 +210,6 @@ export function staggerReveal(elements, options = {}) {
 
   return gsap.fromTo(elements, fromVars, vars)
 }
-
-// ── Counter ───────────────────────────────────
 
 export function animateCounter(el, options = {}) {
   if (!el) return null
@@ -261,8 +249,6 @@ export function animateCounter(el, options = {}) {
   return gsap.to(obj, vars)
 }
 
-// ── SVG Stroke Draw ───────────────────────────
-
 export function drawSVG(el, options = {}) {
   if (!el || reducedMotion) return null
 
@@ -289,8 +275,6 @@ export function drawSVG(el, options = {}) {
 
   return gsap.to(el, vars)
 }
-
-// ── 3D Tilt (for cards) ───────────────────────
 
 export function tiltCard(el, options = {}) {
   if (!el || isMobile || reducedMotion) return null
@@ -344,8 +328,6 @@ export function initTiltCards(selector = '.tilt-card') {
   return () => cleaners.forEach((fn) => fn())
 }
 
-// ── Hero Parallax ─────────────────────────────
-
 export function heroParallax(contentEl, imgEl, options = {}) {
   if (!contentEl && !imgEl) return null
 
@@ -387,8 +369,6 @@ export function heroParallax(contentEl, imgEl, options = {}) {
 
   return tweens
 }
-
-// ── Scroll Progress Color Shift ───────────────
 
 export function scrollProgressColor(el, options = {}) {
   if (!el) return null

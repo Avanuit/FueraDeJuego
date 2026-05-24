@@ -1,3 +1,9 @@
+/* ==========================================================================
+   AYUDANTE DE CONTADORES NUMÉRICOS (assets/js/counter.js)
+   Proporciona funciones auxiliares para inicializar animaciones estáticas
+   de conteo progresivo.
+   ========================================================================== */
+
 import gsap from './animation-engine.js'
 import { ScrollTrigger } from './animation-engine.js'
 

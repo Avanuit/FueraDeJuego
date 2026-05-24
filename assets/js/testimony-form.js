@@ -1,3 +1,9 @@
+/* ==========================================================================
+   CONTROLADOR DE TESTIMONIOS (assets/js/testimony-form.js)
+   Maneja la entrada del usuario, el guardado local de historias de desplazamiento
+   y el desbloqueo del cómic digital.
+   ========================================================================== */
+
 import gsap from './animation-engine.js'
 import { createValidator } from './form-validator.js'
 

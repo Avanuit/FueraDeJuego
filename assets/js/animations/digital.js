@@ -1,3 +1,8 @@
+/* ==========================================================================
+   ANIMACIONES DE CÓMIC DIGITAL (assets/js/animations/digital.js)
+   Maneja los triggers verticales de las 13 páginas de la versión digital del cómic.
+   ========================================================================== */
+
 import gsap from '../animation-engine.js'
 import { ScrollTrigger } from '../animation-engine.js'
 import { splitText } from '../text-split.js'

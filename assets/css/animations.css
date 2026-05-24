@@ -1,8 +1,9 @@
-/* ============================================
-   FUERA DE JUEGO — ANIMATIONS
-   ============================================ */
+/* ==========================================================================
+   SISTEMA DE ESTILOS DE ANIMACIÓN (assets/css/animations.css)
+   Contiene los keyframes, transiciones y clases de soporte dinámico
+   para el motor de animación brutalista del proyecto.
+   ========================================================================== */
 
-/* --- Curtain Panels (Theatre Wipe) --- */
 .curtain-panel {
   position: fixed;
   top: 0;
@@ -22,7 +23,6 @@
   right: 0;
 }
 
-/* Accent seam at the inner edge */
 .curtain-panel::after {
   content: '';
   position: absolute;
@@ -41,14 +41,10 @@
   left: 0;
 }
 
-/* Prevent scroll & selection during transition */
 body.is-transitioning {
   overflow: hidden;
 }
 
-/* ============================================
-   KEYFRAMES
-   ============================================ */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(30px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -103,9 +99,6 @@ body.is-transitioning {
   to { stroke-dashoffset: 0; }
 }
 
-/* ============================================
-   ANIMATION UTILITIES
-   ============================================ */
 .anim-fade-up {
   opacity: 0;
   transform: translateY(30px);
@@ -135,9 +128,6 @@ body.is-transitioning {
   transform: translateY(20px);
 }
 
-/* ============================================
-   COMIC FLIP KEYFRAMES
-   ============================================ */
 @keyframes flipToLeft {
   0%   { transform: rotateY(0deg);    z-index: 10; }
   100% { transform: rotateY(-180deg); z-index: 10; }
@@ -207,9 +197,6 @@ body.is-transitioning {
 .anim-slide-in-right  { display: flex !important; animation: slideInRight  0.65s ease forwards; }
 .anim-slide-in-left   { display: flex !important; animation: slideInLeft   0.65s ease forwards; }
 
-/* ============================================
-   MICROINTERACTIONS
-   ============================================ */
 .link-underline {
   position: relative;
   display: inline-block;
@@ -299,9 +286,6 @@ body.is-transitioning {
   transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
-/* ============================================
-   LOGO STROKE ANIMATION
-   ============================================ */
 .nav__logo-icon .logo-ring {
   stroke-dasharray: 277;
   stroke-dashoffset: 277;
@@ -325,9 +309,6 @@ body.is-transitioning {
   animation: fadeIn 0.4s ease 1.4s forwards;
 }
 
-/* ============================================
-   SPLIT TEXT HELPERS
-   ============================================ */
 .char,
 .word {
   display: inline-block;
@@ -343,9 +324,6 @@ body.is-transitioning {
   display: block;
 }
 
-/* ============================================
-   SCROLL PROGRESS BAR
-   ============================================ */
 .scroll-progress {
   position: fixed;
   top: 0;
@@ -359,9 +337,6 @@ body.is-transitioning {
   pointer-events: none;
 }
 
-/* ============================================
-   PERSPECTIVE / 3D HELPERS
-   ============================================ */
 .perspective-container {
   perspective: 2000px;
   transform-style: preserve-3d;
@@ -371,9 +346,6 @@ body.is-transitioning {
   transform-style: preserve-3d;
 }
 
-/* ============================================
-   HERO CHARACTER ANIMATION HELPERS
-   ============================================ */
 .hero-char {
   display: inline-block;
   will-change: transform, opacity;
@@ -389,9 +361,6 @@ body.is-transitioning {
   will-change: transform;
 }
 
-/* ============================================
-   TILT & MAGNETIC HELPERS
-   ============================================ */
 .tilt-card {
   transform-style: preserve-3d;
   transition: box-shadow 0.3s ease;
@@ -401,9 +370,6 @@ body.is-transitioning {
   will-change: transform;
 }
 
-/* ============================================
-   MAGNETIC BUTTON GLOW
-   ============================================ */
 .btn--accent {
   position: relative;
   overflow: hidden;
@@ -425,24 +391,15 @@ body.is-transitioning {
   opacity: 1;
 }
 
-/* ============================================
-   SCROLL PROGRESS COLOR
-   ============================================ */
 .scroll-progress {
   background: linear-gradient(90deg, #FF2A00, #FFD600);
 }
 
-/* ============================================
-   CHARACTER NAME HIGHLIGHT
-   ============================================ */
 .char-name {
   display: inline-block;
   will-change: transform, opacity;
 }
 
-/* ============================================
-   QUOTE CHARACTER
-   ============================================ */
 .quote-char {
   display: inline-block;
   will-change: opacity;
@@ -453,59 +410,35 @@ body.is-transitioning {
   will-change: opacity;
 }
 
-/* ============================================
-   CITY CARD 3D
-   ============================================ */
 .city-card {
   transform-style: preserve-3d;
 }
 
-/* ============================================
-   BAR CHART ANIMATION SETUP
-   ============================================ */
 .bar-fill {
   transform-origin: left;
   will-change: transform;
 }
 
-/* ============================================
-   PROGRESS RING
-   ============================================ */
 .progress-ring svg circle:last-child {
   will-change: stroke-dashoffset;
 }
 
-/* ============================================
-   EVIDENCE ITEM CLIP
-   ============================================ */
 .evidence-item img {
   will-change: clip-path, transform;
 }
 
-/* ============================================
-   TESTIMONIAL AVATAR
-   ============================================ */
 .testimonial-card__avatar {
   will-change: clip-path;
 }
 
-/* ============================================
-   COMIC PAGE ENTRY
-   ============================================ */
 .page-entry__img {
   will-change: clip-path, transform;
 }
 
-/* ============================================
-   NAV LINK UNDERLINE
-   ============================================ */
 .nav__link {
   position: relative;
 }
 
-/* ============================================
-   REDUCED MOTION PREFERENCES
-   ============================================ */
 @media (prefers-reduced-motion: reduce) {
   .char,
   .word,
@@ -541,8 +474,6 @@ body.is-transitioning {
   }
 }
 
-/* Global reduced-motion class hook */
 .reduced-motion .scroll-progress {
   display: none !important;
 }
-

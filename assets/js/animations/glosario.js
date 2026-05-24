@@ -32,9 +32,9 @@ function initAccordion() {
 
   // Stagger entry of accordion items
   gsap.fromTo(items,
-    { opacity: 0, y: 30, scale: 0.98 },
+    { autoAlpha: 0, y: 30, scale: 0.98 },
     {
-      opacity: 1, y: 0, scale: 1,
+      autoAlpha: 1, y: 0, scale: 1,
       duration: 0.8,
       stagger: 0.12,
       ease: 'power3.out',

@@ -1,3 +1,9 @@
+/* ==========================================================================
+   MÓDULO DE SCROLL SUAVE (assets/js/lenis.js)
+   Inicializa y expone el objeto Lenis para controlar el desplazamiento fluido de la web
+   e integrarlo eficientemente con las secuencias de ScrollTrigger.
+   ========================================================================== */
+
 import Lenis from 'lenis'
 import { ScrollTrigger } from './animation-engine.js'
 

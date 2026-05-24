@@ -1,3 +1,9 @@
+/* ==========================================================================
+   ANIMACIONES DE LA PÁGINA DE INICIO (assets/js/animations/home.js)
+   Orquesta los efectos de entrada y los activadores ScrollTrigger
+   de la landing page principal del reportaje.
+   ========================================================================== */
+
 import gsap from '../animation-engine.js'
 import { ScrollTrigger } from '../animation-engine.js'
 import { splitText } from '../text-split.js'
@@ -22,14 +28,12 @@ import {
 
 gsap.registerPlugin(ScrollTrigger)
 
-// ── HERO ──────────────────────────────────────
 function animateHero() {
   const hero = document.querySelector('.hero')
   if (!hero) return
 
   const tl = gsap.timeline({ delay: 0.3 })
 
-  // Tags slide in
   const tags = hero.querySelectorAll('.hero__label .tag')
   if (tags.length) {
     tl.fromTo(tags,
@@ -38,7 +42,6 @@ function animateHero() {
     )
   }
 
-  // Title: dramatic wave reveal
   const title = hero.querySelector('.hero__title')
   if (title) {
     const split = splitText(title, { type: 'chars', charsClass: 'hero-char' })
@@ -60,7 +63,6 @@ function animateHero() {
     }
   }
 
-  // Subtitle: clip-path wipe
   const subtitle = hero.querySelector('.hero__subtitle')
   if (subtitle) {
     gsap.set(subtitle, { clipPath: 'inset(0 100% 0 0)' })
@@ -71,7 +73,6 @@ function animateHero() {
     }, '-=0.6')
   }
 
-  // Buttons: elastic pop + magnetic init
   const buttons = hero.querySelectorAll('.hero__actions .btn')
   if (buttons.length) {
     tl.fromTo(buttons,
@@ -79,11 +80,10 @@ function animateHero() {
       { opacity: 1, scale: 1, y: 0, duration: 0.7, stagger: 0.1, ease: 'elastic.out(1, 0.6)' },
       '-=0.5'
     )
-    // Init magnetic after animation
+    
     tl.call(() => initMagneticButtons('.hero__actions .btn'))
   }
 
-  // Hero image: circle expand
   const imgWrap = hero.querySelector('.hero__img-wrap')
   if (imgWrap) {
     gsap.set(imgWrap, { clipPath: 'circle(0% at 50% 50%)' })
@@ -94,7 +94,6 @@ function animateHero() {
     }, '-=1.1')
   }
 
-  // Caption fade up
   const caption = hero.querySelector('.hero__img-caption')
   if (caption) {
     tl.fromTo(caption,
@@ -104,11 +103,9 @@ function animateHero() {
     )
   }
 
-  // Parallax
   animateHeroParallax(hero, { contentY: -80, imgScaleFrom: 1.2 })
 }
 
-// ── STATS ─────────────────────────────────────
 function animateStats() {
   const stats = document.querySelector('.stats')
   if (!stats) return
@@ -125,7 +122,6 @@ function animateStats() {
   })
 }
 
-// ── INTRO ─────────────────────────────────────
 function animateIntro() {
   const section = document.querySelector('.intro__container')
   if (!section) return
@@ -181,7 +177,6 @@ function animateIntro() {
   }
 }
 
-// ── CITIES ────────────────────────────────────
 function animateCities() {
   const container = document.querySelector('.cities__container')
   if (!container) return
@@ -241,7 +236,6 @@ function animateCities() {
     }
   })
 
-  // Add 3D tilt to all city cards
   initTiltCards('.city-card')
 
   const mapContainer = container.querySelector('.cities-map-layout__map')
@@ -262,7 +256,6 @@ function animateCities() {
   }
 }
 
-// ── CTA ───────────────────────────────────────
 function animateCTA() {
   const cta = document.querySelector('.cta')
   if (!cta) return
@@ -348,8 +341,7 @@ function animateCTA() {
 
 export function init() {
   animateHero()
-  // Stats section removed per request — now static text only
-  // animateStats()
+
   animateIntro()
   animateCities()
   animateCTA()

@@ -58,8 +58,8 @@ function animateAdvisories() {
     })
 
     tl.fromTo(card,
-      { opacity: 0, y: 50, rotateX: 10 },
-      { opacity: 1, y: 0, rotateX: 0, duration: 0.9, ease: 'power3.out' }
+      { autoAlpha: 0, y: 50, rotateX: 10 },
+      { autoAlpha: 1, y: 0, rotateX: 0, duration: 0.9, ease: 'power3.out' }
     )
 
     const num = card.querySelector('.chapter-card__number')
@@ -75,8 +75,8 @@ function animateAdvisories() {
     if (content) {
       const children = content.querySelectorAll('h3, p')
       tl.fromTo(children,
-        { opacity: 0, y: 15 },
-        { opacity: 1, y: 0, duration: 0.5, stagger: 0.1, ease: 'power2.out' },
+        { autoAlpha: 0, y: 15 },
+        { autoAlpha: 1, y: 0, duration: 0.5, stagger: 0.1, ease: 'power2.out' },
         '-=0.4'
       )
     }

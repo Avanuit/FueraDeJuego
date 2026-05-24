@@ -1,3 +1,9 @@
+/* ==========================================================================
+   SISTEMA DE MAPAS LEAFLET (assets/js/leaflet-map.js)
+   Inicializa el mapa inmersivo interactivo mediante la API de Leaflet
+   con capas de mapas personalizadas y marcadores de testimonios.
+   ========================================================================== */
+
 let mapInstance = null
 
 const CITIES = [

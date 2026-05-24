@@ -1,10 +1,10 @@
-// ──────────────────────────────────────────────
-// Text Split — Fuera de Juego
-// Lightweight vanilla text splitter (chars / words / lines)
-// Compatible API with the original; enhanced for lines
-// ──────────────────────────────────────────────
+/* ==========================================================================
+   DIVISOR DE TEXTOS EDITORIAL (assets/js/text-split.js)
+   Procesa cadenas de texto del DOM para segmentarlas dinámicamente en palabras y caracteres
+   facilitando las revelaciones tipográficas interactivas.
+   ========================================================================== */
 
-const instances = /* @__PURE__ */ new Map()
+const instances =  new Map()
 
 function wrapChars(node, charsClass) {
   const text = node.textContent
@@ -60,7 +60,7 @@ function wrapWords(node, wordsClass) {
 }
 
 function wrapLines(el, wordsClass, charsClass) {
-  // First wrap words, then detect lines by offsetTop
+  
   const wordResult = wrapWords(el, wordsClass)
   const tempContainer = document.createElement('div')
   tempContainer.style.position = 'absolute'
@@ -88,7 +88,6 @@ function wrapLines(el, wordsClass, charsClass) {
 
   document.body.removeChild(tempContainer)
 
-  // Now build line wrappers
   const lineSpan = document.createElement('span')
   lineSpan.className = 'line'
   lineSpan.style.display = 'block'
@@ -157,7 +156,6 @@ export function splitText(selector, opts = {}) {
     wordsClass = 'word',
   } = opts
 
-  // Save original HTML for revert
   const original = el.innerHTML
 
   let chars = []

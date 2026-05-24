@@ -1,3 +1,9 @@
+/* ==========================================================================
+   ANIMACIONES DE PERSONAJES (assets/js/animations/personajes.js)
+   Controla las revelaciones y efectos tridimensionales interactivos
+   de las tarjetas de Lucía, Marcus y Aiyana.
+   ========================================================================== */
+
 import gsap from '../animation-engine.js'
 import { ScrollTrigger } from '../animation-engine.js'
 import { splitText } from '../text-split.js'
@@ -46,7 +52,6 @@ function animateCharacterCards() {
       scrollTrigger: { trigger: card, start: 'top 88%', once: true },
     })
 
-    // Image reveal
     if (img) {
       gsap.set(img, { clipPath: 'inset(0 0 100% 0)', scale: 1.05 })
       tl.to(img, {
@@ -64,7 +69,6 @@ function animateCharacterCards() {
       })
     }
 
-    // Card body entrance
     tl.fromTo(card,
       { opacity: 0, y: 70, rotateY: i % 2 === 0 ? -8 : 8 },
       { opacity: 1, y: 0, rotateY: 0, duration: 1, ease: 'power3.out' },
@@ -101,7 +105,6 @@ function animateCharacterCards() {
       )
     }
 
-    // Highlight lema specially
     if (lema) {
       const lemaSplit = splitText(lema, { type: 'chars', charsClass: 'lema-char' })
       if (lemaSplit && lemaSplit.chars.length && !reducedMotion) {
@@ -116,7 +119,6 @@ function animateCharacterCards() {
     }
   })
 
-  // Add 3D tilt to character cards
   initTiltCards('.char-card')
 }
 

@@ -58,15 +58,15 @@ function animateSteps() {
     })
 
     tl.fromTo(card,
-      { opacity: 0, y: 60, rotateX: 12, rotateY: i % 2 === 0 ? -6 : 6 },
-      { opacity: 1, y: 0, rotateX: 0, rotateY: 0, duration: 1, ease: 'power3.out' }
+      { autoAlpha: 0, y: 60, rotateX: 12, rotateY: i % 2 === 0 ? -6 : 6 },
+      { autoAlpha: 1, y: 0, rotateX: 0, rotateY: 0, duration: 1, ease: 'power3.out' }
     )
 
     const number = card.querySelector('.chapter-card__number')
     if (number) {
       tl.fromTo(number,
-        { scale: 0.4, opacity: 0, rotateY: -90 },
-        { scale: 1, opacity: 1, rotateY: 0, duration: 0.6, ease: 'back.out(2)' },
+        { scale: 0.4, autoAlpha: 0, rotateY: -90 },
+        { scale: 1, autoAlpha: 1, rotateY: 0, duration: 0.6, ease: 'back.out(2)' },
         '-=0.7'
       )
     }
@@ -75,8 +75,8 @@ function animateSteps() {
     if (content) {
       const children = content.querySelectorAll('h3, p, a')
       tl.fromTo(children,
-        { opacity: 0, y: 18 },
-        { opacity: 1, y: 0, duration: 0.55, stagger: 0.08, ease: 'power2.out' },
+        { autoAlpha: 0, y: 18 },
+        { autoAlpha: 1, y: 0, duration: 0.55, stagger: 0.08, ease: 'power2.out' },
         '-=0.4'
       )
     }

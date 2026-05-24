@@ -1,15 +1,11 @@
-/* ============================================
-   FUERA DE JUEGO — DESIGN SYSTEM v2
-   Brutalismo Digital x Editorial Magazine
-   FIFA 2026 · Copa del Mundo
-   ============================================ */
+/* ==========================================================================
+   SISTEMA DE DISEÑO DE ESTILOS PRINCIPAL (assets/css/main.css)
+   Define la hoja de estilos raíz del proyecto (Tokens, Reset, Grid asimétrico,
+   Navegación, Temas claro/oscuro y componentes visuales editoriales).
+   ========================================================================== */
 
-/* --- IMPORTS --- */
-/* Fonts now loaded via <link> in HTML for better performance */
-
-/* --- TOKENS --- */
 :root {
-  /* Core */
+  
   --bg: #050505;
   --surface: #0a0a0a;
   --surface-2: #111111;
@@ -18,24 +14,20 @@
   --border-2: #333333;
   --border-3: #444444;
 
-  /* Accents */
   --accent: #FF2A00;
   --accent-2: #FFD600;
   --accent-3: #00E5FF;
 
-  /* Text */
   --text: #FFFFFF;
   --text-body: #E5E5E5;
   --text-muted: #888888;
   --text-dim: #555555;
 
-  /* Typography */
   --font-display: 'Space Grotesk', system-ui, sans-serif;
   --font-body: 'Inter', system-ui, sans-serif;
   --font-serif: 'Playfair Display', Georgia, serif;
   --font-mono: 'JetBrains Mono', monospace;
 
-  /* Spacing */
   --space-xs: 0.5rem;
   --space-sm: 1rem;
   --space-md: 2rem;
@@ -43,22 +35,18 @@
   --space-xl: 6rem;
   --space-2xl: 10rem;
 
-  /* Layout */
   --max-width: 1280px;
   --nav-height: 72px;
 
-  /* Transitions */
   --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-slow: 600ms cubic-bezier(0.16, 1, 0.3, 1);
 
-  /* Radius — brutalista: casi nulo */
   --radius-sm: 0px;
   --radius-md: 2px;
   --radius-lg: 4px;
 }
 
-/* --- LIGHT MODE TOKENS --- */
 [data-theme="light"] {
   --bg: #FAFAF8;
   --surface: #F5F3EF;
@@ -78,7 +66,6 @@
   --text-dim: #999999;
 }
 
-/* --- THEME TRANSITION --- */
 body,
 .nav,
 .footer,
@@ -97,7 +84,6 @@ body,
               box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* --- RESET & BASE --- */
 *,
 *::before,
 *::after {
@@ -108,7 +94,7 @@ body,
 
 html {
   scroll-behavior: auto;
-  /* Lenis controla el scroll */
+  
   font-size: 16px;
 }
 
@@ -142,7 +128,6 @@ a {
   color: #000;
 }
 
-/* --- SCROLLBAR --- */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -160,9 +145,6 @@ a {
   background: var(--text-dim);
 }
 
-/* ============================================
-   TYPOGRAPHY
-   ============================================ */
 .font-display {
   font-family: var(--font-display);
 }
@@ -210,9 +192,6 @@ a {
   color: var(--text-dim);
 }
 
-/* ============================================
-   LAYOUT UTILITIES
-   ============================================ */
 .content-container {
   max-width: var(--max-width);
   margin: 0 auto;
@@ -269,16 +248,12 @@ a {
   width: 60px;
 }
 
-/* Grid asimétrico editorial */
 .grid-editorial {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   gap: var(--space-md);
 }
 
-/* ============================================
-   NAVIGATION
-   ============================================ */
 .nav {
   position: fixed;
   top: 0;
@@ -414,16 +389,12 @@ a {
   transition: transform var(--transition-base), opacity var(--transition-base);
 }
 
-/* Nav right section (theme toggle + hamburger) */
 .nav__right {
   display: flex;
   align-items: center;
   gap: 0.75rem;
 }
 
-/* ============================================
-   THEME TOGGLE BUTTON
-   ============================================ */
 .theme-toggle {
   position: relative;
   width: 40px;
@@ -490,7 +461,6 @@ a {
   fill: var(--text);
 }
 
-/* Idle "alive" animation */
 .theme-toggle__icon {
   animation: themeIdle 5s ease-in-out infinite;
 }
@@ -505,7 +475,6 @@ a {
   animation: none;
 }
 
-/* Ripple effect */
 .theme-toggle__ripple {
   position: absolute;
   width: 20px;
@@ -519,7 +488,6 @@ a {
   z-index: 1;
 }
 
-/* Light mode specific overrides */
 [data-theme="light"] .nav {
   background: rgba(250, 250, 248, 0.88);
   border-bottom-color: var(--border);
@@ -607,7 +575,6 @@ a {
   background: var(--surface);
 }
 
-/* Mobile nav dropdown */
 @media (max-width: 900px) {
   .nav {
     position: fixed;
@@ -738,7 +705,6 @@ a {
   .nav__links.open li:nth-child(6) { transition-delay: 0.24s; }
   .nav__links.open li:nth-child(7) { transition-delay: 0.28s; }
 
-  /* Theme toggle inside mobile dropdown */
   .nav__theme-item {
     border-bottom: none !important;
     padding: var(--space-sm) var(--space-md);
@@ -792,9 +758,6 @@ a {
   }
 }
 
-/* ============================================
-   EXPANDED LOGO (Hero sections)
-   ============================================ */
 .logo-expanded {
   display: flex;
   flex-direction: column;
@@ -830,9 +793,6 @@ a {
   animation: fadeIn 0.4s ease 1.4s forwards;
 }
 
-/* ============================================
-   TAGS & BADGES
-   ============================================ */
 .tag {
   display: inline-flex;
   align-items: center;
@@ -860,9 +820,6 @@ a {
   border-color: var(--border);
 }
 
-/* ============================================
-   BUTTONS
-   ============================================ */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -880,7 +837,6 @@ a {
   overflow: hidden;
 }
 
-/* Brutalist button with hard shadow */
 .btn--primary {
   background: var(--text);
   color: var(--bg);
@@ -943,9 +899,6 @@ a {
   box-shadow: none !important;
 }
 
-/* ============================================
-   HERO (index)
-   ============================================ */
 .hero {
   min-height: 100vh;
   display: grid;
@@ -1037,9 +990,6 @@ a {
   letter-spacing: 0.05em;
 }
 
-/* ============================================
-   STATS BAR
-   ============================================ */
 .stats {
   background: var(--surface);
   border-top: 2px solid var(--border);
@@ -1087,9 +1037,6 @@ a {
   letter-spacing: 0.1em;
 }
 
-/* ============================================
-   INTRO SECTION
-   ============================================ */
 .intro__container {
   max-width: var(--max-width);
   margin: 0 auto;
@@ -1160,9 +1107,6 @@ a {
   z-index: 2;
 }
 
-/* ============================================
-   CITIES
-   ============================================ */
 .cities__container {
   max-width: var(--max-width);
   margin: 0 auto;
@@ -1176,7 +1120,6 @@ a {
   margin-top: var(--space-lg);
 }
 
-/* --- Cities + Map Split Layout --- */
 .cities-map-layout {
   display: grid;
   grid-template-columns: 5fr 7fr;
@@ -1218,7 +1161,6 @@ a {
   letter-spacing: 0.06em;
 }
 
-/* Active card state (triggered by map hover) */
 .city-card--active {
   transform: translate(-4px, -4px);
   box-shadow: 6px 6px 0px var(--accent);
@@ -1230,7 +1172,6 @@ a {
   filter: grayscale(0) contrast(1.05) brightness(0.8);
 }
 
-/* Leaflet popup overrides for hero map */
 .hero-popup .leaflet-popup-content-wrapper {
   background: var(--surface) !important;
   color: var(--text-body) !important;
@@ -1246,7 +1187,6 @@ a {
   margin: 12px 16px !important;
 }
 
-/* Hero map marker */
 .hero-map-marker {
   background: transparent !important;
   border: none !important;
@@ -1362,9 +1302,6 @@ a {
   width: 100%;
 }
 
-/* ============================================
-   CTA SECTION
-   ============================================ */
 .cta {
   background: var(--surface);
   border-top: 2px solid var(--border);
@@ -1429,9 +1366,6 @@ a {
   font-size: 0.8rem;
 }
 
-/* ============================================
-   PAGE HERO (inner pages)
-   ============================================ */
 .page-hero {
   padding: calc(var(--nav-height) + var(--space-xl)) var(--space-md) var(--space-xl);
   text-align: left;
@@ -1466,9 +1400,6 @@ a {
   max-width: 520px;
 }
 
-/* ============================================
-   CHAPTERS
-   ============================================ */
 .chapters__grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -1535,9 +1466,6 @@ a {
   margin-bottom: var(--space-sm);
 }
 
-/* ============================================
-   TRANSMEDIA FLOW
-   ============================================ */
 .transmedia__lead {
   text-align: left;
   font-family: var(--font-serif);
@@ -1600,9 +1528,6 @@ a {
   flex-shrink: 0;
 }
 
-/* ============================================
-   METRICS
-   ============================================ */
 .metrics {
   background: var(--surface);
   border-top: 2px solid var(--border);
@@ -1645,9 +1570,6 @@ a {
   letter-spacing: 0.1em;
 }
 
-/* ============================================
-   TWO-COL LAYOUT
-   ============================================ */
 .two-col {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1673,9 +1595,6 @@ a {
   filter: grayscale(0.3) contrast(1.1);
 }
 
-/* ============================================
-   CHARACTERS (personajes)
-   ============================================ */
 .characters-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1861,9 +1780,6 @@ a {
   line-height: 1.7;
 }
 
-/* ============================================
-   MAP SECTION
-   ============================================ */
 .map-wrapper--leaflet {
   display: grid;
   grid-template-columns: 1fr 280px;
@@ -1917,7 +1833,6 @@ a {
   margin: var(--space-xs) 0;
 }
 
-/* Leaflet overrides */
 .leaflet-popup-content-wrapper {
   background: var(--surface) !important;
   color: var(--text-body) !important;
@@ -1991,9 +1906,6 @@ a {
   color: var(--text-muted) !important;
 }
 
-/* ============================================
-   DATA CARDS
-   ============================================ */
 .data-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -2037,7 +1949,6 @@ a {
   letter-spacing: 0.05em;
 }
 
-/* Bar chart */
 .bar-chart {
   display: flex;
   flex-direction: column;
@@ -2092,7 +2003,6 @@ a {
   color: var(--bg);
 }
 
-/* Big numbers */
 .data-card__numbers {
   display: flex;
   gap: var(--space-md);
@@ -2118,7 +2028,6 @@ a {
   margin-top: 4px;
 }
 
-/* Contrast */
 .data-card__contrast {
   display: flex;
   align-items: center;
@@ -2151,9 +2060,6 @@ a {
   padding: 0 var(--space-xs);
 }
 
-/* ============================================
-   EVIDENCE
-   ============================================ */
 .evidence-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -2193,9 +2099,6 @@ a {
   line-height: 1.5;
 }
 
-/* ============================================
-   TESTIMONIOS
-   ============================================ */
 .unlock-banner {
   padding: var(--space-md) 0;
 }
@@ -2265,7 +2168,6 @@ a {
   font-family: var(--font-mono);
 }
 
-/* FORM */
 .form-wrapper {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -2394,7 +2296,6 @@ a {
   min-height: 18px;
 }
 
-/* Checkbox */
 .form-checkbox {
   display: flex;
   align-items: flex-start;
@@ -2437,7 +2338,6 @@ a {
   background-position: center;
 }
 
-/* Unlock success */
 .unlock-success {
   position: fixed;
   inset: 0;
@@ -2473,7 +2373,6 @@ a {
   margin-bottom: var(--space-md);
 }
 
-/* Comic panels preview */
 .chapter4-preview {
   margin-bottom: var(--space-md);
 }
@@ -2519,7 +2418,6 @@ a {
   color: var(--text-dim);
 }
 
-/* Testimonials grid */
 .testimonials-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -2592,9 +2490,6 @@ a {
   letter-spacing: 0.05em;
 }
 
-/* ============================================
-   FOOTER
-   ============================================ */
 .footer {
   background: var(--surface);
   border-top: 2px solid var(--border);
@@ -2695,9 +2590,6 @@ a {
   letter-spacing: 0.05em;
 }
 
-/* ============================================
-   COMIC READER BASE
-   ============================================ */
 .comic-reader-section {
   padding: var(--space-xl) 0;
 }
@@ -2870,7 +2762,6 @@ a {
   z-index: 3;
 }
 
-/* Controls */
 .comic-controls {
   position: relative;
   z-index: 2;
@@ -3064,9 +2955,6 @@ a {
   flex-wrap: wrap;
 }
 
-/* ============================================
-   QR PLACEHOLDER
-   ============================================ */
 .qr-placeholder {
   display: inline-flex;
   flex-direction: column;
@@ -3087,9 +2975,6 @@ a {
   letter-spacing: 0.1em;
 }
 
-/* ============================================
-   RESPONSIVE
-   ============================================ */
 @media (max-width: 1024px) {
   .hero {
     grid-template-columns: 1fr;
@@ -3282,7 +3167,6 @@ a {
   }
 }
 
-/* Comic responsive */
 @media (max-width: 700px) {
   #comicViewer {
     width: min(380px, calc(100vw - 32px));
@@ -3312,10 +3196,6 @@ a {
   }
 }
 
-/* ============================================
-   TABLET RANGE (640px - 1024px)
-   Grids de 2 columnas para aprovechar el ancho
-   ============================================ */
 @media (min-width: 640px) and (max-width: 1024px) {
   .characters-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -3347,9 +3227,6 @@ a {
   }
 }
 
-/* ============================================
-   ULTRAWIDE SCREENS (> 1920px)
-   ============================================ */
 @media (min-width: 1920px) {
   :root {
     --max-width: 1520px;
@@ -3376,9 +3253,6 @@ a {
   }
 }
 
-/* ============================================
-   SMALL PHONES (< 360px)
-   ============================================ */
 @media (max-width: 360px) {
   :root {
     --space-md: 1.25rem;
@@ -3453,9 +3327,6 @@ a {
   }
 }
 
-/* ============================================
-   MOBILE LANDSCAPE (short screens)
-   ============================================ */
 @media (orientation: landscape) and (max-height: 500px) {
   .hero {
     min-height: auto;
@@ -3481,9 +3352,6 @@ a {
   }
 }
 
-/* ============================================
-   REDUCED MOTION (Accessibility)
-   ============================================ */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

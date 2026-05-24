@@ -1,3 +1,8 @@
+/* ==========================================================================
+   ANIMACIONES DE TESTIMONIOS (assets/js/animations/testimonios.js)
+   Controla la revelación del formulario y el ingreso estético de las tarjetas de testimonios.
+   ========================================================================== */
+
 import gsap from '../animation-engine.js'
 import { ScrollTrigger } from '../animation-engine.js'
 import { splitText } from '../text-split.js'

@@ -1,3 +1,9 @@
+/* ==========================================================================
+   VISOR INTERACTIVO DEL CÓMIC (assets/js/comic-reader.js)
+   Controla el visor digital del cómic físico, permitiendo hacer zoom,
+   desplazamiento lateral y desbloqueo del capítulo final.
+   ========================================================================== */
+
 const TOTAL_PAGES = 13
 const FLIP_MS = 650
 

@@ -1,3 +1,8 @@
+/* ==========================================================================
+   ANIMACIONES DE CÓMIC (assets/js/animations/comic.js)
+   Controla las revelaciones de la portada y la navegación del cómic impreso.
+   ========================================================================== */
+
 import gsap from '../animation-engine.js'
 import { ScrollTrigger } from '../animation-engine.js'
 import { splitText } from '../text-split.js'

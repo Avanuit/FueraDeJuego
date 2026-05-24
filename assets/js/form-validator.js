@@ -1,3 +1,9 @@
+/* ==========================================================================
+   VALIDADOR DE FORMULARIOS (assets/js/form-validator.js)
+   Verifica la integridad de las entradas del usuario (nombres, correos electrónicos)
+   antes de procesar el envío de testimonios.
+   ========================================================================== */
+
 export function createValidator(rules) {
   const showError = (id, msg) => {
     const el = document.getElementById(id)

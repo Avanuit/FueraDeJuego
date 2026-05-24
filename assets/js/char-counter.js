@@ -1,3 +1,9 @@
+/* ==========================================================================
+   CONTADOR DE CARACTERES (assets/js/char-counter.js)
+   Valida la longitud máxima permitida en campos de texto de formularios
+   actualizando los indicadores visuales en tiempo real.
+   ========================================================================== */
+
 export function initCharCounter() {
   const textarea = document.getElementById('testimony')
   const counter = document.getElementById('charCount')

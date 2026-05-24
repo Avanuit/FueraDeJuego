@@ -1,7 +1,8 @@
-// ──────────────────────────────────────────────
-// GSAP Global Setup — Fuera de Juego
-// Configura defaults, accesibilidad y rendimiento
-// ──────────────────────────────────────────────
+/* ==========================================================================
+   CONFIGURACIÓN DE MEDIAS ADAPTATIVAS (assets/js/gsap-setup.js)
+   Configura la accesibilidad de movimiento reducido (prefers-reduced-motion)
+   y los puntos de quiebre responsive para ScrollTrigger.
+   ========================================================================== */
 
 const gsap = window.gsap
 const ScrollTrigger = window.ScrollTrigger
@@ -10,23 +11,19 @@ if (!gsap || !ScrollTrigger) {
   console.warn('[GSAP] No se detecto GSAP o ScrollTrigger globales. Asegurate de cargar los scripts CDN antes que los modulos ES.')
 }
 
-// ── Register plugins ──────────────────────────
 if (ScrollTrigger) gsap.registerPlugin(ScrollTrigger)
 
-// ── Defaults globales ─────────────────────────
 gsap.defaults({
   duration: 0.6,
   ease: 'power2.out',
 })
 
-// ── ScrollTrigger defaults ────────────────────
 if (ScrollTrigger) {
   ScrollTrigger.defaults({
     once: true,
   })
 }
 
-// ── Responsive / Accessibility with matchMedia ──
 let reducedMotion = false
 let isMobile = false
 
@@ -44,14 +41,12 @@ if (mm) {
       reducedMotion = !!context.conditions.reducedMotion
       isMobile = !!context.conditions.isMobile
 
-      // Global class hooks for CSS
       document.documentElement.classList.toggle('reduced-motion', reducedMotion)
       document.documentElement.classList.toggle('mobile-animations', isMobile)
     }
   )
 }
 
-// ── Revert all animations helper ────────────────
 export function killAllAnimations() {
   gsap.globalTimeline.clear()
   if (ScrollTrigger) {
@@ -59,17 +54,14 @@ export function killAllAnimations() {
   }
 }
 
-// ── Safe create context helper ──────────────────
 export function createSafeContext(fn) {
   if (reducedMotion) {
-    // In reduced motion, just run fn without heavy animations
-    // but still allow ScrollTriggers that reveal content simply
+
     return fn()
   }
   return gsap.context(fn)
 }
 
-// ── Easing presets ──────────────────────────────
 export const EASE = {
   smooth: 'power2.out',
   dramatic: 'power3.out',
@@ -80,7 +72,6 @@ export const EASE = {
   none: 'none',
 }
 
-// ── Responsive helpers ──────────────────────────
 export function mobileSkip(fn) {
   if (!isMobile) return fn()
   return null
