@@ -1,3 +1,10 @@
+/* ==========================================================================
+   MÓDULO PRINCIPAL DE BOOTSTRAP (assets/js/app.js)
+   Este script actúa como el punto de entrada de la aplicación web inmersiva.
+   Inicializa los controladores de diseño, Lenis, navegación compartida,
+   y despacha la carga dinámica de submódulos interactivos específicos de cada vista.
+   ========================================================================== */
+
 import './gsap-setup.js'
 import gsap from './animation-engine.js'
 import { ScrollTrigger } from './animation-engine.js'

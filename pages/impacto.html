@@ -1,0 +1,131 @@
+<!-- ==========================================================================
+     PÁGINA DE IMPACTO SOCIAL Y DATOS (pages/impacto.html)
+     Esta sección expone mediante análisis de datos de periodismo de investigación
+     los aumentos drásticos en alquileres, el desplazamiento forzado y los
+     antecedentes históricos de gentrificación provocados por mega-eventos de la FIFA.
+     ========================================================================== -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="../assets/img/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Space+Grotesk:wght@400;700;800&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=JetBrains+Mono:wght@400;500;700&family=Alfa+Slab+One&display=swap" />
+  <title>Impacto — Fuera de Juego</title>
+  <meta name="description" content="El costo real de la Copa del Mundo: datos y estadísticas sobre gentrificación, desalojos y especulación inmobiliaria en Ciudad Juárez, Inglewood y Vancouver." />
+  <link rel="canonical" href="impacto.html" />
+  <meta property="og:title" content="Impacto — Fuera de Juego" />
+  <meta property="og:description" content="El costo real de la Copa del Mundo: datos y estadísticas sobre gentrificación, desalojos y especulación inmobiliaria." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="impacto.html" />
+  <meta property="og:image" content="../assets/img/impacto_visual.png" />
+  <meta property="og:locale" content="es_ES" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Impacto — Fuera de Juego" />
+  <meta name="twitter:description" content="El costo real de la Copa del Mundo: datos y estadísticas sobre gentrificación y desalojos." />
+  <meta name="twitter:image" content="../assets/img/impacto_visual.png" />
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/animations.css" />
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/all.css" />
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+  <script type="importmap">
+  {
+    "imports": {
+      "lenis": "https://esm.sh/lenis@1.1.13",
+      "@barba/core": "https://esm.sh/@barba/core@2.9.7"
+    }
+  }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+</head>
+<body data-barba="wrapper">
+
+  <main data-barba="container" data-barba-namespace="impacto">
+
+    <section class="page-hero">
+      <div class="page-hero__content">
+        <span class="tag tag--accent">Periodismo de Datos</span>
+        <h1 class="page-hero__title">El Impacto Real</h1>
+        <p class="page-hero__sub">Las cifras frías y las realidades urbanas detrás del torneo de fútbol más grande del planeta.</p>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <div class="content-container">
+        <div class="two-col">
+          <div class="two-col__text">
+            <span class="section-label">Estudio de Caso</span>
+            <h2 class="section-title">La fiebre del suelo</h2>
+            <p>El anuncio de una Copa del Mundo actúa como un catalizador inmediato para la especulación en el mercado inmobiliario. En Inglewood, a pocos kilómetros del SoFi Stadium, los precios promedio de las rentas residenciales aumentaron un 300% en menos de tres años.</p>
+            <p>Este aumento no refleja mejoras en la infraestructura del barrio para los residentes locales, sino la expectativa de alojar a turistas globales. El resultado es el desalojo sistemático de familias de bajos ingresos que han vivido en estas zonas por generaciones.</p>
+          </div>
+          <div class="two-col__image">
+            <img src="../assets/img/impacto_visual.png" alt="Construcción masiva de estadios cerca de hogares vulnerables" loading="lazy" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section" style="background: var(--surface); border-top: 2px solid var(--border); border-bottom: 2px solid var(--border);">
+      <div class="content-container">
+        <span class="section-label">Estadísticas</span>
+        <h2 class="section-title">Efecto Inflacionario Global</h2>
+        <div class="metrics__grid" data-stagger>
+          <div class="metric-item">
+            <span class="metric-item__value">300%</span>
+            <span class="metric-item__label">Aumento Renta Inglewood</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-item__value">180%</span>
+            <span class="metric-item__label">Incremento Ciudad Juárez</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-item__value">220%</span>
+            <span class="metric-item__label">Aumento Vancouver</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-item__value">8,000+</span>
+            <span class="metric-item__label">Desalojos Proyectados</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <div class="content-container">
+        <span class="section-label">Historial</span>
+        <h2 class="section-title">Mega-eventos anteriores</h2>
+        <p class="transmedia__lead" style="max-width: 720px; margin: 0 auto var(--space-md); text-align: center;">El desplazamiento no es un accidente, es parte del modelo económico que financia estos mega-eventos de entretenimiento global.</p>
+        
+        <div class="transmedia__flow" style="margin-top: var(--space-lg);">
+          <div class="flow-step" style="flex: 1;">
+            <div class="flow-step__icon" style="background: var(--surface-3); border-color: var(--accent);"><i class="fa-solid fa-hotel" style="color: var(--accent);"></i></div>
+            <h4>Sudáfrica 2010</h4>
+            <p>Más de 20,000 personas fueron removidas a asentamientos temporales alejados de centros comerciales.</p>
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step" style="flex: 1;">
+            <div class="flow-step__icon" style="background: var(--surface-3); border-color: var(--accent);"><i class="fa-solid fa-house-chimney-crack" style="color: var(--accent);"></i></div>
+            <h4>Brasil 2014</h4>
+            <p>170,000 personas fueron desalojadas o perdieron su vivienda en favelas para dar paso a obras de tránsito rápido.</p>
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step" style="flex: 1;">
+            <div class="flow-step__icon" style="background: var(--surface-3); border-color: var(--accent);"><i class="fa-solid fa-city" style="color: var(--accent);"></i></div>
+            <h4>Qatar 2022</h4>
+            <p>Miles de trabajadores inmigrantes fueron desplazados forzosamente de complejos residenciales en el centro de Doha.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script type="module" src="../assets/js/app.js"></script>
+  <script type="module" src="../assets/js/transitions.js"></script>
+</body>
+</html>

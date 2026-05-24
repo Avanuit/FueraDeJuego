@@ -1,0 +1,132 @@
+<!-- ==========================================================================
+     PÁGINA DE GLOSARIO URBANO CRÍTICO (pages/glosario.html)
+     Esta sección expone un glosario interactivo brutalista de términos sociológicos
+     y de planificación urbana crítica, permitiendo a los usuarios comprender la
+     terminología técnica del desplazamiento y la turistificación.
+     ========================================================================== -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="../assets/img/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Space+Grotesk:wght@400;700;800&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=JetBrains+Mono:wght@400;500;700&family=Alfa+Slab+One&display=swap" />
+  <title>Glosario — Fuera de Juego</title>
+  <meta name="description" content="Diccionario crítico de desarrollo urbano: entiende los conceptos de gentrificación, renoviction, redlining y limpieza social en el marco de la Copa del Mundo." />
+  <link rel="canonical" href="glosario.html" />
+  <meta property="og:title" content="Glosario — Fuera de Juego" />
+  <meta property="og:description" content="Diccionario crítico de desarrollo urbano y gentrificación." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="glosario.html" />
+  <meta property="og:image" content="../assets/img/favicon.svg" />
+  <meta property="og:locale" content="es_ES" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Glosario — Fuera de Juego" />
+  <meta name="twitter:description" content="Entiende los conceptos de gentrificación, redlining y desplazamiento social." />
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/animations.css" />
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/all.css" />
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+  <script type="importmap">
+  {
+    "imports": {
+      "lenis": "https://esm.sh/lenis@1.1.13",
+      "@barba/core": "https://esm.sh/@barba/core@2.9.7"
+    }
+  }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+</head>
+<body data-barba="wrapper">
+
+  <main data-barba="container" data-barba-namespace="glosario">
+
+    <section class="page-hero">
+      <div class="page-hero__content">
+        <span class="tag tag--accent">Glosario Urbano</span>
+        <h1 class="page-hero__title">Diccionario Crítico</h1>
+        <p class="page-hero__sub">La terminología técnica de la especulación inmobiliaria y el desplazamiento social explicada de forma clara.</p>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <div class="content-container" style="max-width: 800px;">
+        <span class="section-label">Conceptos Clave</span>
+        <h2 class="section-title section-title--center">Entiende el vocabulario de la exclusión</h2>
+        
+        <div class="glosario-list" style="margin-top: var(--space-lg); display: flex; flex-direction: column; gap: var(--space-md);">
+          
+          <div class="glosario-item" style="border: 2px solid var(--border); padding: var(--space-md); background: var(--surface); transition: var(--transition-base);">
+            <div class="glosario-header" style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+              <h3 style="font-family: var(--font-display); font-size: 1.6rem; font-weight: 800; color: var(--text);">Gentrificación</h3>
+              <i class="fa-solid fa-plus glosario-icon" style="color: var(--accent); transition: transform 0.4s ease;"></i>
+            </div>
+            <div class="glosario-content" style="max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);">
+              <p style="margin-top: var(--space-sm); color: var(--text-body); line-height: 1.7; font-size: 0.95rem;">
+                Proceso de transformación de un espacio urbano deteriorado o de bajos ingresos mediante la reconstrucción y la afluencia de capitales privados e inquilinos de mayores ingresos. A menudo conduce al desplazamiento forzado de los antiguos residentes debido al incremento del costo de la vida y el alquiler.
+              </p>
+            </div>
+          </div>
+
+          <div class="glosario-item" style="border: 2px solid var(--border); padding: var(--space-md); background: var(--surface); transition: var(--transition-base);">
+            <div class="glosario-header" style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+              <h3 style="font-family: var(--font-display); font-size: 1.6rem; font-weight: 800; color: var(--text);">Renoviction</h3>
+              <i class="fa-solid fa-plus glosario-icon" style="color: var(--accent); transition: transform 0.4s ease;"></i>
+            </div>
+            <div class="glosario-content" style="max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);">
+              <p style="margin-top: var(--space-sm); color: var(--text-body); line-height: 1.7; font-size: 0.95rem;">
+                Término en inglés resultante de la combinación de "renovación" (renovation) y "desahucio" (eviction). Es la práctica controvertida en la que un propietario obliga legalmente a sus inquilinos a desalojar sus viviendas bajo el pretexto de realizar renovaciones mayores, para luego volver a alquilar la propiedad a un precio sustancialmente mayor a nuevos inquilinos de nivel socioeconómico superior.
+              </p>
+            </div>
+          </div>
+
+          <div class="glosario-item" style="border: 2px solid var(--border); padding: var(--space-md); background: var(--surface); transition: var(--transition-base);">
+            <div class="glosario-header" style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+              <h3 style="font-family: var(--font-display); font-size: 1.6rem; font-weight: 800; color: var(--text);">Limpieza Social</h3>
+              <i class="fa-solid fa-plus glosario-icon" style="color: var(--accent); transition: transform 0.4s ease;"></i>
+            </div>
+            <div class="glosario-content" style="max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);">
+              <p style="margin-top: var(--space-sm); color: var(--text-body); line-height: 1.7; font-size: 0.95rem;">
+                En el contexto de los mega-eventos mundiales, se refiere a las políticas de remoción forzosa o reubicación forzada de poblaciones vulnerables (como vendedores informales, trabajadores sexuales y personas sin hogar) fuera de las zonas turísticas o comerciales principales del evento, con el fin de proyectar una imagen esterilizada de la ciudad al turismo internacional.
+              </p>
+            </div>
+          </div>
+
+          <div class="glosario-item" style="border: 2px solid var(--border); padding: var(--space-md); background: var(--surface); transition: var(--transition-base);">
+            <div class="glosario-header" style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+              <h3 style="font-family: var(--font-display); font-size: 1.6rem; font-weight: 800; color: var(--text);">Touristification</h3>
+              <i class="fa-solid fa-plus glosario-icon" style="color: var(--accent); transition: transform 0.4s ease;"></i>
+            </div>
+            <div class="glosario-content" style="max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);">
+              <p style="margin-top: var(--space-sm); color: var(--text-body); line-height: 1.7; font-size: 0.95rem;">
+                Fenómeno en el cual el tejido de un vecindario cambia radicalmente debido al turismo de masas. El comercio local tradicional desaparece en favor de comercios y atracciones orientadas al consumo del visitante extranjero, y el parque inmobiliario de alquiler a largo plazo es absorbido por alojamientos turísticos a corto plazo (tipo Airbnb), reduciendo drásticamente la oferta habitacional para residentes.
+              </p>
+            </div>
+          </div>
+
+          <div class="glosario-item" style="border: 2px solid var(--border); padding: var(--space-md); background: var(--surface); transition: var(--transition-base);">
+            <div class="glosario-header" style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+              <h3 style="font-family: var(--font-display); font-size: 1.6rem; font-weight: 800; color: var(--text);">Redlining</h3>
+              <i class="fa-solid fa-plus glosario-icon" style="color: var(--accent); transition: transform 0.4s ease;"></i>
+            </div>
+            <div class="glosario-content" style="max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);">
+              <p style="margin-top: var(--space-sm); color: var(--text-body); line-height: 1.7; font-size: 0.95rem;">
+                Práctica histórica y sistemática de negar servicios financieros, hipotecas o seguros a vecindarios específicos (generalmente habitados por minorías étnicas o de bajos recursos), delimitándolos en los mapas con líneas rojas. Esto privó de capital acumulado a estas áreas, acelerando su deterioro urbano inducido para posteriormente justificar su compra masiva y gentrificación lucrativa.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script type="module" src="../assets/js/app.js"></script>
+  <script type="module" src="../assets/js/transitions.js"></script>
+</body>
+</html>

@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" href="img/favicon.ico" sizes="any" />
-  <link rel="icon" type="image/svg+xml" href="img/favicon.svg" />
+  <link rel="icon" href="assets/img/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Space+Grotesk:wght@400;700;800&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=JetBrains+Mono:wght@400;500;700&family=Alfa+Slab+One&display=swap" />
@@ -15,14 +15,15 @@
   <meta property="og:description" content="Fuera de Juego expone las voces silenciadas del Mundial FIFA 2026: gentrificación y desplazamiento en Ciudad Juárez, Inglewood y Vancouver. Periodismo gráfico transmedia." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="index.html" />
-  <meta property="og:image" content="img/historia-cover.png" />
+  <meta property="og:image" content="assets/img/historia-cover.png" />
   <meta property="og:locale" content="es_ES" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Fuera de Juego — FIFA 2026" />
   <meta name="twitter:description" content="Fuera de Juego expone las voces silenciadas del Mundial FIFA 2026: gentrificación y desplazamiento en Ciudad Juárez, Inglewood y Vancouver. Periodismo gráfico transmedia." />
-  <meta name="twitter:image" content="img/historia-cover.png" />
-  <link rel="stylesheet" href="css/main.css" />
-  <link rel="stylesheet" href="css/animations.css" />
+  <meta name="twitter:image" content="assets/img/historia-cover.png" />
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/animations.css" />
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/all.css" />
   <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script type="importmap">
@@ -51,7 +52,7 @@
         "@type": "Organization",
         "name": "Fuera de Juego",
         "url": "index.html",
-        "logo": "img/favicon.svg",
+        "logo": "assets/img/favicon.svg",
         "description": "Proyecto transmedia sobre las voces silenciadas del Mundial FIFA 2026"
       },
       {
@@ -96,13 +97,13 @@
           Gentrificacion, desplazamiento y silencio.
         </p>
         <div class="hero__actions">
-          <a href="historia.html" class="btn btn--accent">Explorar la historia</a>
-          <a href="testimonios.html" class="btn btn--ghost">Comparte tu voz</a>
+          <a href="pages/historia.html" class="btn btn--accent">Explorar la historia</a>
+          <a href="pages/testimonios.html" class="btn btn--ghost">Comparte tu voz</a>
         </div>
       </div>
       <div class="hero__visual">
         <div class="hero__img-wrap">
-          <img src="img/SoFiStadium.png" alt="Estadio iluminado contrasta con barrio marginalizado" loading="eager" />
+          <img src="assets/img/SoFiStadium.png" alt="Estadio iluminado contrasta con barrio marginalizado" loading="eager" />
           <div class="hero__img-caption">
             SoFi Stadium, Inglewood — a cuadras de donde Marcus crecio.
           </div>
@@ -153,8 +154,8 @@
           </blockquote>
         </div>
         <div class="intro__visual">
-          <img src="img/intro-back.png" alt="Barrio humilde con construccion de lujo al fondo" class="intro__img intro__img--back" loading="lazy" />
-          <img src="img/intro-front.png" alt="Edificio en construccion" class="intro__img intro__img--front" loading="lazy" />
+          <img src="assets/img/intro-back.png" alt="Barrio humilde con construccion de lujo al fondo" class="intro__img intro__img--back" loading="lazy" />
+          <img src="assets/img/intro-front.png" alt="Edificio en construccion" class="intro__img intro__img--front" loading="lazy" />
         </div>
       </div>
     </section>
@@ -170,7 +171,7 @@
 
             <article class="city-card" data-city="juarez">
               <div class="city-card__img-wrap">
-                <img src="img/Anapra.png" alt="Ciudad Juarez, calles de tierra cerca del estadio" loading="lazy" />
+                <img src="assets/img/Anapra.png" alt="Ciudad Juarez, calles de tierra cerca del estadio" loading="lazy" />
                 <div class="city-card__overlay"></div>
                 <span class="city-card__flag">MX</span>
               </div>
@@ -178,13 +179,13 @@
                 <span class="city-card__location">Anapra, Ciudad Juarez</span>
                 <h3 class="city-card__name">Lucia</h3>
                 <p class="city-card__desc">Trenzas negras, hoodie verde, cuadernos de bocetos en la mochila. Desde que anunciaron el Mundial su barrio cambio: primero los precios, luego los vecinos.</p>
-                <a href="personajes.html" class="city-card__link">Ver historia →</a>
+                <a href="pages/personajes.html" class="city-card__link">Ver historia →</a>
               </div>
             </article>
 
             <article class="city-card" data-city="inglewood">
               <div class="city-card__img-wrap">
-                <img src="img/Inglewood.png" alt="Inglewood, Los Angeles" loading="lazy" />
+                <img src="assets/img/Inglewood.png" alt="Inglewood, Los Angeles" loading="lazy" />
                 <div class="city-card__overlay"></div>
                 <span class="city-card__flag">US</span>
               </div>
@@ -192,13 +193,13 @@
                 <span class="city-card__location">Inglewood, Los Angeles</span>
                 <h3 class="city-card__name">Marcus</h3>
                 <p class="city-card__desc">Hoodie rojo, contextura atletica. Crecio a tres cuadras del SoFi Stadium — hasta que su familia recibio una notificacion de desalojo.</p>
-                <a href="personajes.html" class="city-card__link">Ver historia →</a>
+                <a href="pages/personajes.html" class="city-card__link">Ver historia →</a>
               </div>
             </article>
 
             <article class="city-card" data-city="vancouver">
               <div class="city-card__img-wrap">
-                <img src="img/NacionSquamish.png" alt="Territorio Squamish, Vancouver" loading="lazy" />
+                <img src="assets/img/NacionSquamish.png" alt="Territorio Squamish, Vancouver" loading="lazy" />
                 <div class="city-card__overlay"></div>
                 <span class="city-card__flag">CA</span>
               </div>
@@ -206,7 +207,7 @@
                 <span class="city-card__location">Nacion Squamish, Vancouver</span>
                 <h3 class="city-card__name">Aiyana</h3>
                 <p class="city-card__desc">Pelo largo y negro, hoodie verde, audifonos al cuello. Graba los cantos de su abuela antes de que las excavadoras los borren para siempre.</p>
-                <a href="personajes.html" class="city-card__link">Ver historia →</a>
+                <a href="pages/personajes.html" class="city-card__link">Ver historia →</a>
               </div>
             </article>
 
@@ -231,8 +232,8 @@
           <h2 class="cta__title">Invertimos juntos en las voces que el Mundial no transmite?</h2>
           <p class="cta__sub">Proyecto transmedia — Comic + Web Inmersiva</p>
           <div class="cta__actions">
-            <a href="testimonios.html" class="btn btn--accent btn--large">Comparte tu testimonio</a>
-            <a href="historia.html" class="btn btn--ghost btn--large">Leer el comic</a>
+            <a href="pages/testimonios.html" class="btn btn--accent btn--large">Comparte tu testimonio</a>
+            <a href="pages/historia.html" class="btn btn--ghost btn--large">Leer el comic</a>
           </div>
         </div>
         <div class="cta__tag-cloud">
@@ -248,7 +249,7 @@
   </main>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
-  <script type="module" src="js/app.js"></script>
-  <script type="module" src="js/transitions.js"></script>
+  <script type="module" src="assets/js/app.js"></script>
+  <script type="module" src="assets/js/transitions.js"></script>
 </body>
 </html>

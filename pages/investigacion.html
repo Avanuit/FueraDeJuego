@@ -1,0 +1,115 @@
+<!-- ==========================================================================
+     PÁGINA DE INVESTIGACIÓN Y METODOLOGÍA (pages/investigacion.html)
+     Esta sección detalla el trasfondo académico, metodológico y tecnológico
+     desarrollado por la Universidad de San Buenaventura (Ingeniería Multimedia)
+     para la recolección de testimonios, la narrativa gráfica y el desarrollo transmedia.
+     ========================================================================== -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="../assets/img/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Space+Grotesk:wght@400;700;800&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=JetBrains+Mono:wght@400;500;700&family=Alfa+Slab+One&display=swap" />
+  <title>Investigación — Fuera de Juego</title>
+  <meta name="description" content="Detrás de las cámaras de Fuera de Juego: periodismo gráfico, metodologías de investigación de campo y desarrollo tecnológico transmedia." />
+  <link rel="canonical" href="investigacion.html" />
+  <meta property="og:title" content="Investigación — Fuera de Juego" />
+  <meta property="og:description" content="Detrás de las cámaras de Fuera de Juego: periodismo gráfico y desarrollo transmedia." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="investigacion.html" />
+  <meta property="og:image" content="../assets/img/investigacion_visual.png" />
+  <meta property="og:locale" content="es_ES" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Investigación — Fuera de Juego" />
+  <meta name="twitter:description" content="Metodología transmedia e investigación de campo en el periodismo de datos." />
+  <meta name="twitter:image" content="../assets/img/investigacion_visual.png" />
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/animations.css" />
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/all.css" />
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+  <script type="importmap">
+  {
+    "imports": {
+      "lenis": "https://esm.sh/lenis@1.1.13",
+      "@barba/core": "https://esm.sh/@barba/core@2.9.7"
+    }
+  }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+</head>
+<body data-barba="wrapper">
+
+  <main data-barba="container" data-barba-namespace="investigacion">
+
+    <section class="page-hero">
+      <div class="page-hero__content">
+        <span class="tag tag--accent">Metodología Transmedia</span>
+        <h1 class="page-hero__title">Investigación</h1>
+        <p class="page-hero__sub">Cómo convertimos datos periodísticos fríos en relatos de cómic y código web inmersivo.</p>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <div class="content-container">
+        <div class="two-col">
+          <div class="two-col__text">
+            <span class="section-label">Origen</span>
+            <h2 class="section-title">Ingeniería + Periodismo</h2>
+            <p><strong>Fuera de Juego</strong> nace como un proyecto de investigación transmedia en el programa de <em>Ingeniería Multimedia de la Universidad de San Buenaventura</em>. Nuestro objetivo fue ir más allá del reportaje escrito tradicional para concebir un puente transmedia unificado entre el papel físico y la interactividad web.</p>
+            <p>La recolección de historias se realizó mediante colaboraciones directas con activistas locales en Ciudad Juárez, defensores de vivienda de Los Ángeles y miembros comunitarios de la nación originaria Squamish en Vancouver. Sus grabaciones de voz y bocetos inspiraron el desarrollo gráfico y los guiones.</p>
+          </div>
+          <div class="two-col__image">
+            <img src="../assets/img/investigacion_visual.png" alt="Proceso creativo de diseño gráfico y guiones en oficina multimedia" loading="lazy" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section" style="background: var(--surface); border-top: 2px solid var(--border); border-bottom: 2px solid var(--border);">
+      <div class="content-container">
+        <span class="section-label">Etapas</span>
+        <h2 class="section-title">El Proceso Creativo</h2>
+        <div class="chapters__grid">
+
+          <article class="chapter-card">
+            <div class="chapter-card__number">01</div>
+            <div class="chapter-card__content">
+              <h3>Trabajo de Campo</h3>
+              <p class="chapter-card__char">Investigación Social</p>
+              <p>Entrevistas directas, recopilación de audios ambientales y rastreo de datos sobre plusvalía urbana y desalojos forzados de las comunidades afectadas.</p>
+            </div>
+          </article>
+
+          <article class="chapter-card">
+            <div class="chapter-card__number">02</div>
+            <div class="chapter-card__content">
+              <h3>Narrativa Gráfica</h3>
+              <p class="chapter-card__char">El Cómic de 12 Páginas</p>
+              <p>Ilustración de personajes entrañables basados en personas reales, capturando en papel brutalista la atmósfera de sus barrios amenazados por la Copa.</p>
+            </div>
+          </article>
+
+          <article class="chapter-card">
+            <div class="chapter-card__number">03</div>
+            <div class="chapter-card__content">
+              <h3>Desarrollo Web</h3>
+              <p class="chapter-card__char">Ingeniería Multimedia</p>
+              <p>Programación inmersiva front-end con aceleración por hardware mediante GSAP, transiciones dinámicas SPA con Barba.js y cartografía interactiva.</p>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script type="module" src="../assets/js/app.js"></script>
+  <script type="module" src="../assets/js/transitions.js"></script>
+</body>
+</html>

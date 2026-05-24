@@ -1,3 +1,10 @@
+/* ==========================================================================
+   CONTRALADOR CENTRAL DE ANIMACIONES POR PÁGINA (assets/js/animations/index.js)
+   Este script importa dinámicamente y ejecuta los módulos de animación de GSAP
+   específicos para la página que se está cargando (basado en su namespace).
+   Inicializa la barra de progreso de lectura global.
+   ========================================================================== */
+
 import gsap from '../animation-engine.js'
 import { ScrollTrigger } from '../animation-engine.js'
 import { scrollProgressColor } from '../animation-utils.js'
@@ -15,6 +22,10 @@ const PAGE_ANIMATIONS = {
   comic: () => import('./comic.js'),
   testimonios: () => import('./testimonios.js'),
   digital: () => import('./digital.js'),
+  impacto: () => import('./impacto.js'),
+  investigacion: () => import('./investigacion.js'),
+  glosario: () => import('./glosario.js'),
+  recursos: () => import('./recursos.js'),
 }
 
 function createScrollProgress() {
@@ -27,7 +38,6 @@ function createScrollProgress() {
   progressBar.className = 'scroll-progress'
   document.body.appendChild(progressBar)
 
-  // Color-shifting scroll progress
   scrollProgressColor(progressBar, {
     fromColor: '#FF2A00',
     toColor: '#FFD600',
@@ -72,7 +82,6 @@ export async function initPageAnimations(namespace) {
 
   createScrollProgress()
 
-  // Small delay to let DOM settle before refresh
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
       ScrollTrigger.refresh()

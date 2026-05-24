@@ -319,9 +319,25 @@ a {
 .nav__logo-icon {
   width: 2.25rem;
   height: 2.25rem;
-  display: block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
   transition: filter var(--transition-fast);
+}
+
+.fa-futbol {
+  transition: var(--transition-base);
+}
+
+[data-theme="dark"] .fa-futbol {
+  --fa-primary-color: var(--accent) !important;
+  --fa-secondary-color: var(--text) !important;
+}
+
+[data-theme="light"] .fa-futbol {
+  --fa-primary-color: rgb(10, 10, 10) !important;
+  --fa-secondary-color: rgb(80, 80, 80) !important;
 }
 
 .nav__logo-text {

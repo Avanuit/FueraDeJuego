@@ -1,3 +1,10 @@
+/* ==========================================================================
+   MÓDULO DE GESTIÓN DE TEMAS (assets/js/theme.js)
+   Este script controla la lógica de cambio de tema cromático (claro / oscuro).
+   Persiste la preferencia del usuario en LocalStorage, maneja delegación de
+   eventos de clic para el botón flotante y ejecuta animaciones elásticas de GSAP.
+   ========================================================================== */
+
 import gsap from './animation-engine.js'
 
 const STORAGE_KEY = 'fj-theme'

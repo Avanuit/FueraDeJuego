@@ -1,3 +1,10 @@
+/* ==========================================================================
+   MÓDULO DE TRANSICIONES DE PÁGINA (assets/js/transitions.js)
+   Este script utiliza Barba.js y GSAP para crear transiciones fluidas de tipo
+   "theatre-wipe" (telón brutalista) entre las diferentes páginas del proyecto.
+   Mantiene el estado activo del menú superior sincronizado con el espacio de nombres.
+   ========================================================================== */
+
 import gsap from './animation-engine.js'
 import barba from '@barba/core'
 import { getLenis } from './lenis.js'
@@ -7,15 +14,6 @@ const CURTAIN_DURATION = 0.75
 const SETTLE_DELAY = 0.1
 const CURTAIN_EASE = 'expo.inOut'
 const CONTENT_TIMEOUT = 3000
-
-const NAMESPACE_TO_URL = {
-  home: 'index.html',
-  historia: 'historia.html',
-  personajes: 'personajes.html',
-  mapa: 'mapa.html',
-  comic: 'comic.html',
-  testimonios: 'testimonios.html',
-}
 
 const VISIBLE_SELECTORS = [
   '[data-stagger] > *',
@@ -147,11 +145,8 @@ function cleanupTransition(left, right, lenis) {
 }
 
 function updateActiveNav(namespace) {
-  const target = NAMESPACE_TO_URL[namespace]
-  if (!target) return
-
   document.querySelectorAll('.nav__link').forEach((link) => {
-    link.classList.toggle('active', link.getAttribute('href') === target)
+    link.classList.toggle('active', link.getAttribute('data-nav') === namespace)
   })
 }
 

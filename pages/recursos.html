@@ -1,0 +1,116 @@
+<!-- ==========================================================================
+     PÁGINA DE RECURSOS COMUNITARIOS Y ACCIÓN (pages/recursos.html)
+     Esta sección recopila recursos prácticos, sindicatos de inquilinos, organizaciones
+     indígenas y guías de defensa legal en Ciudad Juárez, Inglewood y Vancouver
+     para empoderar a los habitantes locales en la defensa de sus territorios.
+     ========================================================================== -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="../assets/img/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Space+Grotesk:wght@400;700;800&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=JetBrains+Mono:wght@400;500;700&family=Alfa+Slab+One&display=swap" />
+  <title>Recursos — Fuera de Juego</title>
+  <meta name="description" content="Organízate y actúa: sindicatos de inquilinos, recursos legales y redes de apoyo comunitario en las tres sedes del Mundial de Fútbol." />
+  <link rel="canonical" href="recursos.html" />
+  <meta property="og:title" content="Recursos — Fuera de Juego" />
+  <meta property="og:description" content="Organízate y actúa: sindicatos de inquilinos y redes de apoyo comunitario." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="recursos.html" />
+  <meta property="og:image" content="../assets/img/recursos_visual.png" />
+  <meta property="og:locale" content="es_ES" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Recursos — Fuera de Juego" />
+  <meta name="twitter:description" content="Guías y herramientas comunitarias para combatir el desplazamiento urbano." />
+  <meta name="twitter:image" content="../assets/img/recursos_visual.png" />
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/animations.css" />
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/all.css" />
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+  <script type="importmap">
+  {
+    "imports": {
+      "lenis": "https://esm.sh/lenis@1.1.13",
+      "@barba/core": "https://esm.sh/@barba/core@2.9.7"
+    }
+  }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+</head>
+<body data-barba="wrapper">
+
+  <main data-barba="container" data-barba-namespace="recursos">
+
+    <section class="page-hero">
+      <div class="page-hero__content">
+        <span class="tag tag--accent">Defensa y Acción</span>
+        <h1 class="page-hero__title">Recursos</h1>
+        <p class="page-hero__sub">Herramientas organizativas y legales para enfrentar la especulación inmobiliaria y defender tu vecindario.</p>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <div class="content-container">
+        <div class="two-col">
+          <div class="two-col__text">
+            <span class="section-label">Organízate</span>
+            <h2 class="section-title">El poder de la comunidad</h2>
+            <p>Ningún mega-evento corporativo debería estar por encima del derecho fundamental a la vivienda y al arraigo comunitario. Las victorias más importantes frente a la gentrificación inducida se han logrado mediante la organización colectiva e independiente de los propios inquilinos.</p>
+            <p>A continuación, recopilamos un listado directo de sindicatos activos, redes comunitarias de resistencia urbana y defensorías legales organizadas para cada una de las tres sedes expuestas en nuestro periodismo transmedia.</p>
+          </div>
+          <div class="two-col__image">
+            <img src="../assets/img/recursos_visual.png" alt="Acción comunitaria y carteles de protesta exigiendo derechos a la vivienda" loading="lazy" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section" style="background: var(--surface); border-top: 2px solid var(--border); border-bottom: 2px solid var(--border);">
+      <div class="content-container">
+        <span class="section-label">Redes de Apoyo</span>
+        <h2 class="section-title section-title--center">Defensorías por Ciudad</h2>
+        
+        <div class="chapters__grid" style="margin-top: var(--space-lg);">
+
+          <article class="chapter-card">
+            <div class="chapter-card__number"><i class="fa-solid fa-map-location-dot" style="font-size: 1.5rem; color: var(--accent);"></i></div>
+            <div class="chapter-card__content">
+              <h3>Ciudad Juárez</h3>
+              <p class="chapter-card__char">Frontera y Derechos Humanos</p>
+              <p>Redes locales e iniciativas comunitarias en Anapra y zonas periféricas dedicadas a documentar desalojos, registrar la historia oral de la comunidad y ofrecer asesoramiento vecinal básico.</p>
+            </div>
+          </article>
+
+          <article class="chapter-card">
+            <div class="chapter-card__number"><i class="fa-solid fa-people-group" style="font-size: 1.5rem; color: var(--accent);"></i></div>
+            <div class="chapter-card__content">
+              <h3>Los Ángeles (Inglewood)</h3>
+              <p class="chapter-card__char">Sindicato de Inquilinos (LATU)</p>
+              <p>El *Los Angeles Tenants Union* ofrece asambleas semanales de organización comunitaria, asesoría legal frente a notificaciones de desalojo injustas e iniciativas de huelga de renta.</p>
+            </div>
+          </article>
+
+          <article class="chapter-card">
+            <div class="chapter-card__number"><i class="fa-solid fa-seedling" style="font-size: 1.5rem; color: var(--accent);"></i></div>
+            <div class="chapter-card__content">
+              <h3>Vancouver</h3>
+              <p class="chapter-card__char">Derechos Territoriales e Indígenas</p>
+              <p>Redes colectivas de las naciones originarias Musqueam, Squamish y Tsleil-Waututh consagradas a proteger los territorios ancestrales no cedidos frente al avance comercial del Mundial.</p>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script type="module" src="../assets/js/app.js"></script>
+  <script type="module" src="../assets/js/transitions.js"></script>
+</body>
+</html>
