@@ -7,7 +7,7 @@
   <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Space+Grotesk:wght@400;700;800&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=JetBrains+Mono:wght@400;500;700&family=Alfa+Slab+One&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow+Condensed:wght@500;700;900&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500;700;800&family=Alfa+Slab+One&display=swap" />
   <title>Fuera de Juego — FIFA 2026</title>
   <meta name="description" content="Fuera de Juego expone las voces silenciadas del Mundial FIFA 2026: gentrificación y desplazamiento en Ciudad Juárez, Inglewood y Vancouver. Periodismo gráfico transmedia." />
   <link rel="canonical" href="index.html" />
@@ -83,19 +83,29 @@
     <!-- HERO -->
     <section class="hero">
       <div class="hero__content">
+        <div class="hero__case-stamp" aria-hidden="true">
+          <span>Acta 2026</span>
+          <strong>EXPULSION</strong>
+        </div>
         <div class="hero__label">
-          <span class="tag tag--accent">FIFA 2026</span>
+          <span class="tag tag--accent">Tarjeta roja al desplazamiento</span>
           <span class="tag tag--mono">#FueraDeJuego</span>
         </div>
         <h1 class="hero__title">
-          Las voces que<br />
-          <em>el Mundial</em><br />
-          no transmite.
+          Fuera de<br />
+          <em>Juego</em><br />
+          Urbano.
         </h1>
         <p class="hero__subtitle">
-          Mientras 48 selecciones llenan los estadios, tres comunidades pagan el precio del espectaculo.
-          Gentrificacion, desplazamiento y silencio.
+          Mientras el Mundial 2026 vende fiesta global, barrios enteros quedan fuera del marcador.
+          Gentrificacion, renta imposible y desalojos no aparecen en la transmision oficial.
         </p>
+        <div class="hero__scoreboard" aria-label="Marcador social del Mundial 2026">
+          <span>FIFA 26</span>
+          <strong>VS</strong>
+          <span>BARRIOS</span>
+          <mark>90+6'</mark>
+        </div>
         <div class="hero__actions">
           <a href="pages/historia.html" class="btn btn--accent">Explorar la historia</a>
           <a href="pages/testimonios.html" class="btn btn--ghost">Comparte tu voz</a>
@@ -103,11 +113,25 @@
       </div>
       <div class="hero__visual">
         <div class="hero__img-wrap">
+          <div class="hero__red-card" aria-hidden="true">DESALOJO</div>
           <img src="assets/img/SoFiStadium.png" alt="Estadio iluminado contrasta con barrio marginalizado" loading="eager" />
           <div class="hero__img-caption">
             SoFi Stadium, Inglewood — a cuadras de donde Marcus crecio.
           </div>
         </div>
+      </div>
+    </section>
+
+    <section class="protest-ticker" aria-label="Consignas del proyecto">
+      <div class="protest-ticker__track">
+        <span>No hay fiesta con desalojo</span>
+        <span>La ciudad no se vende</span>
+        <span>El futbol no justifica el olvido</span>
+        <span>48 selecciones / miles de rentas imposibles</span>
+        <span>No hay fiesta con desalojo</span>
+        <span>La ciudad no se vende</span>
+        <span>El futbol no justifica el olvido</span>
+        <span>48 selecciones / miles de rentas imposibles</span>
       </div>
     </section>
 
@@ -117,18 +141,22 @@
         <div class="stat">
           <span class="stat__number">48</span>
           <span class="stat__label">Selecciones</span>
+          <span class="stat__note">en pantalla</span>
         </div>
         <div class="stat">
           <span class="stat__number">16</span>
           <span class="stat__label">Ciudades sede</span>
+          <span class="stat__note">en vitrina</span>
         </div>
         <div class="stat">
           <span class="stat__number">3</span>
           <span class="stat__label">Comunidades desplazadas</span>
+          <span class="stat__note">en esta investigacion</span>
         </div>
         <div class="stat">
           <span class="stat__number">300%</span>
           <span class="stat__label">Aumento en alquileres</span>
+          <span class="stat__note">fuera del relato oficial</span>
         </div>
       </div>
     </section>
@@ -164,7 +192,7 @@
     <section class="content-section">
       <div class="cities__container">
         <span class="section-label">Tres ciudades</span>
-        <h2 class="section-title">Una historia.</h2>
+        <h2 class="section-title">Tres sedes, una misma jugada.</h2>
 
         <div class="cities-map-layout">
           <div class="cities-map-layout__cards">
