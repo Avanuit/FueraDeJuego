@@ -4,7 +4,7 @@
    desplazamiento lateral y desbloqueo del capítulo final.
    ========================================================================== */
 
-const TOTAL_PAGES = 13
+const TOTAL_PAGES = 9
 const FLIP_MS = 650
 
 let spread = 0
