@@ -145,17 +145,17 @@
         </div>
 
         <!-- QR -->
-        <div style="margin-top: var(--space-lg); display:flex; justify-content:center;">
-          <div style="background:var(--surface); border:2px solid var(--border); padding:var(--space-md) var(--space-lg); display:flex; align-items:center; gap:var(--space-md); max-width:560px; width:100%;">
-            <div class="qr-placeholder" style="flex-shrink:0; width:100px; height:100px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; background:var(--surface-2); border:2px solid var(--border);">
-              <i class="ph ph-device-mobile-camera" style="font-size:1.6rem; color:var(--text-muted);"></i>
-              <small style="font-size:0.6rem; color:var(--text-dim); letter-spacing:0.08em; text-transform:uppercase; font-family:var(--font-mono);">Escanear</small>
+        <div class="qr-box-container">
+          <div class="qr-box">
+            <div class="qr-box__placeholder">
+              <i class="ph ph-device-mobile-camera"></i>
+              <small>Escanear</small>
             </div>
-            <div>
-              <p style="font-family:var(--font-mono); font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--accent); margin-bottom:4px;">Leer el comic completo</p>
-              <p style="font-family:var(--font-display); font-size:1.1rem; font-weight:800; margin-bottom:6px; color:var(--text);">Fuera de Juego — 12 paginas</p>
-              <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.5;">Escanea el QR del comic impreso para leerlo en formato digital. Todas las paginas, sin instalar nada.</p>
-              <a href="comic-digital.html" style="display:inline-flex; align-items:center; gap:6px; margin-top:8px; font-size:0.85rem; font-weight:600; color:var(--accent); font-family:var(--font-mono);">Ver en pantalla →</a>
+            <div class="qr-box__content">
+              <p class="qr-box__tag">Leer el comic completo</p>
+              <p class="qr-box__title">Fuera de Juego — 12 paginas</p>
+              <p class="qr-box__desc">Escanea el QR del comic impreso para leerlo en formato digital. Todas las paginas, sin instalar nada.</p>
+              <a href="comic-digital.html" class="qr-box__link">Ver en pantalla →</a>
             </div>
           </div>
         </div>

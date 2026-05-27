@@ -9,6 +9,8 @@ import gsap from './animation-engine.js'
 import barba from '@barba/core'
 import { getLenis } from './lenis.js'
 import { reinit, killPageAnimations } from './app.js'
+import { forceCloseMenu } from './navigation.js'
+
 
 const CURTAIN_DURATION = 0.75
 const SETTLE_DELAY = 0.1
@@ -64,6 +66,7 @@ function hideCurtains(left, right) {
 
 function prepareLeave() {
   document.body.classList.add('is-transitioning')
+  forceCloseMenu()
   killPageAnimations()
   const lenis = getLenis()
   if (lenis) lenis.stop()

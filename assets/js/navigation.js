@@ -91,3 +91,19 @@ export function initNavigation() {
 
   toggle.setAttribute('aria-expanded', 'false')
 }
+
+export function forceCloseMenu() {
+  const toggle = document.getElementById('navToggle')
+  const links = document.querySelector('.nav__links')
+  if (links) {
+    links.classList.remove('open')
+    links.classList.remove('visible')
+  }
+  if (toggle) {
+    toggle.classList.remove('open')
+    toggle.setAttribute('aria-expanded', 'false')
+  }
+  document.body.classList.remove('menu-open')
+  const lenis = getLenis()
+  if (lenis) lenis.start()
+}

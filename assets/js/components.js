@@ -112,25 +112,19 @@ export function updateComponentsPaths() {
   });
 
   const footerLinks = document.querySelectorAll('.footer__links a');
-  if (footerLinks.length === 10) {
-    const footerMap = [
-      `${base}index.html`,
-      `${pageBase}historia.html`,
-      `${pageBase}personajes.html`,
-      `${pageBase}mapa.html`,
-      `${pageBase}comic.html`,
-      `${pageBase}testimonios.html`,
-      `${pageBase}impacto.html`,
-      `${pageBase}investigacion.html`,
-      `${pageBase}glosario.html`,
-      `${pageBase}recursos.html`
-    ];
-    footerLinks.forEach((link, idx) => {
-      if (footerMap[idx]) {
-        link.setAttribute('href', footerMap[idx]);
-      }
-    });
-  }
+  footerLinks.forEach((link) => {
+    const hrefAttr = link.getAttribute('href');
+    if (!hrefAttr) return;
+
+    // Extraer el nombre del archivo al final de la ruta (ej: historia.html)
+    const filename = hrefAttr.split('/').pop();
+
+    if (filename === 'index.html') {
+      link.setAttribute('href', `${base}index.html`);
+    } else if (filename) {
+      link.setAttribute('href', `${pageBase}${filename}`);
+    }
+  });
 }
 
 export function injectComponents() {

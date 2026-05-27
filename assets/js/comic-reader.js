@@ -163,6 +163,9 @@ function buildThumbnails() {
   if (!container) return
   container.innerHTML = ''
 
+  const isSubPage = window.location.pathname.includes('/pages/')
+  const base = isSubPage ? '../assets/comic/' : 'assets/comic/'
+
   for (let i = 0; i < TOTAL_PAGES; i++) {
     const btn = document.createElement('button')
     btn.className = `comic-thumb${i === 0 ? ' active' : ''}`
@@ -170,7 +173,7 @@ function buildThumbnails() {
     btn.title = `Pagina ${i + 1}`
 
     const img = document.createElement('img')
-    img.src = `comic/${i + 1}.png`
+    img.src = `${base}${i + 1}.png`
     img.alt = `Pag. ${i + 1}`
     img.loading = 'lazy'
     img.draggable = false

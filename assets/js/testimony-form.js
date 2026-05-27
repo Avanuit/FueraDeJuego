@@ -6,6 +6,7 @@
 
 import gsap from './animation-engine.js'
 import { createValidator } from './form-validator.js'
+import { getLenis } from './lenis.js'
 
 const VALIDATION_RULES = [
   {
@@ -67,6 +68,10 @@ function showUnlockSuccess() {
   const success = document.getElementById('unlockSuccess')
   if (!success) return
   success.style.display = 'flex'
+  document.body.classList.add('menu-open')
+  const lenis = getLenis()
+  if (lenis) lenis.stop()
+
   gsap.fromTo(success, { opacity: 0 }, { opacity: 1, duration: 0.5, ease: 'power2.out' })
   gsap.fromTo(success.querySelector('.unlock-success__content'),
     { y: 20, opacity: 0 },

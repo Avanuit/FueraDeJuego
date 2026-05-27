@@ -160,6 +160,13 @@ function setupHeroMap() {
       highlightCard(key)
       moveMapTo(CITIES[key].coords, 6)
       if (markers[key]) markers[key].openPopup()
+      
+      if (window.innerWidth < 1024) {
+        const mapContainer = document.querySelector('.cities-map-layout__map')
+        if (mapContainer) {
+          mapContainer.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        }
+      }
     })
   })
 
